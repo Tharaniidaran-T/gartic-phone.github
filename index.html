@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gartic Phone</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #ff6b6b;
             --secondary: #4ecdc4;
@@ -18,10 +13,9 @@
             --dark: #1a1a2e;
             --light: #f7f7f7;
             --border-radius: 16px;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --shadow: 0 8px 32px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
         }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -29,900 +23,507 @@
             padding: 20px;
             color: var(--dark);
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            animation: slideDown 0.6s ease-out;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 40px; animation: slideDown 0.6s ease-out; }
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
         .logo {
-            font-size: 48px;
-            font-weight: 900;
+            font-size: 48px; font-weight: 900;
             background: linear-gradient(135deg, #ff6b6b, #ffe66d, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-            letter-spacing: -2px;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 10px; letter-spacing: -2px;
         }
-
-        .tagline {
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
+        .tagline { color: white; font-size: 16px; font-weight: 500; opacity: 0.9; }
+        .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
         .card {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--shadow-lg);
-            animation: fadeIn 0.6s ease-out;
+            background: white; border-radius: var(--border-radius);
+            padding: 30px; box-shadow: var(--shadow-lg); animation: fadeIn 0.6s ease-out;
         }
-
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .card-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-
-        .lobby-section {
-            grid-column: 1;
-        }
-
-        .input-group {
-            margin-bottom: 16px;
-        }
-
-        .input-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: var(--dark);
-        }
-
+        .card-title { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: var(--dark); }
+        .lobby-section { grid-column: 1; }
+        .input-group { margin-bottom: 16px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: var(--dark); }
         .input-group input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-            font-family: inherit;
+            width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0;
+            border-radius: 8px; font-size: 14px; transition: all 0.3s; font-family: inherit;
         }
-
         .input-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+            outline: none; border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255,107,107,0.1);
         }
-
         button {
-            padding: 14px 24px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            padding: 14px 24px; border: none; border-radius: 8px;
+            font-weight: 600; font-size: 14px; cursor: pointer;
+            transition: all 0.3s; font-family: inherit;
+            text-transform: uppercase; letter-spacing: 1px;
         }
-
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), #ff5252);
-            color: white;
-            box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+            color: white; box-shadow: 0 4px 16px rgba(255,107,107,0.3);
         }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255, 107, 107, 0.4);
-        }
-
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,107,0.4); }
         .btn-secondary {
             background: linear-gradient(135deg, var(--secondary), #45b8aa);
-            color: white;
-            box-shadow: 0 4px 16px rgba(78, 205, 196, 0.3);
+            color: white; box-shadow: 0 4px 16px rgba(78,205,196,0.3);
         }
-
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(78, 205, 196, 0.4);
-        }
-
-        .btn-small {
-            padding: 10px 16px;
-            font-size: 12px;
-        }
-
+        .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(78,205,196,0.4); }
+        .btn-small { padding: 10px 16px; font-size: 12px; }
         .players-list {
-            margin-top: 20px;
-            padding: 16px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            max-height: 200px;
-            overflow-y: auto;
+            margin-top: 20px; padding: 16px; background: #f9f9f9;
+            border-radius: 8px; max-height: 200px; overflow-y: auto;
         }
-
         .player-item {
-            padding: 8px 12px;
-            background: white;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            font-size: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 8px 12px; background: white; border-radius: 6px;
+            margin-bottom: 8px; font-size: 14px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-
-        .player-item .status {
-            font-size: 12px;
-            color: #999;
-        }
-
-        .canvas-section {
-            grid-column: 2;
-        }
-
+        .player-item .status { font-size: 12px; color: #999; }
+        .canvas-section { grid-column: 2; }
         .canvas-container {
-            margin-bottom: 20px;
-            border-radius: 8px;
-            overflow: hidden;
+            margin-bottom: 20px; border-radius: 8px; overflow: hidden;
             box-shadow: inset 0 0 0 2px #e0e0e0;
         }
-
-        #drawingCanvas {
-            display: block;
-            background: white;
-            cursor: crosshair;
-            width: 100%;
-            max-height: 500px;
-        }
-
-        .tools {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .tool-group {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .color-picker {
-            width: 50px;
-            height: 50px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .color-picker:hover {
-            transform: scale(1.1);
-        }
-
-        .slider-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .slider-group label {
-            font-size: 12px;
-            font-weight: 600;
-            color: #666;
-        }
-
-        input[type="range"] {
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .tool-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-        }
-
+        #drawingCanvas { display: block; background: white; cursor: crosshair; width: 100%; max-height: 500px; }
+        .tools { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .tool-group { display: flex; gap: 8px; align-items: center; }
+        .color-picker { width: 50px; height: 50px; border: none; border-radius: 8px; cursor: pointer; transition: transform 0.2s; }
+        .color-picker:hover { transform: scale(1.1); }
+        .slider-group { display: flex; flex-direction: column; gap: 6px; }
+        .slider-group label { font-size: 12px; font-weight: 600; color: #666; }
+        input[type="range"] { cursor: pointer; width: 100%; }
+        .tool-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
         .tool-btn {
-            padding: 12px;
-            background: #f0f0f0;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s;
+            padding: 12px; background: #f0f0f0; border: 2px solid transparent;
+            border-radius: 8px; cursor: pointer; font-size: 14px;
+            font-weight: 600; transition: all 0.3s;
         }
-
-        .tool-btn.active {
-            background: var(--accent);
-            border-color: var(--primary);
-            color: var(--dark);
-        }
-
-        .tool-btn:hover {
-            background: #e0e0e0;
-        }
-
-        .state-section {
-            grid-column: 1 / -1;
-            display: none;
-        }
-
-        .state-section.active {
-            display: block;
-        }
-
+        .tool-btn.active { background: var(--accent); border-color: var(--primary); color: var(--dark); }
+        .tool-btn:hover { background: #e0e0e0; }
+        .state-section { grid-column: 1 / -1; display: none; }
+        .state-section.active { display: block; }
         .guess-input {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-bottom: 12px;
-            font-family: inherit;
+            width: 100%; padding: 16px; border: 2px solid #e0e0e0;
+            border-radius: 8px; font-size: 16px; margin-bottom: 12px; font-family: inherit;
         }
-
-        .guess-input:focus {
-            outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
-        }
-
-        .chain-display {
-            background: #f9f9f9;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .chain-item {
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .chain-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .chain-player {
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 12px;
-            margin-bottom: 6px;
-        }
-
-        .chain-content {
-            font-size: 14px;
-            color: var(--dark);
-            font-style: italic;
-        }
-
-        .chain-image {
-            width: 100%;
-            border-radius: 6px;
-            margin-top: 8px;
-            background: white;
-            border: 1px solid #e0e0e0;
-        }
-
-        .setup-screen {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .setup-tabs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .tab-btn {
-            padding: 16px;
-            background: #f0f0f0;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, var(--primary), #ff5252);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .info-box {
-            background: #e3f2fd;
-            border-left: 4px solid #2196f3;
-            padding: 16px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #0d47a1;
-        }
-
-        .turn-indicator {
-            padding: 16px;
-            background: linear-gradient(135deg, var(--accent), #ffd54f);
-            border-radius: 8px;
-            margin-bottom: 16px;
-            font-weight: 600;
-            text-align: center;
-            color: var(--dark);
-        }
-
+        .guess-input:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(78,205,196,0.1); }
+        .chain-display { background: #f9f9f9; border-radius: 8px; padding: 20px; margin-bottom: 20px; max-height: 400px; overflow-y: auto; }
+        .chain-item { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #e0e0e0; }
+        .chain-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .chain-player { font-weight: 600; color: var(--primary); font-size: 12px; margin-bottom: 6px; }
+        .chain-content { font-size: 14px; color: var(--dark); font-style: italic; }
+        .chain-image { width: 100%; border-radius: 6px; margin-top: 8px; background: white; border: 1px solid #e0e0e0; }
+        .setup-screen { display: flex; flex-direction: column; gap: 20px; }
+        .setup-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .tab-btn { padding: 16px; background: #f0f0f0; border: 2px solid transparent; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .tab-btn.active { background: linear-gradient(135deg, var(--primary), #ff5252); color: white; border-color: var(--primary); }
+        .info-box { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 16px; border-radius: 4px; margin-bottom: 20px; font-size: 14px; color: #0d47a1; }
+        .turn-indicator { padding: 16px; background: linear-gradient(135deg, var(--accent), #ffd54f); border-radius: 8px; margin-bottom: 16px; font-weight: 600; text-align: center; color: var(--dark); }
         @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-
-            .lobby-section,
-            .canvas-section {
-                grid-column: 1;
-            }
-
-            .logo {
-                font-size: 36px;
-            }
+            .main-content { grid-template-columns: 1fr; }
+            .lobby-section, .canvas-section { grid-column: 1; }
+            .logo { font-size: 36px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">Gartic Phone</div>
-            <div class="tagline">Draw it. Guess it. Share the chaos.</div>
-        </div>
-
-        <div class="main-content">
-            <div id="setupState" class="state-section active">
-                <div class="card setup-screen">
-                    <div class="card-title">Welcome to Gartic Phone</div>
-                    
-                    <div class="info-box">
-                        ✓ <strong>Firebase is configured and ready!</strong> You can now create or join rooms to play multiplayer.
+<div class="container">
+    <div class="header">
+        <div class="logo">Gartic Phone</div>
+        <div class="tagline">Draw it. Guess it. Share the chaos.</div>
+    </div>
+    <div class="main-content">
+        <div id="setupState" class="state-section active">
+            <div class="card setup-screen">
+                <div class="card-title">Welcome to Gartic Phone</div>
+                <div class="info-box" id="firebaseStatus">⏳ Connecting to Firebase...</div>
+                <div class="setup-tabs">
+                    <button class="tab-btn active" onclick="switchTab('create', event)">Create Room</button>
+                    <button class="tab-btn" onclick="switchTab('join', event)">Join Room</button>
+                </div>
+                <div id="createTab">
+                    <div class="input-group">
+                        <label>Your Name</label>
+                        <input type="text" id="playerName" placeholder="Enter your name">
                     </div>
-
-                    <div class="setup-tabs">
-                        <button class="tab-btn active" onclick="switchTab('create')">Create Room</button>
-                        <button class="tab-btn" onclick="switchTab('join')">Join Room</button>
+                    <div class="input-group">
+                        <label>Room Name</label>
+                        <input type="text" id="roomName" placeholder="Give your room a fun name">
                     </div>
-
-                    <div id="createTab">
-                        <div style="margin-bottom: 20px; padding: 12px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #4caf50;">
-                            <strong style="color: #2e7d32;">✓ Firebase Connected</strong>
-                            <div style="font-size: 12px; color: #2e7d32; margin-top: 4px;">Ready to play multiplayer!</div>
-                        </div>
-
-                        <div class="input-group">
-                            <label>Your Name</label>
-                            <input type="text" id="playerName" placeholder="Enter your name" value="">
-                        </div>
-                        <div class="input-group">
-                            <label>Room Name</label>
-                            <input type="text" id="roomName" placeholder="Give your room a fun name">
-                        </div>
-                        <div class="input-group">
-                            <label>Max Players</label>
-                            <input type="number" id="maxPlayers" placeholder="2-8" min="2" max="8" value="4">
-                        </div>
-                        <button class="btn-primary" style="width: 100%;" onclick="createRoom()">Create Room</button>
+                    <div class="input-group">
+                        <label>Max Players</label>
+                        <input type="number" id="maxPlayers" placeholder="2-8" min="2" max="8" value="4">
                     </div>
-
-                    <div id="joinTab" style="display: none;">
-                        <div style="margin-bottom: 20px; padding: 12px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #4caf50;">
-                            <strong style="color: #2e7d32;">✓ Firebase Connected</strong>
-                            <div style="font-size: 12px; color: #2e7d32; margin-top: 4px;">Ready to play multiplayer!</div>
-                        </div>
-
-                        <div class="input-group">
-                            <label>Your Name</label>
-                            <input type="text" id="joinPlayerName" placeholder="Enter your name">
-                        </div>
-                        <div class="input-group">
-                            <label>Room Code</label>
-                            <input type="text" id="roomCode" placeholder="Enter the room code (6 characters)">
-                        </div>
-                        <button class="btn-primary" style="width: 100%;" onclick="joinRoom()">Join Room</button>
+                    <button class="btn-primary" style="width:100%;" onclick="createRoom()">Create Room</button>
+                </div>
+                <div id="joinTab" style="display:none;">
+                    <div class="input-group">
+                        <label>Your Name</label>
+                        <input type="text" id="joinPlayerName" placeholder="Enter your name">
                     </div>
+                    <div class="input-group">
+                        <label>Room Code</label>
+                        <input type="text" id="roomCode" placeholder="Enter the room code (6 characters)">
+                    </div>
+                    <button class="btn-primary" style="width:100%;" onclick="joinRoom()">Join Room</button>
                 </div>
             </div>
+        </div>
 
-            <div id="gameState" class="state-section">
-                <div class="card lobby-section">
-                    <div class="card-title">Room: <span id="roomDisplay">-</span></div>
-                    <div style="margin-bottom: 16px;">
-                        <strong>Room Code:</strong> <code id="codeDisplay" style="background: #f0f0f0; padding: 4px 8px; border-radius: 4px;">-</code>
-                        <button class="btn-small" style="margin-left: 8px;" onclick="copyCode()">Copy</button>
-                    </div>
-                    
-                    <div class="turn-indicator" id="turnIndicator">
-                        Waiting for players...
-                    </div>
+        <div id="gameState" class="state-section">
+            <div class="card lobby-section">
+                <div class="card-title">Room: <span id="roomDisplay">-</span></div>
+                <div style="margin-bottom:16px;">
+                    <strong>Room Code:</strong>
+                    <code id="codeDisplay" style="background:#f0f0f0;padding:4px 8px;border-radius:4px;">-</code>
+                    <button class="btn-small" style="margin-left:8px;" onclick="copyCode()">Copy</button>
+                </div>
+                <div class="turn-indicator" id="turnIndicator">Waiting for players...</div>
+                <div class="card-title" style="font-size:18px;">Players</div>
+                <div class="players-list" id="playersList">
+                    <div class="player-item"><span>Waiting for players...</span></div>
+                </div>
+                <button class="btn-primary" style="width:100%;margin-top:20px;" id="startBtn" onclick="startGame()" disabled>Start Game</button>
+                <button class="btn-secondary" style="width:100%;margin-top:12px;" onclick="leaveRoom()">Leave Room</button>
+            </div>
 
-                    <div class="card-title" style="font-size: 18px;">Players</div>
-                    <div class="players-list" id="playersList">
-                        <div class="player-item">
-                            <span>Waiting for players...</span>
+            <div class="card canvas-section">
+                <div class="turn-indicator" id="gamePhase">Draw Phase</div>
+                <div id="drawPhase" class="state-section active">
+                    <div class="card-title">Your Turn to Draw</div>
+                    <div style="margin-bottom:16px;padding:12px;background:#fff3cd;border-radius:8px;border-left:4px solid var(--accent);">
+                        <strong id="promptDisplay">Drawing prompt will appear here</strong>
+                    </div>
+                    <div class="tools">
+                        <div class="tool-group">
+                            <label style="font-weight:600;font-size:12px;">Color</label>
+                            <input type="color" id="brushColor" class="color-picker" value="#000000">
+                        </div>
+                        <div class="slider-group">
+                            <label>Brush Size</label>
+                            <input type="range" id="brushSize" min="1" max="50" value="5">
+                        </div>
+                        <div class="slider-group">
+                            <label>Opacity</label>
+                            <input type="range" id="brushOpacity" min="0" max="1" step="0.1" value="1">
                         </div>
                     </div>
-
-                    <button class="btn-primary" style="width: 100%; margin-top: 20px;" id="startBtn" onclick="startGame()" disabled>Start Game</button>
-                    <button class="btn-secondary" style="width: 100%; margin-top: 12px;" onclick="leaveRoom()">Leave Room</button>
+                    <div class="tool-buttons">
+                        <button class="tool-btn active" data-tool="draw" onclick="selectTool('draw', event)">🖌️ Draw</button>
+                        <button class="tool-btn" data-tool="eraser" onclick="selectTool('eraser', event)">🧹 Eraser</button>
+                        <button class="tool-btn" onclick="clearCanvas()">🗑️ Clear</button>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="drawingCanvas"></canvas>
+                    </div>
+                    <button class="btn-primary" style="width:100%;" onclick="submitDrawing()">Submit Drawing</button>
                 </div>
 
-                <div class="card canvas-section">
-                    <div class="turn-indicator" id="gamePhase">Draw Phase</div>
-
-                    <div id="drawPhase" class="state-section active">
-                        <div class="card-title">Your Turn to Draw</div>
-                        <div style="margin-bottom: 16px; padding: 12px; background: #fff3cd; border-radius: 8px; border-left: 4px solid var(--accent);">
-                            <strong id="promptDisplay">Drawing prompt will appear here</strong>
-                        </div>
-
-                        <div class="tools">
-                            <div class="tool-group">
-                                <label style="font-weight: 600; font-size: 12px;">Color</label>
-                                <input type="color" id="brushColor" class="color-picker" value="#000000">
-                            </div>
-                            <div class="slider-group">
-                                <label>Brush Size</label>
-                                <input type="range" id="brushSize" min="1" max="50" value="5">
-                            </div>
-                            <div class="slider-group">
-                                <label>Opacity</label>
-                                <input type="range" id="brushOpacity" min="0" max="1" step="0.1" value="1">
-                            </div>
-                        </div>
-
-                        <div class="tool-buttons">
-                            <button class="tool-btn active" data-tool="draw" onclick="selectTool('draw')">🖌️ Draw</button>
-                            <button class="tool-btn" data-tool="eraser" onclick="selectTool('eraser')">🧹 Eraser</button>
-                            <button class="tool-btn" onclick="clearCanvas()">🗑️ Clear</button>
-                        </div>
-
-                        <div class="canvas-container">
-                            <canvas id="drawingCanvas"></canvas>
-                        </div>
-
-                        <button class="btn-primary" style="width: 100%;" onclick="submitDrawing()">Submit Drawing</button>
+                <div id="guessPhase" class="state-section">
+                    <div class="card-title">What is this?</div>
+                    <div class="canvas-container">
+                        <canvas id="displayCanvas"></canvas>
                     </div>
+                    <input type="text" class="guess-input" id="guessInput" placeholder="Type your guess..." autocomplete="off">
+                    <button class="btn-primary" style="width:100%;" onclick="submitGuess()">Submit Guess</button>
+                </div>
 
-                    <div id="guessPhase" class="state-section">
-                        <div class="card-title">What is this?</div>
-                        
-                        <div class="canvas-container">
-                            <canvas id="displayCanvas"></canvas>
-                        </div>
-
-                        <input type="text" class="guess-input" id="guessInput" placeholder="Type your guess..." autocomplete="off">
-                        <button class="btn-primary" style="width: 100%;" onclick="submitGuess()">Submit Guess</button>
-                    </div>
-
-                    <div id="chainView" class="state-section">
-                        <div class="card-title">The Chain</div>
-                        <div class="chain-display" id="chainContent"></div>
-                        <button class="btn-secondary" style="width: 100%;" onclick="leaveRoom()">Play Again</button>
-                    </div>
+                <div id="chainView" class="state-section">
+                    <div class="card-title">The Chain</div>
+                    <div class="chain-display" id="chainContent"></div>
+                    <button class="btn-secondary" style="width:100%;" onclick="leaveRoom()">Play Again</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js"></script>
+<!-- Firebase Compat SDK (exposes global `firebase` object) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-    <script>
-        // Declare gameState FIRST with var (not let)
-        var gameState = {
-            playerName: '',
-            roomId: null,
-            roomName: '',
-            players: {},
-            currentPhase: 'setup',
-            currentTurn: 0,
-            isDrawing: false,
-            currentTool: 'draw',
-            canvas: null,
-            ctx: null,
-            displayCanvas: null,
-            displayCtx: null,
-            mouseDown: false,
-            lastX: 0,
-            lastY: 0,
-            chain: [],
-            firebaseInitialized: true,
-            db: null
-        };
+<script>
+var gameState = {
+    playerName: '',
+    roomId: null,
+    roomName: '',
+    players: {},
+    currentPhase: 'setup',
+    currentTurn: 0,
+    currentTool: 'draw',
+    canvas: null,
+    ctx: null,
+    displayCanvas: null,
+    displayCtx: null,
+    mouseDown: false,
+    lastX: 0,
+    lastY: 0,
+    chain: [],
+    db: null
+};
 
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyDdwdbP8tsEGKWW88NR9C3StYMhTmecujM",
-            authDomain: "gartic-phone-ea498.firebaseapp.com",
-            databaseURL: "https://gartic-phone-ea498-default-rtdb.firebaseio.com",
-            projectId: "gartic-phone-ea498",
-            storageBucket: "gartic-phone-ea498.firebasestorage.app",
-            messagingSenderId: "425033124791",
-            appId: "1:425033124791:web:0388821e8eaa37a4673632"
-        };
+const firebaseConfig = {
+    apiKey: "AIzaSyDdwdbP8tsEGKWW88NR9C3StYMhTmecujM",
+    authDomain: "gartic-phone-ea498.firebaseapp.com",
+    databaseURL: "https://gartic-phone-ea498-default-rtdb.firebaseio.com",
+    projectId: "gartic-phone-ea498",
+    storageBucket: "gartic-phone-ea498.firebasestorage.app",
+    messagingSenderId: "425033124791",
+    appId: "1:425033124791:web:0388821e8eaa37a4673632"
+};
 
-        // Initialize Firebase and assign to gameState
-        const app = firebase.initializeApp(firebaseConfig);
-        gameState.db = firebase.database();
+// Initialize Firebase using compat SDK
+firebase.initializeApp(firebaseConfig);
+gameState.db = firebase.database();
 
-        function initializeCanvas() {
-            gameState.canvas = document.getElementById('drawingCanvas');
-            gameState.ctx = gameState.canvas.getContext('2d');
-            gameState.displayCanvas = document.getElementById('displayCanvas');
-            gameState.displayCtx = gameState.displayCanvas.getContext('2d');
+document.addEventListener('DOMContentLoaded', () => {
+    const statusBox = document.getElementById('firebaseStatus');
+    statusBox.style.background = '#e8f5e9';
+    statusBox.style.borderColor = '#4caf50';
+    statusBox.style.color = '#2e7d32';
+    statusBox.innerHTML = '✓ <strong>Firebase connected and ready!</strong> Create or join a room to play.';
+    console.log('✓ Gartic Phone ready! Firebase is configured and connected.');
+});
 
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
+// --- Canvas ---
+function initializeCanvas() {
+    gameState.canvas = document.getElementById('drawingCanvas');
+    gameState.ctx = gameState.canvas.getContext('2d');
+    gameState.displayCanvas = document.getElementById('displayCanvas');
+    gameState.displayCtx = gameState.displayCanvas.getContext('2d');
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    gameState.canvas.addEventListener('mousedown', startDrawing);
+    gameState.canvas.addEventListener('mousemove', draw);
+    gameState.canvas.addEventListener('mouseup', stopDrawing);
+    gameState.canvas.addEventListener('mouseout', stopDrawing);
+    gameState.canvas.addEventListener('touchstart', handleTouch, { passive: false });
+    gameState.canvas.addEventListener('touchmove', handleTouch, { passive: false });
+    gameState.canvas.addEventListener('touchend', stopDrawing);
+}
 
-            gameState.canvas.addEventListener('mousedown', startDrawing);
-            gameState.canvas.addEventListener('mousemove', draw);
-            gameState.canvas.addEventListener('mouseup', stopDrawing);
-            gameState.canvas.addEventListener('mouseout', stopDrawing);
-
-            gameState.canvas.addEventListener('touchstart', handleTouch);
-            gameState.canvas.addEventListener('touchmove', handleTouch);
-            gameState.canvas.addEventListener('touchend', stopDrawing);
+function resizeCanvas() {
+    const container = document.querySelector('.canvas-container');
+    if (container && gameState.canvas) {
+        gameState.canvas.width = container.clientWidth;
+        gameState.canvas.height = 500;
+        if (gameState.displayCanvas) {
+            gameState.displayCanvas.width = container.clientWidth;
+            gameState.displayCanvas.height = 500;
         }
+    }
+}
 
-        function resizeCanvas() {
-            const container = document.querySelector('.canvas-container');
-            if (container && gameState.canvas) {
-                gameState.canvas.width = container.clientWidth;
-                gameState.canvas.height = 500;
-                gameState.displayCanvas.width = container.clientWidth;
-                gameState.displayCanvas.height = 500;
-            }
-        }
+function startDrawing(e) {
+    gameState.mouseDown = true;
+    const rect = gameState.canvas.getBoundingClientRect();
+    gameState.lastX = e.clientX - rect.left;
+    gameState.lastY = e.clientY - rect.top;
+}
 
-        function startDrawing(e) {
-            gameState.mouseDown = true;
-            const rect = gameState.canvas.getBoundingClientRect();
-            gameState.lastX = e.clientX - rect.left;
-            gameState.lastY = e.clientY - rect.top;
-        }
+function draw(e) {
+    if (!gameState.mouseDown) return;
+    const rect = gameState.canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const ctx = gameState.ctx;
+    ctx.globalAlpha = parseFloat(document.getElementById('brushOpacity').value);
+    if (gameState.currentTool === 'draw') {
+        ctx.strokeStyle = document.getElementById('brushColor').value;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineWidth = document.getElementById('brushSize').value;
+        ctx.beginPath();
+        ctx.moveTo(gameState.lastX, gameState.lastY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    } else if (gameState.currentTool === 'eraser') {
+        ctx.clearRect(x - 10, y - 10, 20, 20);
+    }
+    gameState.lastX = x;
+    gameState.lastY = y;
+}
 
-        function draw(e) {
-            if (!gameState.mouseDown) return;
+function stopDrawing() { gameState.mouseDown = false; }
 
-            const rect = gameState.canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+function handleTouch(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+    });
+    gameState.canvas.dispatchEvent(mouseEvent);
+}
 
-            const ctx = gameState.ctx;
-            ctx.globalAlpha = document.getElementById('brushOpacity').value;
+function selectTool(tool, e) {
+    gameState.currentTool = tool;
+    document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+    if (e && e.target) e.target.classList.add('active');
+}
 
-            if (gameState.currentTool === 'draw') {
-                ctx.strokeStyle = document.getElementById('brushColor').value;
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
-                ctx.lineWidth = document.getElementById('brushSize').value;
-                ctx.beginPath();
-                ctx.moveTo(gameState.lastX, gameState.lastY);
-                ctx.lineTo(x, y);
-                ctx.stroke();
-            } else if (gameState.currentTool === 'eraser') {
-                ctx.clearRect(x - 10, y - 10, 20, 20);
-            }
+function clearCanvas() {
+    if (gameState.ctx && gameState.canvas) {
+        gameState.ctx.clearRect(0, 0, gameState.canvas.width, gameState.canvas.height);
+    }
+}
 
-            gameState.lastX = x;
-            gameState.lastY = y;
-        }
+// --- UI ---
+function switchTab(tab, e) {
+    document.querySelectorAll('[id$="Tab"]').forEach(t => t.style.display = 'none');
+    document.getElementById(tab + 'Tab').style.display = 'block';
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    if (e && e.target) e.target.classList.add('active');
+}
 
-        function stopDrawing() {
-            gameState.mouseDown = false;
-        }
+function showState(state) {
+    document.querySelectorAll('.state-section').forEach(s => s.classList.remove('active'));
+    document.getElementById(state + 'State').classList.add('active');
+}
 
-        function handleTouch(e) {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            gameState.canvas.dispatchEvent(mouseEvent);
-        }
+function updatePlayersList() {
+    const list = document.getElementById('playersList');
+    const players = Object.values(gameState.players || {});
+    list.innerHTML = players.length === 0
+        ? '<div class="player-item"><span>Waiting for players...</span></div>'
+        : players.map(p => `
+            <div class="player-item">
+                <span>${p.name}</span>
+                <span class="status">${p.status || 'Ready'}</span>
+            </div>`).join('');
+    document.getElementById('startBtn').disabled = players.length < 2;
+}
 
-        function selectTool(tool) {
-            gameState.currentTool = tool;
-            document.querySelectorAll('.tool-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
+function copyCode() {
+    navigator.clipboard.writeText(document.getElementById('codeDisplay').textContent);
+    alert('Room code copied to clipboard!');
+}
 
-        function clearCanvas() {
-            gameState.ctx.clearRect(0, 0, gameState.canvas.width, gameState.canvas.height);
-        }
+// --- Firebase Room Logic ---
+function createRoom() {
+    gameState.playerName = document.getElementById('playerName').value.trim();
+    if (!gameState.playerName) { alert('Please enter your name'); return; }
+    gameState.roomName = document.getElementById('roomName').value.trim() || 'Untitled Room';
+    const maxPlayers = parseInt(document.getElementById('maxPlayers').value) || 4;
+    gameState.roomId = Math.random().toString(36).substring(2, 8).toUpperCase();
+    const playerId = 'player-' + Date.now();
+    const roomData = {
+        name: gameState.roomName,
+        maxPlayers: maxPlayers,
+        createdAt: new Date().toISOString(),
+        phase: 'lobby',
+        players: { [playerId]: { name: gameState.playerName, status: 'ready' } }
+    };
+    gameState.db.ref('rooms/' + gameState.roomId).set(roomData)
+        .then(() => {
+            gameState.players = roomData.players;
+            document.getElementById('roomDisplay').textContent = gameState.roomName;
+            document.getElementById('codeDisplay').textContent = gameState.roomId;
+            showState('game');
+            initializeCanvas();
+            listenToRoom();
+            updatePlayersList();
+        })
+        .catch(err => alert('Failed to create room: ' + err.message));
+}
 
-        function switchTab(tab) {
-            document.querySelectorAll('[id$="Tab"]').forEach(t => t.style.display = 'none');
-            document.getElementById(tab + 'Tab').style.display = 'block';
+function joinRoom() {
+    gameState.playerName = document.getElementById('joinPlayerName').value.trim();
+    gameState.roomId = document.getElementById('roomCode').value.trim().toUpperCase();
+    if (!gameState.playerName || !gameState.roomId) { alert('Please enter your name and room code'); return; }
+    gameState.db.ref('rooms/' + gameState.roomId).once('value')
+        .then(snapshot => {
+            const room = snapshot.val();
+            if (!room) { alert('Room not found. Check the code and try again.'); return; }
+            gameState.roomName = room.name;
+            document.getElementById('roomDisplay').textContent = gameState.roomName;
+            document.getElementById('codeDisplay').textContent = gameState.roomId;
+            showState('game');
+            initializeCanvas();
+            listenToRoom();
+            updatePlayersList();
+        })
+        .catch(err => alert('Failed to join room: ' + err.message));
+}
 
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
+function listenToRoom() {
+    gameState.db.ref('rooms/' + gameState.roomId + '/players').on('value', snapshot => {
+        gameState.players = snapshot.val() || {};
+        updatePlayersList();
+    });
+}
 
-        function showState(state) {
-            document.querySelectorAll('.state-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(state + 'State').classList.add('active');
-        }
+// --- Game Logic ---
+function startGame() {
+    if (Object.keys(gameState.players).length < 2) { alert('Need at least 2 players'); return; }
+    gameState.currentPhase = 'draw';
+    gameState.db.ref('rooms/' + gameState.roomId + '/phase').set('draw');
+    document.getElementById('gamePhase').textContent = '✏️ Drawing Phase';
+    document.getElementById('drawPhase').classList.add('active');
+    document.getElementById('guessPhase').classList.remove('active');
+}
 
-        function updatePlayersList() {
-            const list = document.getElementById('playersList');
-            const players = Object.values(gameState.players);
-            
-            if (players.length === 0) {
-                list.innerHTML = '<div class="player-item"><span>Waiting for players...</span></div>';
-            } else {
-                list.innerHTML = players.map(p => `
-                    <div class="player-item">
-                        <span>${p.name}</span>
-                        <span class="status">${p.status || 'Ready'}</span>
-                    </div>
-                `).join('');
-            }
+function submitDrawing() {
+    const imageData = gameState.canvas.toDataURL();
+    gameState.chain.push({ type: 'drawing', player: gameState.playerName, content: imageData });
+    gameState.currentPhase = 'guess';
+    gameState.db.ref('rooms/' + gameState.roomId + '/phase').set('guess');
+    const img = new Image();
+    img.onload = () => gameState.displayCtx.drawImage(img, 0, 0);
+    img.src = imageData;
+    document.getElementById('gamePhase').textContent = '🤔 Guessing Phase';
+    document.getElementById('drawPhase').classList.remove('active');
+    document.getElementById('guessPhase').classList.add('active');
+    document.getElementById('guessInput').focus();
+}
 
-            const startBtn = document.getElementById('startBtn');
-            startBtn.disabled = Object.keys(gameState.players).length < 2;
-        }
+function submitGuess() {
+    const guess = document.getElementById('guessInput').value.trim();
+    if (!guess) return;
+    gameState.chain.push({ type: 'guess', player: gameState.playerName, content: guess });
+    document.getElementById('guessInput').value = '';
+    gameState.currentTurn++;
+    if (gameState.currentTurn >= Object.keys(gameState.players).length * 2) {
+        showChain();
+    } else {
+        clearCanvas();
+        gameState.currentPhase = 'draw';
+        document.getElementById('gamePhase').textContent = '✏️ Drawing Phase';
+        document.getElementById('drawPhase').classList.add('active');
+        document.getElementById('guessPhase').classList.remove('active');
+        document.getElementById('promptDisplay').textContent = 'Last guess: ' + guess;
+    }
+}
 
-        // Firebase Functions
-        function createRoom() {
-            gameState.playerName = document.getElementById('playerName').value.trim();
-            if (!gameState.playerName) {
-                alert('Please enter your name');
-                return;
-            }
+function showChain() {
+    document.getElementById('chainContent').innerHTML = gameState.chain.map((item, idx) =>
+        item.type === 'drawing'
+            ? `<div class="chain-item"><div class="chain-player">${idx + 1}. ${item.player} drew:</div><img src="${item.content}" class="chain-image"></div>`
+            : `<div class="chain-item"><div class="chain-player">${idx + 1}. ${item.player} guessed:</div><div class="chain-content">"${item.content}"</div></div>`
+    ).join('');
+    document.getElementById('drawPhase').classList.remove('active');
+    document.getElementById('guessPhase').classList.remove('active');
+    document.getElementById('chainView').classList.add('active');
+    document.getElementById('gamePhase').textContent = '🎉 Game Complete!';
+}
 
-            gameState.roomName = document.getElementById('roomName').value.trim() || 'Untitled Room';
-            const maxPlayers = parseInt(document.getElementById('maxPlayers').value);
-
-            // Generate simple room ID
-            gameState.roomId = Math.random().toString(36).substring(2, 8).toUpperCase();
-            const playerId = 'player-' + Date.now();
-
-            const roomData = {
-                name: gameState.roomName,
-                maxPlayers: maxPlayers,
-                createdAt: new Date().toISOString(),
-                phase: 'lobby',
-                players: {}
-            };
-
-            roomData.players[playerId] = {
-                name: gameState.playerName,
-                status: 'ready'
-            };
-
-            console.log('Creating room:', gameState.roomId);
-
-            gameState.db.ref('rooms/' + gameState.roomId).set(roomData)
-                .then(() => {
-                    console.log('✓ Room created successfully');
-                    gameState.players = roomData.players;
-                    document.getElementById('roomDisplay').textContent = gameState.roomName;
-                    document.getElementById('codeDisplay').textContent = gameState.roomId;
-                    showState('game');
-                    initializeCanvas();
-                    listenToRoom();
-                    updatePlayersList();
-                })
-                .catch((error) => {
-                    console.error('❌ Error creating room:', error);
-                    alert('Failed to create room: ' + error.message);
-                });
-        }
-
-        function joinRoom() {
-            gameState.playerName = document.getElementById('joinPlayerName').value.trim();
-            gameState.roomId = document.getElementById('roomCode').value.trim().toUpperCase();
-
-            if (!gameState.playerName || !gameState.roomId) {
-                alert('Please enter your name and room code');
-                return;
-            }
-
-            console.log('Joining room:', gameState.roomId);
-
-            gameState.db.ref('rooms/' + gameState.roomId).once('value')
-                .then((snapshot) => {
-                    const room = snapshot.val();
-                    if (!room) {
-                        alert('Room not found. Check the code and try again.');
-                        return;
-                    }
-
-                    gameState.roomName = room.name;
-                    document.getElementById('roomDisplay').textContent = gameState.roomName;
-                    document.getElementById('codeDisplay').textContent = gameState.roomId;
-                    
-                    showState('game');
-                    initializeCanvas();
-                    listenToRoom();
-                    updatePlayersList();
-                })
-                .catch((error) => {
-                    console.error('❌ Error joining room:', error);
-                    alert('Failed to join room: ' + error.message);
-                });
-        }
-
-        function listenToRoom() {
-            gameState.db.ref('rooms/' + gameState.roomId + '/players').on('value', (snapshot) => {
-                gameState.players = snapshot.val() || {};
-                updatePlayersList();
-            });
-        }
-
-        function startGame() {
-            if (Object.keys(gameState.players).length < 2) {
-                alert('Need at least 2 players');
-                return;
-            }
-
-            gameState.currentPhase = 'draw';
-            gameState.db.ref('rooms/' + gameState.roomId + '/phase').set('draw');
-            
-            document.getElementById('gamePhase').textContent = '✏️ Drawing Phase';
-            document.getElementById('drawPhase').classList.add('active');
-            document.getElementById('guessPhase').classList.remove('active');
-        }
-
-        function submitDrawing() {
-            const imageData = gameState.canvas.toDataURL();
-            gameState.chain.push({
-                type: 'drawing',
-                player: gameState.playerName,
-                content: imageData
-            });
-
-            gameState.currentPhase = 'guess';
-            gameState.db.ref('rooms/' + gameState.roomId + '/phase').set('guess');
-            
-            const img = new Image();
-            img.onload = () => {
-                gameState.displayCtx.drawImage(img, 0, 0);
-            };
-            img.src = imageData;
-
-            document.getElementById('gamePhase').textContent = '🤔 Guessing Phase';
-            document.getElementById('drawPhase').classList.remove('active');
-            document.getElementById('guessPhase').classList.add('active');
-            document.getElementById('guessInput').focus();
-        }
-
-        function submitGuess() {
-            const guess = document.getElementById('guessInput').value.trim();
-            if (!guess) return;
-
-            gameState.chain.push({
-                type: 'guess',
-                player: gameState.playerName,
-                content: guess
-            });
-
-            document.getElementById('guessInput').value = '';
-
-            gameState.currentTurn++;
-            
-            if (gameState.currentTurn >= Object.keys(gameState.players).length * 2) {
-                showChain();
-            } else {
-                clearCanvas();
-                gameState.currentPhase = 'draw';
-                document.getElementById('gamePhase').textContent = '✏️ Drawing Phase';
-                document.getElementById('drawPhase').classList.add('active');
-                document.getElementById('guessPhase').classList.remove('active');
-                document.getElementById('promptDisplay').textContent = 'Last guess: ' + guess;
-            }
-        }
-
-        function showChain() {
-            const chainContent = document.getElementById('chainContent');
-            chainContent.innerHTML = gameState.chain.map((item, idx) => {
-                if (item.type === 'drawing') {
-                    return `
-                        <div class="chain-item">
-                            <div class="chain-player">${idx + 1}. ${item.player} drew:</div>
-                            <img src="${item.content}" class="chain-image">
-                        </div>
-                    `;
-                } else {
-                    return `
-                        <div class="chain-item">
-                            <div class="chain-player">${idx + 1}. ${item.player} guessed:</div>
-                            <div class="chain-content">"${item.content}"</div>
-                        </div>
-                    `;
-                }
-            }).join('');
-
-            document.getElementById('drawPhase').classList.remove('active');
-            document.getElementById('guessPhase').classList.remove('active');
-            document.getElementById('chainView').classList.add('active');
-            document.getElementById('gamePhase').textContent = '🎉 Game Complete!';
-        }
-
-        function copyCode() {
-            navigator.clipboard.writeText(document.getElementById('codeDisplay').textContent);
-            alert('Room code copied to clipboard!');
-        }
-
-        function leaveRoom() {
-            if (confirm('Leave the room?')) {
-                gameState.roomId = null;
-                gameState.chain = [];
-                gameState.players = {};
-                gameState.currentTurn = 0;
-                showState('setup');
-                document.getElementById('playerName').value = '';
-                document.getElementById('roomName').value = '';
-                document.getElementById('guessInput').value = '';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('✓ Gartic Phone ready! Firebase is configured and connected.');
-            console.log('🎮 Create a room or join with a code to start playing!');
-        });
-    </script>
+function leaveRoom() {
+    if (confirm('Leave the room?')) {
+        gameState.roomId = null;
+        gameState.chain = [];
+        gameState.players = {};
+        gameState.currentTurn = 0;
+        showState('setup');
+        document.getElementById('playerName').value = '';
+        document.getElementById('roomName').value = '';
+        document.getElementById('guessInput').value = '';
+    }
+}
+</script>
 </body>
 </html>
