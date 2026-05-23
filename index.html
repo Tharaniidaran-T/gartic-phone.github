@@ -384,17 +384,6 @@
             border-color: var(--primary);
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            background: #e0f7fa;
-            color: #00838f;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
         .info-box {
             background: #e3f2fd;
             border-left: 4px solid #2196f3;
@@ -577,20 +566,8 @@
     <script src="https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDdwdbP8tsEGKWW88NR9C3StYMhTmecujM",
-            authDomain: "gartic-phone-ea498.firebaseapp.com",
-            databaseURL: "https://gartic-phone-ea498-default-rtdb.firebaseio.com",
-            projectId: "gartic-phone-ea498",
-            storageBucket: "gartic-phone-ea498.firebasestorage.app",
-            messagingSenderId: "425033124791",
-            appId: "1:425033124791:web:0388821e8eaa37a4673632"
-        };
-
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        let gameState = {
+        // Declare gameState FIRST with var (not let)
+        var gameState = {
             playerName: '',
             roomId: null,
             roomName: '',
@@ -608,8 +585,23 @@
             lastY: 0,
             chain: [],
             firebaseInitialized: true,
-            db: database
+            db: null
         };
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDdwdbP8tsEGKWW88NR9C3StYMhTmecujM",
+            authDomain: "gartic-phone-ea498.firebaseapp.com",
+            databaseURL: "https://gartic-phone-ea498-default-rtdb.firebaseio.com",
+            projectId: "gartic-phone-ea498",
+            storageBucket: "gartic-phone-ea498.firebasestorage.app",
+            messagingSenderId: "425033124791",
+            appId: "1:425033124791:web:0388821e8eaa37a4673632"
+        };
+
+        // Initialize Firebase and assign to gameState
+        const app = firebase.initializeApp(firebaseConfig);
+        gameState.db = firebase.database();
 
         function initializeCanvas() {
             gameState.canvas = document.getElementById('drawingCanvas');
@@ -732,67 +724,85 @@
             startBtn.disabled = Object.keys(gameState.players).length < 2;
         }
 
+        // Firebase Functions
         function createRoom() {
-            gameState.playerName = document.getElementById('playerName').value;
+            gameState.playerName = document.getElementById('playerName').value.trim();
             if (!gameState.playerName) {
                 alert('Please enter your name');
                 return;
             }
 
-            gameState.roomName = document.getElementById('roomName').value || 'Untitled Room';
+            gameState.roomName = document.getElementById('roomName').value.trim() || 'Untitled Room';
             const maxPlayers = parseInt(document.getElementById('maxPlayers').value);
 
-            gameState.roomId = gameState.db.ref('rooms').push().key;
+            // Generate simple room ID
+            gameState.roomId = Math.random().toString(36).substring(2, 8).toUpperCase();
+            const playerId = 'player-' + Date.now();
 
             const roomData = {
                 name: gameState.roomName,
                 maxPlayers: maxPlayers,
                 createdAt: new Date().toISOString(),
                 phase: 'lobby',
-                players: {
-                    [gameState.db.ref().child('users').push().key]: {
-                        name: gameState.playerName,
-                        status: 'ready'
-                    }
-                }
+                players: {}
             };
 
-            gameState.db.ref('rooms/' + gameState.roomId).set(roomData, () => {
-                gameState.players = roomData.players;
-                document.getElementById('roomDisplay').textContent = gameState.roomName;
-                document.getElementById('codeDisplay').textContent = gameState.roomId.substring(0, 6).toUpperCase();
-                showState('game');
-                initializeCanvas();
-                listenToRoom();
-                updatePlayersList();
-            });
+            roomData.players[playerId] = {
+                name: gameState.playerName,
+                status: 'ready'
+            };
+
+            console.log('Creating room:', gameState.roomId);
+
+            gameState.db.ref('rooms/' + gameState.roomId).set(roomData)
+                .then(() => {
+                    console.log('✓ Room created successfully');
+                    gameState.players = roomData.players;
+                    document.getElementById('roomDisplay').textContent = gameState.roomName;
+                    document.getElementById('codeDisplay').textContent = gameState.roomId;
+                    showState('game');
+                    initializeCanvas();
+                    listenToRoom();
+                    updatePlayersList();
+                })
+                .catch((error) => {
+                    console.error('❌ Error creating room:', error);
+                    alert('Failed to create room: ' + error.message);
+                });
         }
 
         function joinRoom() {
-            gameState.playerName = document.getElementById('joinPlayerName').value;
-            gameState.roomId = document.getElementById('roomCode').value;
+            gameState.playerName = document.getElementById('joinPlayerName').value.trim();
+            gameState.roomId = document.getElementById('roomCode').value.trim().toUpperCase();
 
             if (!gameState.playerName || !gameState.roomId) {
                 alert('Please enter your name and room code');
                 return;
             }
 
-            gameState.db.ref('rooms/' + gameState.roomId).once('value', (snapshot) => {
-                const room = snapshot.val();
-                if (!room) {
-                    alert('Room not found');
-                    return;
-                }
+            console.log('Joining room:', gameState.roomId);
 
-                gameState.roomName = room.name;
-                document.getElementById('roomDisplay').textContent = gameState.roomName;
-                document.getElementById('codeDisplay').textContent = gameState.roomId.substring(0, 6).toUpperCase();
-                
-                showState('game');
-                initializeCanvas();
-                listenToRoom();
-                updatePlayersList();
-            });
+            gameState.db.ref('rooms/' + gameState.roomId).once('value')
+                .then((snapshot) => {
+                    const room = snapshot.val();
+                    if (!room) {
+                        alert('Room not found. Check the code and try again.');
+                        return;
+                    }
+
+                    gameState.roomName = room.name;
+                    document.getElementById('roomDisplay').textContent = gameState.roomName;
+                    document.getElementById('codeDisplay').textContent = gameState.roomId;
+                    
+                    showState('game');
+                    initializeCanvas();
+                    listenToRoom();
+                    updatePlayersList();
+                })
+                .catch((error) => {
+                    console.error('❌ Error joining room:', error);
+                    alert('Failed to join room: ' + error.message);
+                });
         }
 
         function listenToRoom() {
