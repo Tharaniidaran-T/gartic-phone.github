@@ -1,4 +1,3 @@
-cat > /mnt/user-data/outputs/gartic-phone.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,8 +40,7 @@ button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 .tab-btn{padding:13px;background:#f0f0f0;border:2px solid transparent;border-radius:9px;cursor:pointer;font-weight:700;transition:all .3s;letter-spacing:0;font-size:14px}
 .tab-btn.active{background:linear-gradient(135deg,var(--primary),#ff5252);color:#fff}
 .screen{display:none}.screen.active{display:block}
-/* mode grid */
-.modes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.modes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px}
 .mode-card{padding:16px 10px;border:2px solid #e0e0e0;border-radius:12px;cursor:pointer;text-align:center;transition:all .22s;background:#fafafa;position:relative}
 .mode-card:hover{border-color:var(--purple);background:#f3efff;transform:translateY(-2px)}
 .mode-card.selected{border-color:var(--purple);background:#ede7f6;box-shadow:0 0 0 3px rgba(124,77,255,.2)}
@@ -51,9 +49,7 @@ button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 .mode-badge{position:absolute;top:5px;right:6px;font-size:9px;padding:2px 6px;border-radius:20px;font-weight:700}
 .badge-new{background:#fff3cd;color:#856404}
 .badge-hot{background:#fde8e8;color:#9b1c1c}
-/* settings grid in mode screen */
 .settings-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
-/* game layout */
 .game-layout{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start}
 .players-list{padding:12px;background:#f9f9f9;border-radius:9px;max-height:260px;overflow-y:auto;margin-top:10px}
 .player-item{padding:9px 12px;background:#fff;border-radius:7px;margin-bottom:7px;font-size:13px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
@@ -64,7 +60,6 @@ button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 .badge-done{background:#e3f2fd;color:#0d47a1}
 .badge-joined{background:#f3e5f5;color:#6a1b9a}
 .turn-indicator{padding:12px 16px;background:linear-gradient(135deg,var(--accent),#ffd54f);border-radius:9px;margin-bottom:14px;font-weight:800;text-align:center;color:var(--dark);font-size:14px}
-/* canvas */
 .canvas-wrap{border-radius:10px;overflow:hidden;box-shadow:inset 0 0 0 2px #e0e0e0;margin-bottom:14px;background:#fff}
 canvas{display:block;cursor:crosshair;width:100%;background:#fff}
 .tools-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
@@ -77,39 +72,30 @@ input[type=range]{cursor:pointer;width:100%}
 .tool-btn.active{background:var(--accent);border-color:var(--primary)}
 .tool-btn:hover:not(.active){background:#e0e0e0}
 .phase-panel{display:none}.phase-panel.active{display:block}
-/* story text input */
 .story-input{width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:9px;font-size:15px;margin-bottom:12px;font-family:inherit;resize:vertical;min-height:90px}
 .story-input:focus{outline:none;border-color:var(--secondary);box-shadow:0 0 0 3px rgba(78,205,196,.12)}
 .guess-input{width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:9px;font-size:16px;margin-bottom:12px;font-family:inherit}
 .guess-input:focus{outline:none;border-color:var(--secondary)}
-/* chain */
 .chain-display{background:#f9f9f9;border-radius:9px;padding:18px;margin-bottom:18px;max-height:520px;overflow-y:auto}
 .chain-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #eee}
 .chain-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .chain-player{font-weight:800;color:var(--primary);font-size:11px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
 .chain-content{font-size:15px;color:var(--dark);font-style:italic}
-.chain-image{width:100%;border-radius:7px;margin-top:6px;border:1px solid #e0e0e0}
-/* scoreboard */
+.chain-image{width:100%;border-radius:7px;margin-top:6px;border:1px solid #e0e0e0;max-height:300px;object-fit:contain}
 .scoreboard{display:grid;gap:8px}
 .score-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
 .score-rank{font-size:20px;width:32px;text-align:center}
 .score-name{flex:1;font-weight:700}
 .score-pts{font-size:18px;font-weight:900;color:var(--primary)}
-/* prompt box */
 .prompt-box{padding:12px 16px;background:#fff3cd;border-radius:9px;border-left:4px solid var(--accent);margin-bottom:14px}
-/* timer */
 .timer-bar-wrap{height:10px;background:#e0e0e0;border-radius:5px;overflow:hidden;margin-bottom:12px;display:none}
 .timer-bar{height:100%;width:100%;background:linear-gradient(90deg,#4caf50,#ffeb3b,#f44336);border-radius:5px;transition:width 1s linear}
-/* timer text */
 .timer-text{text-align:right;font-size:12px;font-weight:700;color:#888;margin-top:-8px;margin-bottom:8px}
-/* waiting */
 .waiting-panel-inner{text-align:center;padding:40px 20px}
 code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-spacing:2px}
-/* knockoff grid */
-.knockoff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.knockoff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:16px}
 .knockoff-item{border-radius:9px;overflow:hidden;border:1px solid #e0e0e0}
 .knockoff-label{padding:6px 10px;background:#f9f9f9;font-size:12px;font-weight:700;color:#666}
-/* exquisite sections */
 .exquisite-hint{font-size:12px;color:#888;margin-bottom:8px;padding:8px 12px;background:#f9f9f9;border-radius:8px;border-left:3px solid var(--purple)}
 @media(max-width:800px){
   .game-layout{grid-template-columns:1fr}
@@ -126,7 +112,7 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
     <div class="tagline">Draw it. Guess it. Share the chaos.</div>
   </div>
 
-  <!-- ══ SETUP ══ -->
+  <!-- SETUP -->
   <div id="screenSetup" class="screen active">
     <div class="card" style="max-width:520px;margin:0 auto">
       <div class="card-title">Welcome 🎨</div>
@@ -149,14 +135,13 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
     </div>
   </div>
 
-  <!-- ══ MODE SELECT ══ -->
+  <!-- MODE SELECT -->
   <div id="screenMode" class="screen">
     <div class="card" style="max-width:740px;margin:0 auto">
       <div class="card-title">Choose Game Mode</div>
       <div class="modes-grid" id="modesGrid"></div>
       <div id="modeDesc" class="info-box info-purple" style="min-height:44px;margin-bottom:18px"></div>
 
-      <!-- Timer settings -->
       <div style="font-weight:800;font-size:15px;margin-bottom:12px;color:var(--dark)">⏱️ Timer Settings</div>
       <div class="settings-grid">
         <div class="input-group" style="margin-bottom:0">
@@ -198,11 +183,9 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
     </div>
   </div>
 
-  <!-- ══ GAME ══ -->
+  <!-- GAME -->
   <div id="screenGame" class="screen">
     <div class="game-layout">
-
-      <!-- sidebar -->
       <div class="card sidebar">
         <div class="card-title" id="sideRoomName" style="font-size:18px;margin-bottom:8px">Room</div>
         <div style="margin-bottom:12px">
@@ -219,7 +202,6 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
         <button class="btn-secondary btn-full" onclick="leaveRoom()" style="margin-top:10px">Leave Room</button>
       </div>
 
-      <!-- main -->
       <div class="card main-area">
         <div class="turn-indicator" id="gamePhaseLabel">Lobby</div>
 
@@ -241,7 +223,7 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
             </div>
           </div>
           <div class="tool-buttons">
-            <button class="tool-btn active" id="toolDraw" onclick="selectTool('draw')">🖌️ Draw</button>
+            <button class="tool-btn active" id="toolDraw" onclick="selectTool('draw')">✏️ Draw</button>
             <button class="tool-btn" id="toolEraser" onclick="selectTool('eraser')">🧹 Eraser</button>
             <button class="tool-btn" onclick="fillBucket()">🪣 Fill</button>
             <button class="tool-btn" onclick="clearCanvas()">🗑️ Clear</button>
@@ -251,7 +233,7 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
           <button class="btn-primary btn-full" onclick="submitDrawing()">Submit Drawing ✓</button>
         </div>
 
-        <!-- STORY TEXT (alternates with draw) -->
+        <!-- STORY TEXT -->
         <div id="panelStory" class="phase-panel">
           <div class="card-title" style="font-size:17px">📖 Add to the Story</div>
           <div class="timer-bar-wrap" id="timerWrapStory"><div class="timer-bar" id="timerBarStory"></div></div>
@@ -294,11 +276,11 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
           <div style="margin-bottom:14px">
             <label style="font-weight:700;font-size:13px;display:block;margin-bottom:8px">Your Rating:</label>
             <div style="display:flex;gap:8px;justify-content:center;font-size:32px" id="starRating">
-              <span class="star" onclick="rateStar(1)" style="cursor:pointer">⭐</span>
-              <span class="star" onclick="rateStar(2)" style="cursor:pointer">⭐</span>
-              <span class="star" onclick="rateStar(3)" style="cursor:pointer">⭐</span>
-              <span class="star" onclick="rateStar(4)" style="cursor:pointer">⭐</span>
-              <span class="star" onclick="rateStar(5)" style="cursor:pointer">⭐</span>
+              <span class="star" onclick="rateStar(1)" style="cursor:pointer;opacity:0.4">⭐</span>
+              <span class="star" onclick="rateStar(2)" style="cursor:pointer;opacity:0.4">⭐</span>
+              <span class="star" onclick="rateStar(3)" style="cursor:pointer;opacity:0.4">⭐</span>
+              <span class="star" onclick="rateStar(4)" style="cursor:pointer;opacity:0.4">⭐</span>
+              <span class="star" onclick="rateStar(5)" style="cursor:pointer;opacity:0.4">⭐</span>
             </div>
           </div>
           <button class="btn-primary btn-full" onclick="submitScore()">Submit Rating ✓</button>
@@ -318,7 +300,6 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
           </div>
           <button class="btn-secondary btn-full" onclick="leaveRoom()">Play Again 🔄</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -327,9 +308,6 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-// ══════════════════════════════════════════════════════════
-//  FIREBASE
-// ══════════════════════════════════════════════════════════
 firebase.initializeApp({
   apiKey:"AIzaSyDdwdbP8tsEGKWW88NR9C3StYMhTmecujM",
   authDomain:"gartic-phone-ea498.firebaseapp.com",
@@ -342,7 +320,7 @@ firebase.initializeApp({
 const db = firebase.database();
 
 document.addEventListener('DOMContentLoaded',()=>{
-  setStatus('green','✓ Firebase connected! Create or join a room.');
+  setStatus('green','✓ Firebase connected!');
   document.getElementById('roomCode').addEventListener('input',function(){this.value=this.value.toUpperCase();});
   document.getElementById('storyInput').addEventListener('input',function(){
     document.getElementById('storyCharCount').textContent=this.value.length;
@@ -350,29 +328,21 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildModeGrid();
 });
 
-// ══════════════════════════════════════════════════════════
-//  MODES
-// ══════════════════════════════════════════════════════════
+// MODES
 const MODES=[
-  {id:'normal',    icon:'📝',name:'NORMAL',          desc:'Classic! Write a prompt → draw it → guess → repeat.',              hot:false,new:false},
-  {id:'knockoff',  icon:'🃏',name:'KNOCK-OFF',        desc:'Everyone draws the SAME prompt. Compare all the results!',          hot:true, new:false},
-  {id:'animation', icon:'🎬',name:'ANIMATION',        desc:'Draw 3 frames to make a mini flipbook. Others guess the scene!',   hot:false,new:false},
-  {id:'icebreaker',icon:'🧊',name:'ICEBREAKER',       desc:'Fun warm-up! Each person answers a silly question with a drawing.', hot:false,new:false},
-  {id:'exquisite', icon:'🎭',name:'EXQUISITE CORPSE', desc:'Each player draws one section of a body without seeing the rest.',  hot:false,new:true },
-  {id:'complement',icon:'🖼️',name:'COMPLEMENT',       desc:'Draw the top half — your partner draws the bottom half to match.', hot:false,new:false},
-  {id:'masterpiece',icon:'🖼',name:'MASTERPIECE',      desc:'Recreate a famous painting from memory. Vote on the best!',        hot:false,new:false},
-  {id:'story',     icon:'📖',name:'STORY',            desc:'Alternate between writing sentences and drawing them.',             hot:false,new:false},
-  {id:'score',     icon:'🏆',name:'SCORE',            desc:'Everyone draws the same prompt, then votes for the best drawing!',  hot:true, new:false},
-  {id:'secret',    icon:'🕵️',name:'SECRET',           desc:'Only one player sees the word. They draw; others guess.',          hot:false,new:true },
-  {id:'sandwich',  icon:'🥪',name:'SANDWICH',         desc:'Draw the top half; the next player draws the bottom to complete it.',hot:false,new:false},
+  {id:'normal',    icon:'📝',name:'NORMAL',          desc:'Classic! Write a prompt → draw it → guess → repeat.'},
+  {id:'knockoff',  icon:'🃏',name:'KNOCK-OFF',        desc:'Everyone draws the SAME prompt. Compare results!'},
+  {id:'animation', icon:'🎬',name:'ANIMATION',        desc:'Draw 3 frames for a flipbook. Others guess the scene!'},
+  {id:'icebreaker',icon:'🧊',name:'ICEBREAKER',       desc:'Fun warm-up! Answer silly questions with drawings.'},
+  {id:'exquisite', icon:'🎭',name:'EXQUISITE CORPSE', desc:'Draw one body section without seeing the rest.'},
+  {id:'story',     icon:'📖',name:'STORY',            desc:'Alternate between writing and drawing sentences.'},
+  {id:'score',     icon:'🏆',name:'SCORE',            desc:'Everyone draws same prompt, vote for the best!'},
 ];
 let selectedMode='normal';
 
 function buildModeGrid(){
   document.getElementById('modesGrid').innerHTML=MODES.map(m=>`
     <div class="mode-card${m.id==='normal'?' selected':''}" id="mc_${m.id}" onclick="selectMode('${m.id}')">
-      ${m.hot?'<span class="mode-badge badge-hot">🔥</span>':''}
-      ${m.new?'<span class="mode-badge badge-new">✨</span>':''}
       <div class="mode-icon">${m.icon}</div>
       <div class="mode-name">${m.name}</div>
     </div>`).join('');
@@ -392,9 +362,7 @@ function goModeSelect(){
   showScreen('screenMode');
 }
 
-// ══════════════════════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════════════════════
+// STATE
 const gs={
   playerName:'',playerId:null,roomId:null,roomName:'',
   isHost:false,isDrawer:false,players:{},mode:'normal',
@@ -403,16 +371,13 @@ const gs={
   undoStack:[],chain:[],currentTurn:0,
   scores:{},myRating:0,
   pendingDrawing:null,
-  storySegments:[],            // story mode: array of {type,player,content}
-  exquisiteSection:0,          // 0=head,1=torso,2=legs
-  animationFrames:[],          // animation mode frames
-  animationFrameIdx:0,
+  storySegments:[],
+  exquisiteSection:0,
+  animationFrames:[],
   listeners:[],timers:[],
 };
 
-// ══════════════════════════════════════════════════════════
-//  ROOM CREATE / JOIN
-// ══════════════════════════════════════════════════════════
+// ROOM CREATE / JOIN
 function createRoom(){
   const name=document.getElementById('playerName').value.trim();
   if(!name){alert('Enter your name.');return;}
@@ -467,17 +432,14 @@ function enterRoom(){
   const gt=gs.guessTime===0?'∞':gs.guessTime+'s';
   document.getElementById('timerSettingsTag').innerHTML='✏️ Draw: <strong>'+dt+'</strong> &nbsp;|&nbsp; 🤔 Guess: <strong>'+gt+'</strong> &nbsp;|&nbsp; 🔄 Rounds: <strong>'+gs.rounds+'</strong>';
   showScreen('screenGame');
-  initCanvas();
+  setTimeout(initCanvas,100);
   attachListeners();
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId).onDisconnect().remove();
 }
 
-// ══════════════════════════════════════════════════════════
-//  LISTENERS
-// ══════════════════════════════════════════════════════════
+// LISTENERS
 function attachListeners(){
   function reg(ref){gs.listeners.push(ref);return ref;}
-
   reg(db.ref('rooms/'+gs.roomId+'/players')).on('value',snap=>{
     gs.players=snap.val()||{};renderPlayers();
   });
@@ -489,25 +451,20 @@ function attachListeners(){
     }
   });
   reg(db.ref('rooms/'+gs.roomId+'/currentDrawing')).on('value',snap=>{
-    const d=snap.val();
-    if(d){gs.pendingDrawing=d;renderDisplayCanvas(d);}
+    if(snap.val()){gs.pendingDrawing=snap.val();renderDisplayCanvas(snap.val());}
   });
   reg(db.ref('rooms/'+gs.roomId+'/scores')).on('value',snap=>{gs.scores=snap.val()||{};});
-  // story segments
   reg(db.ref('rooms/'+gs.roomId+'/storySegments')).on('value',snap=>{
-    gs.storySegments=snap.val()||[];
-    renderStorySoFar();
+    gs.storySegments=snap.val()||[];renderStorySoFar();
   });
-  // knockoff drawings
   reg(db.ref('rooms/'+gs.roomId+'/drawings')).on('value',snap=>{
     gs.knockoffDrawings=snap.val()||{};
   });
 }
+
 function detachListeners(){gs.listeners.forEach(r=>r.off());gs.listeners=[];}
 
-// ══════════════════════════════════════════════════════════
-//  PLAYERS RENDER
-// ══════════════════════════════════════════════════════════
+// PLAYERS RENDER
 function renderPlayers(){
   const entries=Object.entries(gs.players);
   document.getElementById('playerCount').textContent='('+entries.length+')';
@@ -526,30 +483,16 @@ function renderPlayers(){
   document.getElementById('turnIndicator').textContent=n<2?'Waiting for players…':n+' player'+(n>1?'s':'')+' ready!';
 }
 
-// ══════════════════════════════════════════════════════════
-//  PROMPTS
-// ══════════════════════════════════════════════════════════
+// PROMPTS
 const P_NORMAL=['A cat riding a bicycle','A haunted pizza','A dinosaur at the dentist',
-  'A robot eating spaghetti','A fish playing guitar','An astronaut grocery shopping',
-  'A dog driving a bus','A penguin at the beach','A wizard doing laundry',
-  'A bear baking cupcakes','A shark at a birthday party','A snail winning a race',
-  'A cow in a spaceship','A pirate doing yoga','A giraffe using an ATM',
-  'A zombie eating salad','A unicorn at the gym','A dragon ordering coffee'];
-const P_ICE=['What did you eat for breakfast?','Your spirit animal','Your current mood',
-  'Your biggest fear','A hobby you wish you had','If you were a superhero','Your dream vacation',
-  'How you feel on Monday mornings','Your favorite food'];
-const P_STORY=['Once upon a time in a distant galaxy…','It was a dark and stormy night…',
-  'The robot opened its eyes for the first time…','Nobody expected the penguin to arrive…',
-  'The last human on Earth was surprised to find…'];
-const P_MASTER=['Starry Night','Mona Lisa','The Scream','American Gothic',
-  'Girl with a Pearl Earring','The Last Supper','The Birth of Venus','Water Lilies'];
-const P_SECRET=['The Eiffel Tower','Pizza','A dinosaur','The internet',
-  'Love','A black hole','Time travel','Money','Wifi','Democracy'];
+  'A robot eating spaghetti','A fish playing guitar','An astronaut grocery shopping'];
+const P_ICE=['What did you eat for breakfast?','Your spirit animal','Your current mood'];
+const P_STORY=['Once upon a time…','It was a dark and stormy night…'];
+const P_MASTER=['Starry Night','Mona Lisa','The Scream'];
+const P_SECRET=['The Eiffel Tower','Pizza','A dinosaur'];
 function rand(a){return a[Math.floor(Math.random()*a.length)];}
 
-// ══════════════════════════════════════════════════════════
-//  START GAME
-// ══════════════════════════════════════════════════════════
+// START GAME
 function startGame(){
   if(!gs.isHost)return;
   const n=Object.keys(gs.players).length;
@@ -568,9 +511,7 @@ function startGame(){
   db.ref('rooms/'+gs.roomId).update(updates);
 }
 
-// ══════════════════════════════════════════════════════════
-//  PHASE HANDLER
-// ══════════════════════════════════════════════════════════
+// PHASE HANDLER
 function handlePhaseChange(phase){
   if(!phase)return;
   stopAllTimers();
@@ -584,10 +525,9 @@ function handlePhaseChange(phase){
     document.getElementById('gamePhaseLabel').textContent='✏️ Draw Phase';
     document.getElementById('guessInput').value='';
 
-    // Story mode alternates: even turns = write text, odd turns = draw
     if(gs.mode==='story'){
-      const seg=Array.isArray(gs.storySegments)?gs.storySegments:Object.values(gs.storySegments||{});
-      const isTextTurn=(seg.length%2===0);
+      const segCount=Array.isArray(gs.storySegments)?gs.storySegments.length:0;
+      const isTextTurn=(segCount%2===0);
       if(isTextTurn){
         document.getElementById('storyInput').value='';
         document.getElementById('storyCharCount').textContent='0';
@@ -602,20 +542,11 @@ function handlePhaseChange(phase){
       return;
     }
 
-    // Exquisite corpse — show which section to draw
     if(gs.mode==='exquisite'){
       const sections=['HEAD & NECK','TORSO & ARMS','LEGS & FEET'];
-      const seg=Array.isArray(gs.storySegments)?gs.storySegments.length:0;
-      const sIdx=Math.min(seg,2);
+      const segCount=Array.isArray(gs.storySegments)?gs.storySegments.length:0;
+      const sIdx=Math.min(segCount,2);
       document.getElementById('drawTitle').textContent='Draw the '+sections[sIdx];
-      const hint=document.querySelector('.exquisite-hint');
-      if(hint){hint.textContent='Section '+(sIdx+1)+'/3: '+sections[sIdx]+'. Draw only your section!';}
-    }
-
-    // Sandwich mode
-    if(gs.mode==='sandwich'){
-      const seg=Array.isArray(gs.storySegments)?gs.storySegments.length:0;
-      document.getElementById('drawTitle').textContent=seg===0?'Draw the TOP half of the picture':'Draw the BOTTOM half!';
     }
 
     showPanel('draw');
@@ -625,26 +556,10 @@ function handlePhaseChange(phase){
   } else if(phase==='guess'){
     document.getElementById('gamePhaseLabel').textContent='🤔 Guess Phase';
     if(gs.isDrawer){
-      document.getElementById('waitingTitle').textContent='Waiting for guesses…';
-      document.getElementById('waitingSubtitle').textContent='You drew it! Others are guessing.';
       showPanel('waiting',true);
     } else {
-      document.getElementById('guessTitle').textContent=gs.mode==='knockoff'?'Guess the prompt! 🃏':'What is this? 🤔';
       showPanel('guess');
       if(gs.guessTime>0) startTimer(gs.guessTime,'timerBarGuess','timerWrapGuess','timerTextGuess',()=>submitGuess(true));
-    }
-
-  } else if(phase==='score_vote'){
-    document.getElementById('gamePhaseLabel').textContent='⭐ Vote!';
-    if(!gs.isDrawer){
-      showPanel('score');
-      if(gs.pendingDrawing) requestAnimationFrame(()=>{
-        scoreCanv.width=scoreCanv.parentElement.clientWidth||600;
-        scoreCanv.height=380;
-        renderOnCanvas(scoreCanv,gs.pendingDrawing);
-      });
-    } else {
-      showPanel('waiting',false);
     }
 
   } else if(phase==='done'){
@@ -652,43 +567,47 @@ function handlePhaseChange(phase){
   }
 }
 
-// ══════════════════════════════════════════════════════════
-//  CANVAS
-// ══════════════════════════════════════════════════════════
+// CANVAS
 let canvas,ctx,dispCanvas,dispCtx,scoreCanv,scoreCtx;
 
 function initCanvas(){
-  canvas=document.getElementById('drawingCanvas');       ctx=canvas.getContext('2d');
-  dispCanvas=document.getElementById('displayCanvas');   dispCtx=dispCanvas.getContext('2d');
-  scoreCanv=document.getElementById('scoreCanvas');      scoreCtx=scoreCanv.getContext('2d');
+  canvas=document.getElementById('drawingCanvas');
+  ctx=canvas.getContext('2d');
+  dispCanvas=document.getElementById('displayCanvas');
+  dispCtx=dispCanvas.getContext('2d');
+  scoreCanv=document.getElementById('scoreCanvas');
+  scoreCtx=scoreCanv.getContext('2d');
 
-  // Set pixel dims once from parent width
-  function setDim(c,h){const w=c.parentElement?c.parentElement.clientWidth||700:700;c.width=w;c.height=h||420;}
-  setDim(canvas,420);setDim(dispCanvas,420);setDim(scoreCanv,380);
-
-  // White background
-  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  // Exquisite corpse hint
-  if(!document.querySelector('.exquisite-hint')){
-    const hint=document.createElement('div');
-    hint.className='exquisite-hint';hint.style.display='none';
-    document.getElementById('drawCanvasWrap')&&document.getElementById('drawCanvasWrap').before(hint);
+  function setDim(c,h){
+    const parent=c.parentElement;
+    const w=parent?parent.clientWidth:700;
+    c.width=Math.max(300,w);
+    c.height=h||420;
   }
+  setDim(canvas,420);
+  setDim(dispCanvas,420);
+  setDim(scoreCanv,380);
 
-  canvas.addEventListener('mousedown',e=>{gs.mouseDown=true;setLast(e);saveUndo();});
-  canvas.addEventListener('mousemove',doDraw);
+  ctx.fillStyle='#ffffff';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  canvas.addEventListener('mousedown',e=>{gs.mouseDown=true;setLast(e);saveUndo();},{passive:true});
+  canvas.addEventListener('mousemove',doDraw,{passive:true});
   canvas.addEventListener('mouseup',()=>gs.mouseDown=false);
   canvas.addEventListener('mouseleave',()=>gs.mouseDown=false);
-  canvas.addEventListener('touchstart',e=>{e.preventDefault();gs.mouseDown=true;setLast(e.touches[0]);saveUndo();},{passive:false});
-  canvas.addEventListener('touchmove',e=>{e.preventDefault();doDraw(e.touches[0]);},{passive:false});
+  canvas.addEventListener('touchstart',e=>{gs.mouseDown=true;setLast(e.touches[0]);saveUndo();},{passive:true});
+  canvas.addEventListener('touchmove',doDraw,{passive:true});
   canvas.addEventListener('touchend',()=>gs.mouseDown=false);
 }
 
-function setLast(e){const r=canvas.getBoundingClientRect();gs.lastX=e.clientX-r.left;gs.lastY=e.clientY-r.top;}
+function setLast(e){
+  const r=canvas.getBoundingClientRect();
+  gs.lastX=e.clientX-r.left;
+  gs.lastY=e.clientY-r.top;
+}
 
 function doDraw(e){
-  if(!gs.mouseDown)return;
+  if(!gs.mouseDown||!canvas)return;
   const r=canvas.getBoundingClientRect();
   const x=e.clientX-r.left,y=e.clientY-r.top;
   ctx.globalAlpha=parseFloat(document.getElementById('brushOpacity').value);
@@ -699,9 +618,13 @@ function doDraw(e){
     ctx.strokeStyle=document.getElementById('brushColor').value;
     ctx.lineWidth=document.getElementById('brushSize').value;
     ctx.lineCap=ctx.lineJoin='round';
-    ctx.beginPath();ctx.moveTo(gs.lastX,gs.lastY);ctx.lineTo(x,y);ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(gs.lastX,gs.lastY);
+    ctx.lineTo(x,y);
+    ctx.stroke();
   }
-  gs.lastX=x;gs.lastY=y;
+  gs.lastX=x;
+  gs.lastY=y;
 }
 
 function selectTool(t){
@@ -711,6 +634,7 @@ function selectTool(t){
 }
 
 function clearCanvas(){
+  if(!ctx)return;
   ctx.globalAlpha=1;
   ctx.fillStyle='#ffffff';
   ctx.fillRect(0,0,canvas.width,canvas.height);
@@ -718,10 +642,17 @@ function clearCanvas(){
 }
 
 function saveUndo(){
+  if(gs.undoStack.length>15)gs.undoStack.shift();
   gs.undoStack.push(ctx.getImageData(0,0,canvas.width,canvas.height));
-  if(gs.undoStack.length>20)gs.undoStack.shift();
 }
-function undoCanvas(){if(gs.undoStack.length)ctx.putImageData(gs.undoStack.pop(),0,0);}
+
+function undoCanvas(){
+  if(gs.undoStack.length>0){
+    gs.undoStack.pop();
+    if(gs.undoStack.length>0)ctx.putImageData(gs.undoStack[gs.undoStack.length-1],0,0);
+    else clearCanvas();
+  }
+}
 
 function fillBucket(){
   ctx.globalAlpha=parseFloat(document.getElementById('brushOpacity').value);
@@ -730,20 +661,22 @@ function fillBucket(){
   ctx.globalAlpha=1;
 }
 
-// Export canvas with guaranteed white background
 function exportCanvas(){
   const exp=document.createElement('canvas');
-  exp.width=canvas.width;exp.height=canvas.height;
+  exp.width=canvas.width;
+  exp.height=canvas.height;
   const ectx=exp.getContext('2d');
-  ectx.fillStyle='#ffffff';ectx.fillRect(0,0,exp.width,exp.height);
+  ectx.fillStyle='#ffffff';
+  ectx.fillRect(0,0,exp.width,exp.height);
   ectx.drawImage(canvas,0,0);
-  return exp.toDataURL('image/jpeg',0.82);
+  return exp.toDataURL('image/jpeg',0.85);
 }
 
 function renderDisplayCanvas(dataUrl){
   if(!dispCanvas)return;
-  if(!dispCanvas.width||dispCanvas.width<10){
-    dispCanvas.width=dispCanvas.parentElement?dispCanvas.parentElement.clientWidth||600:600;
+  const parent=dispCanvas.parentElement;
+  if(parent&&parent.clientWidth>0){
+    dispCanvas.width=parent.clientWidth;
     dispCanvas.height=420;
   }
   renderOnCanvas(dispCanvas,dataUrl);
@@ -752,13 +685,15 @@ function renderDisplayCanvas(dataUrl){
 function renderOnCanvas(c,dataUrl){
   const cctx=c.getContext('2d');
   const img=new Image();
-  img.onload=()=>{cctx.clearRect(0,0,c.width,c.height);cctx.drawImage(img,0,0,c.width,c.height);};
+  img.onload=()=>{
+    cctx.clearRect(0,0,c.width,c.height);
+    cctx.drawImage(img,0,0,c.width,c.height);
+  };
+  img.onerror=()=>console.error('Image load failed');
   img.src=dataUrl;
 }
 
-// ══════════════════════════════════════════════════════════
-//  TIMERS
-// ══════════════════════════════════════════════════════════
+// TIMERS
 function startTimer(secs,barId,wrapId,textId,onEnd){
   const wrap=document.getElementById(wrapId);
   const bar=document.getElementById(barId);
@@ -766,11 +701,11 @@ function startTimer(secs,barId,wrapId,textId,onEnd){
   if(wrap)wrap.style.display='block';
   if(bar)bar.style.width='100%';
   let left=secs;
-  if(txt)txt.textContent=left+'s remaining';
+  if(txt)txt.textContent=left+'s';
   const iv=setInterval(()=>{
     left--;
     if(bar)bar.style.width=Math.max(0,left/secs*100)+'%';
-    if(txt)txt.textContent=left>0?left+'s remaining':'Time\'s up!';
+    if(txt)txt.textContent=left>0?left+'s':'Time\'s up!';
     if(left<=0){clearInterval(iv);if(onEnd)onEnd();}
   },1000);
   gs.timers.push(iv);
@@ -780,16 +715,12 @@ function stopAllTimers(){
   gs.timers.forEach(iv=>clearInterval(iv));
   gs.timers=[];
   ['timerWrapDraw','timerWrapGuess','timerWrapStory'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.style.display='none';
-  });
-  ['timerTextDraw','timerTextGuess','timerTextStory'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.textContent='';
+    const el=document.getElementById(id);
+    if(el)el.style.display='none';
   });
 }
 
-// ══════════════════════════════════════════════════════════
-//  SUBMIT DRAWING
-// ══════════════════════════════════════════════════════════
+// SUBMIT DRAWING
 function submitDrawing(auto){
   stopAllTimers();
   gs.isDrawer=true;
@@ -797,98 +728,67 @@ function submitDrawing(auto){
   gs.chain.push({type:'drawing',player:gs.playerName,content:dataUrl});
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
 
-  // Mode-specific submit logic
-  if(gs.mode==='knockoff'||gs.mode==='masterpiece'||gs.mode==='score'){
-    // Everyone draws same prompt — store individually, host triggers vote when all done
+  if(['knockoff','score'].includes(gs.mode)){
     db.ref('rooms/'+gs.roomId+'/drawings/'+gs.playerId).set({player:gs.playerName,data:dataUrl});
     showPanel('waiting',true);
-    document.getElementById('waitingTitle').textContent='Waiting for others to finish…';
-    document.getElementById('waitingSubtitle').textContent='Your drawing is saved!';
-    // Check if all players done — host triggers next phase
     checkAllDone(()=>{
-      if(gs.mode==='score'){
-        // Pick one random drawing to show for rating
-        const allDrawings=Object.values(gs.knockoffDrawings||{});
-        if(allDrawings.length>0){
-          const pick=allDrawings[Math.floor(Math.random()*allDrawings.length)];
-          db.ref('rooms/'+gs.roomId).update({phase:'score_vote',currentDrawing:pick.data});
-        }
-      } else {
-        db.ref('rooms/'+gs.roomId+'/phase').set('done');
-      }
+      db.ref('rooms/'+gs.roomId+'/phase').set('done');
     });
 
-  } else if(gs.mode==='exquisite'||gs.mode==='sandwich'){
-    // Store this section
+  } else if(gs.mode==='exquisite'){
     db.ref('rooms/'+gs.roomId+'/drawings/'+gs.playerId+'_'+gs.storySegments.length)
       .set({player:gs.playerName,data:dataUrl,section:gs.storySegments.length});
-    const segs=(gs.storySegments||[]);
-    const newSegs=[...segs,{type:'drawing',player:gs.playerName,content:dataUrl}];
+    const newSegs=[...gs.storySegments,{type:'drawing',player:gs.playerName,content:dataUrl}];
     db.ref('rooms/'+gs.roomId+'/storySegments').set(newSegs);
     showPanel('waiting',true);
-    const maxSections=gs.mode==='exquisite'?3:2;
     checkAllDone(()=>{
-      if(newSegs.length>=maxSections){
+      if(newSegs.length>=3){
         db.ref('rooms/'+gs.roomId+'/phase').set('done');
       } else {
-        // Next section
         db.ref('rooms/'+gs.roomId).update({phase:'draw',currentDrawing:null});
       }
     });
 
   } else if(gs.mode==='animation'){
-    gs.animationFrames=gs.animationFrames||[];
     gs.animationFrames.push(dataUrl);
     if(gs.animationFrames.length<3){
-      document.getElementById('drawTitle').textContent='Frame '+( gs.animationFrames.length+1)+'/3';
-      showPanel('draw');
+      document.getElementById('drawTitle').textContent='Frame '+(gs.animationFrames.length+1)+'/3';
       clearCanvas();
-      gs.isDrawer=false;
       if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
     } else {
-      gs.chain.push({type:'animation',player:gs.playerName,frames:gs.animationFrames});
       db.ref('rooms/'+gs.roomId).update({phase:'guess',currentDrawing:gs.animationFrames[0]});
       showPanel('waiting',true);
     }
 
   } else {
-    // Normal / icebreaker / secret — draw once then guess
     db.ref('rooms/'+gs.roomId).update({phase:'guess',currentDrawing:dataUrl});
     showPanel('waiting',true);
   }
 }
 
-// ══════════════════════════════════════════════════════════
-//  SUBMIT STORY TEXT
-// ══════════════════════════════════════════════════════════
+// SUBMIT STORY TEXT
 function submitStoryText(auto){
   stopAllTimers();
   const text=document.getElementById('storyInput').value.trim()||'(skipped)';
-  gs.storySegments=Array.isArray(gs.storySegments)?gs.storySegments:[];
   const newSegs=[...gs.storySegments,{type:'text',player:gs.playerName,content:text}];
   gs.chain.push({type:'text',player:gs.playerName,content:text});
   db.ref('rooms/'+gs.roomId+'/storySegments').set(newSegs);
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
 
+  showPanel('waiting',false);
   document.getElementById('waitingTitle').textContent='Waiting for others…';
   document.getElementById('waitingSubtitle').textContent='Your sentence was added!';
   document.getElementById('waitingTextPreview').style.display='block';
   document.getElementById('waitingTextPreview').textContent='"'+text+'"';
   document.getElementById('waitingThumb').style.display='none';
-  showPanel('waiting',false);
 
   const totalPlayers=Object.keys(gs.players).length;
-  const maxSegments=totalPlayers*2; // alternating text+draw for each player
+  const maxSegments=totalPlayers*2;
   checkAllDone(()=>{
     if(newSegs.length>=maxSegments){
       db.ref('rooms/'+gs.roomId+'/phase').set('done');
     } else {
-      // move to draw turn
-      db.ref('rooms/'+gs.roomId).update({
-        phase:'draw',
-        currentPrompt:'Draw: "'+text+'"',
-        currentDrawing:null
-      });
+      db.ref('rooms/'+gs.roomId).update({phase:'draw',currentPrompt:'Draw: "'+text+'"',currentDrawing:null});
     }
   });
 }
@@ -896,16 +796,14 @@ function submitStoryText(auto){
 function renderStorySoFar(){
   const el=document.getElementById('storyChainSoFar');
   if(!el)return;
-  const segs=Array.isArray(gs.storySegments)?gs.storySegments:Object.values(gs.storySegments||{});
+  const segs=Array.isArray(gs.storySegments)?gs.storySegments:[];
   if(segs.length===0){el.style.display='none';return;}
   el.style.display='block';
   el.innerHTML='<strong style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.5px">Story so far:</strong><br>'+
-    segs.filter(s=>s.type==='text').map(s=>'<span style="color:#555">…'+esc(s.content)+'</span>').join('<br>');
+    segs.filter(s=>s.type==='text').map(s=>'…'+esc(s.content)).join('<br>');
 }
 
-// ══════════════════════════════════════════════════════════
-//  SUBMIT GUESS
-// ══════════════════════════════════════════════════════════
+// SUBMIT GUESS
 function submitGuess(auto){
   stopAllTimers();
   const guess=document.getElementById('guessInput').value.trim()||(auto?'(no answer)':'');
@@ -926,105 +824,75 @@ function submitGuess(auto){
   });
 
   showPanel('waiting',false);
-  document.getElementById('waitingTitle').textContent='Guess submitted!';
-  document.getElementById('waitingSubtitle').textContent='Waiting for others…';
 }
 
-// Helper: poll if all non-host (or all) players are done, then run callback (host only)
 function checkAllDone(cb){
   if(!gs.isHost)return;
   const check=()=>{
     db.ref('rooms/'+gs.roomId+'/players').once('value').then(snap=>{
       const p=snap.val()||{};
-      const all=Object.values(p).every(pl=>pl.status==='done'||pl.isHost&&Object.values(p).filter(x=>!x.isHost).every(x=>x.status==='done'));
-      // simpler: just check all
       const allDone=Object.values(p).every(pl=>pl.status==='done');
-      if(allDone)cb();
-      else setTimeout(check,1500);
+      if(allDone){cb();} else {setTimeout(check,1200);}
     });
   };
-  setTimeout(check,800);
+  setTimeout(check,600);
 }
 
-// ══════════════════════════════════════════════════════════
-//  SCORE MODE
-// ══════════════════════════════════════════════════════════
+// SCORE MODE
 function rateStar(v){
   gs.myRating=v;
   document.querySelectorAll('.star').forEach((s,i)=>{
-    s.style.filter=i<v?'none':'grayscale(1) opacity(.4)';
+    s.style.opacity=i<v?'1':'0.4';
   });
 }
+
 function submitScore(){
-  if(!gs.myRating){alert('Please pick a star rating!');return;}
+  if(!gs.myRating){alert('Pick a rating!');return;}
   db.ref('rooms/'+gs.roomId+'/scores/'+gs.playerId).set(gs.myRating);
   gs.myRating=0;
-  document.querySelectorAll('.star').forEach(s=>s.style.filter='');
+  document.querySelectorAll('.star').forEach(s=>s.style.opacity='0.4');
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
   showPanel('waiting',false);
   checkAllDone(()=>db.ref('rooms/'+gs.roomId+'/phase').set('done'));
 }
 
-// ══════════════════════════════════════════════════════════
-//  RESULTS
-// ══════════════════════════════════════════════════════════
+// RESULTS
 function buildResults(){
   stopAllTimers();
   showPanel('results');
   document.getElementById('gamePhaseLabel').textContent='🎉 Game Over!';
+  document.getElementById('resultsTitle').textContent='🎉 Results!';
 
-  document.getElementById('resultsTitle').textContent={
-    normal:'🎉 The Chain!',knockoff:'🃏 All Drawings!',animation:'🎬 Animations!',
-    icebreaker:'🧊 Icebreaker!',exquisite:'🎭 The Monsters!',complement:'🖼️ Full Pictures!',
-    masterpiece:'🖼 Masterpieces!',story:'📖 The Story!',score:'🏆 Scores!',
-    secret:'🕵️ Secret Revealed!',sandwich:'🥪 Sandwiches!'
-  }[gs.mode]||'🎉 Results!';
-
-  // Chain (normal/story/icebreaker/secret/animation)
   const chainEl=document.getElementById('chainContent');
-  const storySegs=Array.isArray(gs.storySegments)?gs.storySegments:Object.values(gs.storySegments||{});
+  const segs=Array.isArray(gs.storySegments)?gs.storySegments:[];
 
-  if(gs.mode==='story'&&storySegs.length>0){
-    chainEl.innerHTML=storySegs.map((item,i)=>
+  if(gs.mode==='story'&&segs.length>0){
+    chainEl.innerHTML=segs.map((item,i)=>
       item.type==='drawing'
         ?`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} drew:</div><img src="${item.content}" class="chain-image"></div>`
         :`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} wrote:</div><div class="chain-content">"${esc(item.content)}"</div></div>`
     ).join('');
-  } else if(['exquisite','sandwich','complement'].includes(gs.mode)){
-    // Composite: stitch the drawings together vertically
+  } else if(gs.mode==='exquisite'){
     const drawings=Object.values(gs.knockoffDrawings||{}).sort((a,b)=>(a.section||0)-(b.section||0));
-    if(drawings.length>0){
-      chainEl.innerHTML='<p style="text-align:center;color:#888;font-size:13px;margin-bottom:12px">Each player drew one section:</p>'+
-        drawings.map((d,i)=>`<div class="chain-item"><div class="chain-player">Section ${i+1} — ${esc(d.player)}:</div><img src="${d.data}" class="chain-image"></div>`).join('');
-    } else {
-      chainEl.innerHTML='<p style="color:#aaa;text-align:center">No drawings yet.</p>';
-    }
-  } else if(['knockoff','masterpiece'].includes(gs.mode)){
+    chainEl.innerHTML='<p style="text-align:center;color:#888;font-size:13px;margin-bottom:12px">Composite drawing:</p>'+
+      drawings.map((d,i)=>`<div class="chain-item"><img src="${d.data}" class="chain-image"></div>`).join('');
+  } else if(['knockoff','score'].includes(gs.mode)){
     chainEl.style.display='none';
     document.getElementById('knockoffGrid').style.display='block';
     const allD=Object.values(gs.knockoffDrawings||{});
     document.getElementById('knockoffItems').innerHTML=allD.length>0
       ?allD.map(d=>`<div class="knockoff-item"><img src="${d.data}" style="width:100%;display:block"><div class="knockoff-label">${esc(d.player)}</div></div>`).join('')
-      :'<p style="color:#aaa">No drawings submitted.</p>';
-  } else if(gs.mode==='animation'){
-    const animItem=gs.chain.find(c=>c.type==='animation');
-    if(animItem){
-      chainEl.innerHTML='<div class="chain-player">'+esc(animItem.player)+'\'s animation:</div>'+
-        animItem.frames.map((f,i)=>`<div class="chain-item"><div class="chain-player">Frame ${i+1}:</div><img src="${f}" class="chain-image"></div>`).join('');
-      const guesses=gs.chain.filter(c=>c.type==='guess');
-      if(guesses.length)chainEl.innerHTML+=guesses.map(g=>`<div class="chain-item"><div class="chain-player">${esc(g.player)} guessed:</div><div class="chain-content">"${esc(g.content)}"</div></div>`).join('');
-    }
+      :'No drawings.';
   } else {
-    chainEl.innerHTML=gs.chain.length===0
-      ?'<p style="color:#aaa;text-align:center">Play a full round to see results!</p>'
-      :gs.chain.map((item,i)=>
+    chainEl.innerHTML=gs.chain.length>0
+      ?gs.chain.map((item,i)=>
           item.type==='drawing'
-            ?`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} drew:</div><img src="${item.content}" class="chain-image"></div>`
-            :`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} ${item.type==='text'?'wrote':'guessed'}:</div><div class="chain-content">"${esc(item.content)}"</div></div>`
-        ).join('');
+            ?`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)}:</div><img src="${item.content}" class="chain-image"></div>`
+            :`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)}:</div><div class="chain-content">"${esc(item.content)}"</div></div>`
+        ).join('')
+      :'Play to see results!';
   }
 
-  // Scoreboard for score mode
   if(gs.mode==='score'&&Object.keys(gs.scores).length>0){
     document.getElementById('scoreboardWrap').style.display='block';
     const entries=Object.entries(gs.scores)
@@ -1039,41 +907,27 @@ function buildResults(){
   }
 }
 
-// ══════════════════════════════════════════════════════════
-//  UI HELPERS
-// ══════════════════════════════════════════════════════════
+// UI HELPERS
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-function showPanel(name, showDrawingThumb){
+function showPanel(name,showThumb){
   const panels=['panelDraw','panelStory','panelGuess','panelWaiting','panelScore','panelResults'];
   panels.forEach(id=>document.getElementById(id).classList.remove('active'));
-  const map={draw:'panelDraw',story:'panelStory',guess:'panelGuess',
-             waiting:'panelWaiting',score:'panelScore',results:'panelResults'};
-  if(map[name]) document.getElementById(map[name]).classList.add('active');
+  const map={draw:'panelDraw',story:'panelStory',guess:'panelGuess',waiting:'panelWaiting',score:'panelScore',results:'panelResults'};
+  if(map[name])document.getElementById(map[name]).classList.add('active');
 
-  if(name==='waiting'){
-    const thumbCanvas=document.getElementById('waitingThumb');
-    const textPrev=document.getElementById('waitingTextPreview');
-    if(showDrawingThumb===true){
-      thumbCanvas.style.display='block';
-      if(textPrev)textPrev.style.display='none';
-      requestAnimationFrame(()=>{
-        thumbCanvas.width=thumbCanvas.parentElement.clientWidth||400;
-        thumbCanvas.height=Math.round(thumbCanvas.width*420/600);
-        if(canvas)thumbCanvas.getContext('2d').drawImage(canvas,0,0,thumbCanvas.width,thumbCanvas.height);
-      });
+  if(name==='waiting'&&showThumb===true){
+    const thumb=document.getElementById('waitingThumb');
+    if(thumb&&canvas){
+      setTimeout(()=>{
+        thumb.width=thumb.parentElement.clientWidth;
+        thumb.height=Math.round(thumb.width*420/canvas.width);
+        thumb.getContext('2d').drawImage(canvas,0,0,thumb.width,thumb.height);
+      },50);
     }
-  }
-
-  if((name==='guess'||name==='score')&&gs.pendingDrawing){
-    requestAnimationFrame(()=>{
-      dispCanvas.width=dispCanvas.parentElement.clientWidth||600;
-      dispCanvas.height=420;
-      renderDisplayCanvas(gs.pendingDrawing);
-    });
   }
 }
 
@@ -1083,24 +937,35 @@ function switchTab(tab){
   document.getElementById('tabCreate').classList.toggle('active',tab==='create');
   document.getElementById('tabJoin').classList.toggle('active',tab==='join');
 }
-function setStatus(color,html){const el=document.getElementById('firebaseStatus');el.className='info-box info-'+color;el.innerHTML=html;}
-function copyCode(){navigator.clipboard.writeText(gs.roomId).then(()=>alert('Copied!'));}
+
+function setStatus(color,html){
+  const el=document.getElementById('firebaseStatus');
+  el.className='info-box info-'+color;
+  el.innerHTML=html;
+}
+
+function copyCode(){
+  navigator.clipboard.writeText(gs.roomId);
+}
+
 function leaveRoom(){
   if(!confirm('Leave the room?'))return;
-  stopAllTimers();detachListeners();
+  stopAllTimers();
+  detachListeners();
   if(gs.playerId&&gs.roomId)db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId).remove();
   Object.assign(gs,{playerName:'',playerId:null,roomId:null,roomName:'',isHost:false,isDrawer:false,
-    players:{},chain:[],storySegments:[],animationFrames:[],knockoffDrawings:{},
-    currentTurn:0,scores:{},myRating:0,pendingDrawing:null,currentTool:'draw',mouseDown:false,undoStack:[]});
-  showScreen('screenSetup');showPanel('draw');
+    players:{},chain:[],storySegments:[],animationFrames:[],currentTurn:0,scores:{},myRating:0,pendingDrawing:null});
+  showScreen('screenSetup');
   ['playerName','roomName','joinPlayerName','roomCode','guessInput','storyInput'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.value='';
+    const el=document.getElementById(id);
+    if(el)el.value='';
   });
-  if(ctx)clearCanvas();
+  clearCanvas();
 }
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 </script>
 </body>
 </html>
-HTMLEOF
-echo "Done: $(wc -l < /mnt/user-data/outputs/gartic-phone.html) lines"
