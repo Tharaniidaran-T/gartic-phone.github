@@ -255,7 +255,20 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
           <button class="btn-primary btn-full" onclick="submitGuess()">Submit Guess ✓</button>
         </div>
 
-        <!-- SCORE PHASE (Score mode) -->
+        <!-- WAITING (drawer waits while others guess) -->
+        <div id="panelWaiting" class="phase-panel">
+          <div style="text-align:center;padding:60px 20px">
+            <div style="font-size:64px;margin-bottom:20px">⏳</div>
+            <div class="card-title">Waiting for guesses…</div>
+            <p style="color:#888;font-size:15px">You submitted your drawing! Others are guessing now.</p>
+            <div style="margin-top:30px;padding:16px;background:#f9f9f9;border-radius:10px">
+              <div style="font-weight:700;margin-bottom:8px;font-size:13px;color:#666">YOUR DRAWING:</div>
+              <canvas id="waitingThumb" style="width:100%;border-radius:8px;border:1px solid #eee;display:block"></canvas>
+            </div>
+          </div>
+        </div>
+
+
         <div id="panelScore" class="phase-panel">
           <div class="card-title" style="font-size:17px">Rate this drawing! ⭐</div>
           <div class="canvas-wrap">
@@ -365,10 +378,11 @@ function goModeSelect(){
 // ═══════════════════════════════════════════════════════
 const gs = {
   playerName:'', playerId:null, roomId:null, roomName:'',
-  isHost:false, players:{}, mode:'normal',
+  isHost:false, isDrawer:false, players:{}, mode:'normal',
   currentTool:'draw', mouseDown:false, lastX:0, lastY:0,
   undoStack:[], chain:[], currentTurn:0,
   scores:{},  myRating:0,
+  pendingDrawing:null,
   listeners:[], timerInterval:null
 };
 
@@ -439,7 +453,13 @@ function attachListeners(){
   gs.listeners.push(rPrompt);
 
   const rDrawing = db.ref('rooms/'+gs.roomId+'/currentDrawing');
-  rDrawing.on('value',snap=>{ if(snap.val()) renderDisplayCanvas(snap.val()); });
+  rDrawing.on('value',snap=>{
+    const data = snap.val();
+    if(data){
+      gs.pendingDrawing = data; // always cache latest
+      renderDisplayCanvas(data);
+    }
+  });
   gs.listeners.push(rDrawing);
 
   const rScores = db.ref('rooms/'+gs.roomId+'/scores');
@@ -457,14 +477,22 @@ function handlePhaseChange(phase){
     document.getElementById('gamePhaseLabel').textContent='🏠 Lobby';
   } else if(phase==='draw'){
     document.getElementById('gamePhaseLabel').textContent='✏️ Draw Phase';
+    gs.isDrawer = false; // reset — everyone can draw again
     showPanel('draw');
-    // Timer for animation/icebreaker (60s)
+    document.getElementById('guessInput').value='';
     if(['animation','icebreaker'].includes(gs.mode)) startTimer(60,'timerBar','timerWrap');
   } else if(phase==='guess'){
     document.getElementById('gamePhaseLabel').textContent='🤔 Guess Phase';
-    showPanel('guess');
-    if(gs.mode==='score') showPanel('score');
-    if(['animation','icebreaker'].includes(gs.mode)) startTimer(45,'timerBar2','timerWrap2');
+    // Drawer waits; everyone else guesses
+    if(gs.isDrawer){
+      showPanel('waiting');
+    } else {
+      const panel = gs.mode==='score' ? 'score' : 'guess';
+      showPanel(panel);
+      // Now the panel is visible and canvas has real dimensions — render drawing
+      if(gs.pendingDrawing) renderDisplayCanvas(gs.pendingDrawing);
+      if(['animation','icebreaker'].includes(gs.mode)) startTimer(45,'timerBar2','timerWrap2');
+    }
   } else if(phase==='done'){
     buildResults();
   }
@@ -612,13 +640,20 @@ function fillBucket(){
 }
 
 function renderDisplayCanvas(dataUrl){
+  if(!dispCanvas) return;
+  // Ensure canvas has real pixel dimensions (it may be hidden/zero when first called)
+  if(!dispCanvas.width || dispCanvas.width<10){
+    dispCanvas.width  = dispCanvas.parentElement ? dispCanvas.parentElement.clientWidth||600 : 600;
+    dispCanvas.height = 420;
+  }
   const img=new Image();
   img.onload=()=>{
     dispCtx.clearRect(0,0,dispCanvas.width,dispCanvas.height);
     dispCtx.drawImage(img,0,0,dispCanvas.width,dispCanvas.height);
-    // also copy to score canvas for rating
-    scoreCtx.clearRect(0,0,scoreCanv.width,scoreCanv.height);
-    scoreCtx.drawImage(img,0,0,scoreCanv.width,scoreCanv.height);
+    if(scoreCanv && scoreCanv.width>0){
+      scoreCtx.clearRect(0,0,scoreCanv.width,scoreCanv.height);
+      scoreCtx.drawImage(img,0,0,scoreCanv.width,scoreCanv.height);
+    }
   };
   img.src=dataUrl;
 }
@@ -647,14 +682,11 @@ function stopTimer(){
 //  SUBMIT DRAWING
 // ═══════════════════════════════════════════════════════
 function submitDrawing(){
+  gs.isDrawer = true; // this player drew — they wait during guess phase
   const dataUrl=canvas.toDataURL('image/jpeg',0.75);
   gs.chain.push({type:'drawing',player:gs.playerName,content:dataUrl,mode:gs.mode});
-
-  // Mark self as done so others can see
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
-
   if(gs.mode==='knockoff'){
-    // everyone draws simultaneously — just store your drawing and wait
     db.ref('rooms/'+gs.roomId+'/drawings/'+gs.playerId).set({player:gs.playerName,data:dataUrl});
     db.ref('rooms/'+gs.roomId+'/phase').set('guess');
   } else {
@@ -753,11 +785,27 @@ function showScreen(id){
 }
 
 function showPanel(name){
-  // name: 'draw' | 'guess' | 'score' | 'results'
-  ['panelDraw','panelGuess','panelScore','panelResults'].forEach(id=>
+  ['panelDraw','panelGuess','panelWaiting','panelScore','panelResults'].forEach(id=>
     document.getElementById(id).classList.remove('active'));
-  const map={draw:'panelDraw',guess:'panelGuess',score:'panelScore',results:'panelResults'};
+  const map={draw:'panelDraw',guess:'panelGuess',waiting:'panelWaiting',score:'panelScore',results:'panelResults'};
   if(map[name]) document.getElementById(map[name]).classList.add('active');
+
+  if(name==='waiting'){
+    requestAnimationFrame(()=>{
+      const thumb=document.getElementById('waitingThumb');
+      thumb.width=thumb.parentElement.clientWidth||400;
+      thumb.height=Math.round(thumb.width*420/600);
+      if(canvas) thumb.getContext('2d').drawImage(canvas,0,0,thumb.width,thumb.height);
+    });
+  }
+
+  if((name==='guess'||name==='score') && gs.pendingDrawing){
+    requestAnimationFrame(()=>{
+      dispCanvas.width=dispCanvas.parentElement.clientWidth||600;
+      dispCanvas.height=420;
+      renderDisplayCanvas(gs.pendingDrawing);
+    });
+  }
 }
 
 function switchTab(tab){
@@ -778,8 +826,8 @@ function leaveRoom(){
   if(!confirm('Leave the room?')) return;
   stopTimer(); detachListeners();
   if(gs.playerId&&gs.roomId) db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId).remove();
-  Object.assign(gs,{playerName:'',playerId:null,roomId:null,roomName:'',isHost:false,
-    players:{},chain:[],currentTurn:0,scores:{},myRating:0,
+  Object.assign(gs,{playerName:'',playerId:null,roomId:null,roomName:'',isHost:false,isDrawer:false,
+    players:{},chain:[],currentTurn:0,scores:{},myRating:0,pendingDrawing:null,
     currentTool:'draw',mouseDown:false,undoStack:[]});
   showScreen('screenSetup');
   showPanel('draw');
