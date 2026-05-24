@@ -77,6 +77,7 @@ button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 .badge-host{background:#fff3cd;color:#856404}
 .badge-ready{background:#d1f7e0;color:#166534}
 .badge-done{background:#e3f2fd;color:#0d47a1}
+.badge-joined{background:#f3e5f5;color:#6a1b9a}
 
 /* ── turn indicator ── */
 .turn-indicator{padding:12px 16px;background:linear-gradient(135deg,var(--accent),#ffd54f);border-radius:9px;margin-bottom:14px;font-weight:800;text-align:center;color:var(--dark);font-size:14px}
@@ -402,7 +403,7 @@ function createRoom(){
   db.ref('rooms/'+gs.roomId).set({
     name:gs.roomName, maxPlayers, host:gs.playerId, phase:'lobby', mode:gs.mode,
     createdAt:firebase.database.ServerValue.TIMESTAMP,
-    players:{ [gs.playerId]:{name:gs.playerName,isHost:true,status:'ready'} }
+    players:{ [gs.playerId]:{name:gs.playerName,isHost:true,status:'joined'} }
   }).then(enterRoom).catch(e=>alert('Error: '+e.message));
 }
 
@@ -420,7 +421,7 @@ function joinRoom(){
     if(Object.keys(room.players||{}).length>=room.maxPlayers){alert('Room is full!');return;}
     gs.roomName=room.name; gs.mode=room.mode||'normal';
     db.ref('rooms/'+code+'/players/'+gs.playerId)
-      .set({name:gs.playerName,isHost:false,status:'ready'})
+      .set({name:gs.playerName,isHost:false,status:'joined'})
       .then(enterRoom).catch(e=>alert('Error: '+e.message));
   }).catch(e=>alert('Error: '+e.message));
 }
@@ -480,7 +481,7 @@ function handlePhaseChange(phase){
     gs.isDrawer = false; // reset — everyone can draw again
     showPanel('draw');
     document.getElementById('guessInput').value='';
-    if(['animation','icebreaker'].includes(gs.mode)) startTimer(60,'timerBar','timerWrap');
+    startTimer(90,'timerBar','timerWrap');
   } else if(phase==='guess'){
     document.getElementById('gamePhaseLabel').textContent='🤔 Guess Phase';
     // Drawer waits; everyone else guesses
@@ -491,7 +492,7 @@ function handlePhaseChange(phase){
       showPanel(panel);
       // Now the panel is visible and canvas has real dimensions — render drawing
       if(gs.pendingDrawing) renderDisplayCanvas(gs.pendingDrawing);
-      if(['animation','icebreaker'].includes(gs.mode)) startTimer(45,'timerBar2','timerWrap2');
+      startTimer(60,'timerBar2','timerWrap2');
     }
   } else if(phase==='done'){
     buildResults();
@@ -509,7 +510,7 @@ function renderPlayers(){
     : entries.map(([id,p])=>`
         <div class="player-item">
           <span>${esc(p.name)}${id===gs.playerId?' <em style="color:#bbb;font-size:11px">(you)</em>':''}</span>
-          <span class="badge ${p.isHost?'badge-host':p.status==='done'?'badge-done':'badge-ready'}">${p.isHost?'👑 Host':p.status==='done'?'✓ Done':'✓ Ready'}</span>
+          <span class="badge ${p.isHost?'badge-host':p.status==='done'?'badge-done':p.status==='ready'?'badge-ready':'badge-joined'}">${p.isHost?'👑 Host':p.status==='done'?'✓ Done':p.status==='ready'?'✓ Ready':'👋 Joined'}</span>
         </div>`).join('');
   const n = entries.length;
   const canStart = gs.isHost && n>=2;
@@ -555,7 +556,9 @@ function startGame(){
     default:           prompt=randFrom(PROMPTS_NORMAL);
   }
   clearCanvas();
-  db.ref('rooms/'+gs.roomId).update({ phase:'draw', currentPrompt:prompt, currentDrawing:null, scores:{} });
+  const updates={phase:'draw',currentPrompt:prompt,currentDrawing:null,scores:{}};
+  Object.keys(gs.players).forEach(pid=>{updates['players/'+pid+'/status']='ready';});
+  db.ref('rooms/'+gs.roomId).update(updates);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -568,14 +571,14 @@ function initCanvas(){
   dispCanvas= document.getElementById('displayCanvas');   dispCtx  = dispCanvas.getContext('2d');
   scoreCanv = document.getElementById('scoreCanvas');     scoreCtx = scoreCanv.getContext('2d');
 
-  function resize(){
-    [canvas,dispCanvas,scoreCanv].forEach(c=>{
-      c.width = c.parentElement.clientWidth||600;
-      c.height = 420;
-    });
+  function setDim(c, h){
+    const w = c.parentElement ? (c.parentElement.clientWidth||700) : 700;
+    c.width = w; c.height = h||420;
   }
-  resize();
-  window.addEventListener('resize',resize);
+  setDim(canvas,420); setDim(dispCanvas,420); setDim(scoreCanv,380);
+
+  // White background so JPEG export never goes black
+  ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,canvas.width,canvas.height);
 
   canvas.addEventListener('mousedown', e=>{gs.mouseDown=true; setLast(e); saveUndo();});
   canvas.addEventListener('mousemove', doDraw);
@@ -682,8 +685,14 @@ function stopTimer(){
 //  SUBMIT DRAWING
 // ═══════════════════════════════════════════════════════
 function submitDrawing(){
-  gs.isDrawer = true; // this player drew — they wait during guess phase
-  const dataUrl=canvas.toDataURL('image/jpeg',0.75);
+  gs.isDrawer = true;
+  // Stamp white bg before JPEG (no alpha channel = transparent → black)
+  const exp=document.createElement('canvas');
+  exp.width=canvas.width; exp.height=canvas.height;
+  const ectx=exp.getContext('2d');
+  ectx.fillStyle='#ffffff'; ectx.fillRect(0,0,exp.width,exp.height);
+  ectx.drawImage(canvas,0,0);
+  const dataUrl=exp.toDataURL('image/jpeg',0.82);
   gs.chain.push({type:'drawing',player:gs.playerName,content:dataUrl,mode:gs.mode});
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
   if(gs.mode==='knockoff'){
