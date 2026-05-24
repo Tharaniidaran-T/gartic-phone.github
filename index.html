@@ -729,27 +729,35 @@ function submitDrawing(auto){
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
 
   if(['knockoff','score'].includes(gs.mode)){
+    // These modes: everyone draws same prompt, wait for all to finish
     db.ref('rooms/'+gs.roomId+'/drawings/'+gs.playerId).set({player:gs.playerName,data:dataUrl});
     showPanel('waiting',true);
-    checkAllDone(()=>{
-      db.ref('rooms/'+gs.roomId+'/phase').set('done');
-    });
+    if(gs.isHost){
+      watchForAllDone(()=>{
+        db.ref('rooms/'+gs.roomId).update({phase:'done'});
+      });
+    }
 
   } else if(gs.mode==='exquisite'){
+    // Turn-based: immediately move to next phase
     db.ref('rooms/'+gs.roomId+'/drawings/'+gs.playerId+'_'+gs.storySegments.length)
       .set({player:gs.playerName,data:dataUrl,section:gs.storySegments.length});
     const newSegs=[...gs.storySegments,{type:'drawing',player:gs.playerName,content:dataUrl}];
     db.ref('rooms/'+gs.roomId+'/storySegments').set(newSegs);
     showPanel('waiting',true);
-    checkAllDone(()=>{
-      if(newSegs.length>=3){
-        db.ref('rooms/'+gs.roomId+'/phase').set('done');
-      } else {
-        db.ref('rooms/'+gs.roomId).update({phase:'draw',currentDrawing:null});
-      }
-    });
+    
+    if(gs.isHost){
+      setTimeout(()=>{
+        if(newSegs.length>=3){
+          db.ref('rooms/'+gs.roomId).update({phase:'done'});
+        } else {
+          db.ref('rooms/'+gs.roomId).update({phase:'draw',currentDrawing:null});
+        }
+      },600);
+    }
 
   } else if(gs.mode==='animation'){
+    // Turn-based: user draws 3 frames then moves to guess
     gs.animationFrames.push(dataUrl);
     if(gs.animationFrames.length<3){
       document.getElementById('drawTitle').textContent='Frame '+(gs.animationFrames.length+1)+'/3';
@@ -760,7 +768,25 @@ function submitDrawing(auto){
       showPanel('waiting',true);
     }
 
+  } else if(gs.mode==='story'){
+    // Story mode draw phase: immediately move to next turn
+    const newSegs=[...gs.storySegments,{type:'drawing',player:gs.playerName,content:dataUrl}];
+    db.ref('rooms/'+gs.roomId+'/storySegments').set(newSegs);
+    showPanel('waiting',true);
+    
+    if(gs.isHost){
+      const totalPlayers=Object.keys(gs.players).length;
+      const maxSegments=totalPlayers*2;
+      setTimeout(()=>{
+        if(newSegs.length>=maxSegments){
+          db.ref('rooms/'+gs.roomId).update({phase:'done'});
+        } else {
+          db.ref('rooms/'+gs.roomId).update({phase:'draw',currentDrawing:null});
+        }
+      },600);
+    }
   } else {
+    // Normal mode: everyone draws then guesses (wait for all)
     db.ref('rooms/'+gs.roomId).update({phase:'guess',currentDrawing:dataUrl});
     showPanel('waiting',true);
   }
@@ -776,7 +802,7 @@ function submitStoryText(auto){
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
 
   showPanel('waiting',false);
-  document.getElementById('waitingTitle').textContent='Waiting for others…';
+  document.getElementById('waitingTitle').textContent='Moving to next phase…';
   document.getElementById('waitingSubtitle').textContent='Your sentence was added!';
   document.getElementById('waitingTextPreview').style.display='block';
   document.getElementById('waitingTextPreview').textContent='"'+text+'"';
@@ -784,13 +810,17 @@ function submitStoryText(auto){
 
   const totalPlayers=Object.keys(gs.players).length;
   const maxSegments=totalPlayers*2;
-  checkAllDone(()=>{
-    if(newSegs.length>=maxSegments){
-      db.ref('rooms/'+gs.roomId+'/phase').set('done');
-    } else {
-      db.ref('rooms/'+gs.roomId).update({phase:'draw',currentPrompt:'Draw: "'+text+'"',currentDrawing:null});
-    }
-  });
+  
+  // Story mode: immediately move to next phase (it's turn-based)
+  if(gs.isHost){
+    setTimeout(()=>{
+      if(newSegs.length>=maxSegments){
+        db.ref('rooms/'+gs.roomId).update({phase:'done'});
+      } else {
+        db.ref('rooms/'+gs.roomId).update({phase:'draw',currentPrompt:'Draw: "'+text+'"',currentDrawing:null});
+      }
+    },800);
+  }
 }
 
 function renderStorySoFar(){
@@ -813,29 +843,46 @@ function submitGuess(auto){
   gs.currentTurn++;
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
 
-  checkAllDone(()=>{
-    const total=Object.keys(gs.players).length;
-    if(gs.currentTurn>=total){
-      db.ref('rooms/'+gs.roomId+'/phase').set('done');
-    } else {
-      clearCanvas();
-      db.ref('rooms/'+gs.roomId).update({phase:'draw',currentPrompt:'Last guess: "'+guess+'"',currentDrawing:null});
-    }
-  });
-
   showPanel('waiting',false);
+
+  // For host: check if all non-drawer players have guessed, then move to next phase
+  if(gs.isHost){
+    setTimeout(()=>{
+      db.ref('rooms/'+gs.roomId+'/players').once('value').then(snap=>{
+        const players=snap.val()||{};
+        const nonDrawers=Object.values(players).filter(p=>!p.isHost||gs.currentTurn>0);
+        const allGuessed=nonDrawers.every(p=>p.status==='done');
+        
+        if(allGuessed){
+          const total=Object.keys(players).length;
+          if(gs.currentTurn>=total){
+            db.ref('rooms/'+gs.roomId).update({phase:'done'});
+          } else {
+            // Reset status for next round
+            Object.keys(players).forEach(pid=>{
+              db.ref('rooms/'+gs.roomId+'/players/'+pid+'/status').set('ready');
+            });
+            clearCanvas();
+            db.ref('rooms/'+gs.roomId).update({phase:'draw',currentPrompt:'Next round!',currentDrawing:null});
+          }
+        }
+      });
+    },400);
+  }
 }
 
-function checkAllDone(cb){
+// Check if all players are done - listen to changes instead of polling
+function watchForAllDone(cb){
   if(!gs.isHost)return;
-  const check=()=>{
-    db.ref('rooms/'+gs.roomId+'/players').once('value').then(snap=>{
-      const p=snap.val()||{};
-      const allDone=Object.values(p).every(pl=>pl.status==='done');
-      if(allDone){cb();} else {setTimeout(check,1200);}
-    });
-  };
-  setTimeout(check,600);
+  const ref=db.ref('rooms/'+gs.roomId+'/players');
+  const listener=ref.on('value',snap=>{
+    const p=snap.val()||{};
+    const allDone=Object.values(p).every(pl=>pl.status==='done');
+    if(allDone){
+      ref.off('value',listener);
+      cb();
+    }
+  });
 }
 
 // SCORE MODE
@@ -853,7 +900,10 @@ function submitScore(){
   document.querySelectorAll('.star').forEach(s=>s.style.opacity='0.4');
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
   showPanel('waiting',false);
-  checkAllDone(()=>db.ref('rooms/'+gs.roomId+'/phase').set('done'));
+  
+  if(gs.isHost){
+    watchForAllDone(()=>db.ref('rooms/'+gs.roomId).update({phase:'done'}));
+  }
 }
 
 // RESULTS
