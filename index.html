@@ -1,3 +1,4 @@
+cat > /mnt/user-data/outputs/gartic-phone.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,8 +18,6 @@ body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea
 .tagline{color:#ffffffcc;font-size:15px;margin-top:4px}
 .card{background:#fff;border-radius:var(--r);padding:26px;box-shadow:var(--shadow-lg)}
 .card-title{font-size:22px;font-weight:800;margin-bottom:18px;color:var(--dark)}
-
-/* ── buttons ── */
 button{padding:13px 22px;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;transition:all .25s;font-family:inherit;letter-spacing:.6px}
 button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 .btn-primary{background:linear-gradient(135deg,var(--primary),#ff5252);color:#fff;box-shadow:0 4px 14px rgba(255,107,107,.35)}
@@ -29,47 +28,33 @@ button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 .btn-purple:not(:disabled):hover{transform:translateY(-2px)}
 .btn-small{padding:7px 13px;font-size:12px}
 .btn-full{width:100%;margin-top:10px}
-
-/* ── inputs ── */
 .input-group{margin-bottom:14px}
 .input-group label{display:block;font-weight:700;margin-bottom:6px;font-size:13px}
 .input-group input,.input-group select{width:100%;padding:11px 14px;border:2px solid #e0e0e0;border-radius:9px;font-size:14px;transition:all .3s;font-family:inherit;background:#fff}
 .input-group input:focus,.input-group select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,107,107,.1)}
-
-/* ── info boxes ── */
 .info-box{padding:12px 16px;border-radius:9px;margin-bottom:14px;font-size:13px;border-left:4px solid}
 .info-blue{background:#e3f2fd;border-color:#2196f3;color:#0d47a1}
 .info-green{background:#e8f5e9;border-color:#4caf50;color:#2e7d32}
 .info-orange{background:#fff3e0;border-color:#ff9800;color:#e65100}
 .info-purple{background:#ede7f6;border-color:#7c4dff;color:#4527a0}
-
-/* ── tabs ── */
 .setup-tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
 .tab-btn{padding:13px;background:#f0f0f0;border:2px solid transparent;border-radius:9px;cursor:pointer;font-weight:700;transition:all .3s;letter-spacing:0;font-size:14px}
 .tab-btn.active{background:linear-gradient(135deg,var(--primary),#ff5252);color:#fff}
-
-/* ── layout states ── */
-.screen{display:none}
-.screen.active{display:block}
-
-/* ── mode select ── */
-.modes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-.mode-card{padding:18px 12px;border:2px solid #e0e0e0;border-radius:12px;cursor:pointer;text-align:center;transition:all .25s;background:#fafafa;position:relative}
+.screen{display:none}.screen.active{display:block}
+/* mode grid */
+.modes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.mode-card{padding:16px 10px;border:2px solid #e0e0e0;border-radius:12px;cursor:pointer;text-align:center;transition:all .22s;background:#fafafa;position:relative}
 .mode-card:hover{border-color:var(--purple);background:#f3efff;transform:translateY(-2px)}
 .mode-card.selected{border-color:var(--purple);background:#ede7f6;box-shadow:0 0 0 3px rgba(124,77,255,.2)}
-.mode-card .mode-icon{font-size:30px;margin-bottom:6px}
-.mode-card .mode-name{font-weight:800;font-size:13px;letter-spacing:.5px;color:var(--dark)}
-.mode-card .mode-desc{font-size:11px;color:#888;margin-top:3px;line-height:1.4}
-.mode-card .mode-badge{position:absolute;top:6px;right:8px;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:700}
+.mode-icon{font-size:28px;margin-bottom:5px}
+.mode-name{font-weight:800;font-size:12px;letter-spacing:.5px;color:var(--dark)}
+.mode-badge{position:absolute;top:5px;right:6px;font-size:9px;padding:2px 6px;border-radius:20px;font-weight:700}
 .badge-new{background:#fff3cd;color:#856404}
 .badge-hot{background:#fde8e8;color:#9b1c1c}
-
-/* ── game layout ── */
+/* settings grid in mode screen */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
+/* game layout */
 .game-layout{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start}
-.sidebar{}
-.main-area{}
-
-/* ── players list ── */
 .players-list{padding:12px;background:#f9f9f9;border-radius:9px;max-height:260px;overflow-y:auto;margin-top:10px}
 .player-item{padding:9px 12px;background:#fff;border-radius:7px;margin-bottom:7px;font-size:13px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .player-item:last-child{margin-bottom:0}
@@ -78,15 +63,10 @@ button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 .badge-ready{background:#d1f7e0;color:#166534}
 .badge-done{background:#e3f2fd;color:#0d47a1}
 .badge-joined{background:#f3e5f5;color:#6a1b9a}
-
-/* ── turn indicator ── */
 .turn-indicator{padding:12px 16px;background:linear-gradient(135deg,var(--accent),#ffd54f);border-radius:9px;margin-bottom:14px;font-weight:800;text-align:center;color:var(--dark);font-size:14px}
-
-/* ── canvas ── */
-.canvas-wrap{border-radius:10px;overflow:hidden;box-shadow:inset 0 0 0 2px #e0e0e0;margin-bottom:14px;background:#fff;position:relative}
+/* canvas */
+.canvas-wrap{border-radius:10px;overflow:hidden;box-shadow:inset 0 0 0 2px #e0e0e0;margin-bottom:14px;background:#fff}
 canvas{display:block;cursor:crosshair;width:100%;background:#fff}
-
-/* ── tools ── */
 .tools-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
 .color-picker{width:44px;height:44px;border:none;border-radius:8px;cursor:pointer;flex-shrink:0}
 .slider-group{display:flex;flex-direction:column;gap:3px;flex:1;min-width:80px}
@@ -96,45 +76,45 @@ input[type=range]{cursor:pointer;width:100%}
 .tool-btn{padding:9px 14px;background:#f0f0f0;border:2px solid transparent;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;transition:all .2s;text-transform:none;letter-spacing:0}
 .tool-btn.active{background:var(--accent);border-color:var(--primary)}
 .tool-btn:hover:not(.active){background:#e0e0e0}
-
-/* ── phase panels ── */
-.phase-panel{display:none}
-.phase-panel.active{display:block}
-
-/* ── guess ── */
+.phase-panel{display:none}.phase-panel.active{display:block}
+/* story text input */
+.story-input{width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:9px;font-size:15px;margin-bottom:12px;font-family:inherit;resize:vertical;min-height:90px}
+.story-input:focus{outline:none;border-color:var(--secondary);box-shadow:0 0 0 3px rgba(78,205,196,.12)}
 .guess-input{width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:9px;font-size:16px;margin-bottom:12px;font-family:inherit}
 .guess-input:focus{outline:none;border-color:var(--secondary)}
-
-/* ── chain / results ── */
-.chain-display{background:#f9f9f9;border-radius:9px;padding:18px;margin-bottom:18px;max-height:500px;overflow-y:auto}
+/* chain */
+.chain-display{background:#f9f9f9;border-radius:9px;padding:18px;margin-bottom:18px;max-height:520px;overflow-y:auto}
 .chain-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #eee}
 .chain-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .chain-player{font-weight:800;color:var(--primary);font-size:11px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
 .chain-content{font-size:15px;color:var(--dark);font-style:italic}
 .chain-image{width:100%;border-radius:7px;margin-top:6px;border:1px solid #e0e0e0}
-
-/* ── score board ── */
+/* scoreboard */
 .scoreboard{display:grid;gap:8px}
 .score-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
 .score-rank{font-size:20px;width:32px;text-align:center}
 .score-name{flex:1;font-weight:700}
 .score-pts{font-size:18px;font-weight:900;color:var(--primary)}
-
-/* ── mode-specific ── */
+/* prompt box */
 .prompt-box{padding:12px 16px;background:#fff3cd;border-radius:9px;border-left:4px solid var(--accent);margin-bottom:14px}
-.timer-bar-wrap{height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;margin-bottom:12px}
-.timer-bar{height:100%;background:linear-gradient(90deg,#4caf50,#ffeb3b,#f44336);border-radius:4px;transition:width .5s linear}
-
-/* ── sandwich split canvas ── */
-.split-canvas-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
-/* ── coopoverlay ── */
-.co-note{font-size:12px;color:#888;margin-bottom:8px}
-
+/* timer */
+.timer-bar-wrap{height:10px;background:#e0e0e0;border-radius:5px;overflow:hidden;margin-bottom:12px;display:none}
+.timer-bar{height:100%;width:100%;background:linear-gradient(90deg,#4caf50,#ffeb3b,#f44336);border-radius:5px;transition:width 1s linear}
+/* timer text */
+.timer-text{text-align:right;font-size:12px;font-weight:700;color:#888;margin-top:-8px;margin-bottom:8px}
+/* waiting */
+.waiting-panel-inner{text-align:center;padding:40px 20px}
 code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-spacing:2px}
+/* knockoff grid */
+.knockoff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.knockoff-item{border-radius:9px;overflow:hidden;border:1px solid #e0e0e0}
+.knockoff-label{padding:6px 10px;background:#f9f9f9;font-size:12px;font-weight:700;color:#666}
+/* exquisite sections */
+.exquisite-hint{font-size:12px;color:#888;margin-bottom:8px;padding:8px 12px;background:#f9f9f9;border-radius:8px;border-left:3px solid var(--purple)}
 @media(max-width:800px){
   .game-layout{grid-template-columns:1fr}
   .modes-grid{grid-template-columns:repeat(2,1fr)}
+  .settings-grid{grid-template-columns:1fr 1fr}
   .logo{font-size:32px}
 }
 </style>
@@ -146,7 +126,7 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
     <div class="tagline">Draw it. Guess it. Share the chaos.</div>
   </div>
 
-  <!-- ══════════════ SETUP SCREEN ══════════════ -->
+  <!-- ══ SETUP ══ -->
   <div id="screenSetup" class="screen active">
     <div class="card" style="max-width:520px;margin:0 auto">
       <div class="card-title">Welcome 🎨</div>
@@ -155,16 +135,12 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
         <button class="tab-btn active" id="tabCreate" onclick="switchTab('create')">Create Room</button>
         <button class="tab-btn" id="tabJoin" onclick="switchTab('join')">Join Room</button>
       </div>
-
-      <!-- create -->
       <div id="createTab">
         <div class="input-group"><label>Your Name</label><input id="playerName" placeholder="e.g. SketchMaster" maxlength="20"></div>
         <div class="input-group"><label>Room Name</label><input id="roomName" placeholder="Fun Room" maxlength="30"></div>
         <div class="input-group"><label>Max Players (2–8)</label><input id="maxPlayers" type="number" min="2" max="8" value="4"></div>
         <button class="btn-purple btn-full" onclick="goModeSelect()">Choose Game Mode →</button>
       </div>
-
-      <!-- join -->
       <div id="joinTab" style="display:none">
         <div class="input-group"><label>Your Name</label><input id="joinPlayerName" placeholder="Your name" maxlength="20"></div>
         <div class="input-group"><label>Room Code</label><input id="roomCode" placeholder="6-character code" maxlength="6" style="text-transform:uppercase"></div>
@@ -173,22 +149,56 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
     </div>
   </div>
 
-  <!-- ══════════════ MODE SELECT ══════════════ -->
+  <!-- ══ MODE SELECT ══ -->
   <div id="screenMode" class="screen">
-    <div class="card" style="max-width:700px;margin:0 auto">
+    <div class="card" style="max-width:740px;margin:0 auto">
       <div class="card-title">Choose Game Mode</div>
-      <div class="modes-grid" id="modesGrid">
-        <!-- injected by JS -->
+      <div class="modes-grid" id="modesGrid"></div>
+      <div id="modeDesc" class="info-box info-purple" style="min-height:44px;margin-bottom:18px"></div>
+
+      <!-- Timer settings -->
+      <div style="font-weight:800;font-size:15px;margin-bottom:12px;color:var(--dark)">⏱️ Timer Settings</div>
+      <div class="settings-grid">
+        <div class="input-group" style="margin-bottom:0">
+          <label>Draw Time (seconds)</label>
+          <select id="settingDrawTime">
+            <option value="30">30s</option>
+            <option value="60">60s</option>
+            <option value="90" selected>90s</option>
+            <option value="120">120s</option>
+            <option value="180">180s</option>
+            <option value="0">No limit</option>
+          </select>
+        </div>
+        <div class="input-group" style="margin-bottom:0">
+          <label>Guess Time (seconds)</label>
+          <select id="settingGuessTime">
+            <option value="30">30s</option>
+            <option value="45">45s</option>
+            <option value="60" selected>60s</option>
+            <option value="90">90s</option>
+            <option value="120">120s</option>
+            <option value="0">No limit</option>
+          </select>
+        </div>
+        <div class="input-group" style="margin-bottom:0">
+          <label>Rounds</label>
+          <select id="settingRounds">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
       </div>
-      <div id="modeDesc" class="info-box info-purple" style="min-height:44px"></div>
-      <div style="display:flex;gap:10px;margin-top:4px">
+
+      <div style="display:flex;gap:10px;margin-top:8px">
         <button class="btn-secondary" style="flex:1" onclick="showScreen('screenSetup')">← Back</button>
-        <button class="btn-primary" style="flex:2" id="modeConfirmBtn" onclick="createRoom()">Create Room →</button>
+        <button class="btn-primary" style="flex:2" onclick="createRoom()">Create Room →</button>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════ GAME SCREEN ══════════════ -->
+  <!-- ══ GAME ══ -->
   <div id="screenGame" class="screen">
     <div class="game-layout">
 
@@ -202,27 +212,25 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
         <div class="turn-indicator" id="turnIndicator">Waiting…</div>
         <div id="minPlayerNote" class="info-box info-orange" style="display:none">⚠️ Need ≥2 players to start.</div>
         <div id="modeTag" class="info-box info-purple" style="margin-bottom:10px"></div>
-
-        <div style="font-weight:800;font-size:14px;margin-bottom:4px">
-          Players <span id="playerCount" style="color:#aaa;font-weight:400;font-size:12px"></span>
-        </div>
+        <div id="timerSettingsTag" class="info-box info-blue" style="margin-bottom:10px;font-size:12px"></div>
+        <div style="font-weight:800;font-size:14px;margin-bottom:4px">Players <span id="playerCount" style="color:#aaa;font-weight:400;font-size:12px"></span></div>
         <div class="players-list" id="playersList"></div>
-
         <button class="btn-primary btn-full" id="startBtn" onclick="startGame()" disabled>Start Game</button>
         <button class="btn-secondary btn-full" onclick="leaveRoom()" style="margin-top:10px">Leave Room</button>
       </div>
 
-      <!-- main area -->
+      <!-- main -->
       <div class="card main-area">
         <div class="turn-indicator" id="gamePhaseLabel">Lobby</div>
 
-        <!-- DRAW PHASE -->
+        <!-- DRAW -->
         <div id="panelDraw" class="phase-panel active">
           <div class="card-title" style="font-size:17px" id="drawTitle">Your Turn to Draw</div>
-          <div id="timerWrap" class="timer-bar-wrap" style="display:none"><div class="timer-bar" id="timerBar"></div></div>
+          <div class="timer-bar-wrap" id="timerWrapDraw"><div class="timer-bar" id="timerBarDraw"></div></div>
+          <div class="timer-text" id="timerTextDraw"></div>
           <div class="prompt-box"><strong id="promptDisplay">Waiting to start…</strong></div>
           <div class="tools-row">
-            <input type="color" id="brushColor" class="color-picker" value="#000000" title="Color">
+            <input type="color" id="brushColor" class="color-picker" value="#000000">
             <div class="slider-group">
               <label>Size: <span id="sizeVal">5</span>px</label>
               <input type="range" id="brushSize" min="1" max="50" value="5" oninput="sizeVal.textContent=this.value">
@@ -237,61 +245,73 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
             <button class="tool-btn" id="toolEraser" onclick="selectTool('eraser')">🧹 Eraser</button>
             <button class="tool-btn" onclick="fillBucket()">🪣 Fill</button>
             <button class="tool-btn" onclick="clearCanvas()">🗑️ Clear</button>
-            <button class="tool-btn" id="toolUndo" onclick="undoCanvas()">↩️ Undo</button>
+            <button class="tool-btn" onclick="undoCanvas()">↩️ Undo</button>
           </div>
-          <div class="canvas-wrap" id="drawCanvasWrap">
-            <canvas id="drawingCanvas" height="420"></canvas>
-          </div>
+          <div class="canvas-wrap"><canvas id="drawingCanvas" height="420"></canvas></div>
           <button class="btn-primary btn-full" onclick="submitDrawing()">Submit Drawing ✓</button>
         </div>
 
-        <!-- GUESS PHASE -->
+        <!-- STORY TEXT (alternates with draw) -->
+        <div id="panelStory" class="phase-panel">
+          <div class="card-title" style="font-size:17px">📖 Add to the Story</div>
+          <div class="timer-bar-wrap" id="timerWrapStory"><div class="timer-bar" id="timerBarStory"></div></div>
+          <div class="timer-text" id="timerTextStory"></div>
+          <div id="storyChainSoFar" style="margin-bottom:14px;max-height:180px;overflow-y:auto;padding:12px;background:#f9f9f9;border-radius:9px;font-size:14px;color:#555;display:none"></div>
+          <div class="prompt-box"><strong id="storyPromptDisplay">Waiting…</strong></div>
+          <textarea id="storyInput" class="story-input" placeholder="Write the next sentence of the story…" maxlength="300"></textarea>
+          <div style="text-align:right;font-size:11px;color:#aaa;margin-top:-8px;margin-bottom:10px"><span id="storyCharCount">0</span>/300</div>
+          <button class="btn-primary btn-full" onclick="submitStoryText()">Submit ✓</button>
+        </div>
+
+        <!-- GUESS -->
         <div id="panelGuess" class="phase-panel">
-          <div class="card-title" style="font-size:17px">What is this? 🤔</div>
-          <div id="timerWrap2" class="timer-bar-wrap" style="display:none"><div class="timer-bar" id="timerBar2"></div></div>
-          <div class="canvas-wrap">
-            <canvas id="displayCanvas" height="420"></canvas>
-          </div>
+          <div class="card-title" style="font-size:17px" id="guessTitle">What is this? 🤔</div>
+          <div class="timer-bar-wrap" id="timerWrapGuess"><div class="timer-bar" id="timerBarGuess"></div></div>
+          <div class="timer-text" id="timerTextGuess"></div>
+          <div class="canvas-wrap"><canvas id="displayCanvas" height="420"></canvas></div>
           <input class="guess-input" id="guessInput" placeholder="Type your guess…" autocomplete="off" onkeydown="if(event.key==='Enter')submitGuess()">
           <button class="btn-primary btn-full" onclick="submitGuess()">Submit Guess ✓</button>
         </div>
 
-        <!-- WAITING (drawer waits while others guess) -->
+        <!-- WAITING -->
         <div id="panelWaiting" class="phase-panel">
-          <div style="text-align:center;padding:60px 20px">
+          <div class="waiting-panel-inner">
             <div style="font-size:64px;margin-bottom:20px">⏳</div>
-            <div class="card-title">Waiting for guesses…</div>
-            <p style="color:#888;font-size:15px">You submitted your drawing! Others are guessing now.</p>
-            <div style="margin-top:30px;padding:16px;background:#f9f9f9;border-radius:10px">
-              <div style="font-weight:700;margin-bottom:8px;font-size:13px;color:#666">YOUR DRAWING:</div>
+            <div class="card-title" id="waitingTitle">Waiting for others…</div>
+            <p style="color:#888;font-size:15px" id="waitingSubtitle">You submitted! Others are still going.</p>
+            <div style="margin-top:28px;padding:16px;background:#f9f9f9;border-radius:10px">
+              <div style="font-weight:700;margin-bottom:8px;font-size:12px;color:#666">YOUR SUBMISSION:</div>
               <canvas id="waitingThumb" style="width:100%;border-radius:8px;border:1px solid #eee;display:block"></canvas>
+              <div id="waitingTextPreview" style="display:none;font-style:italic;font-size:15px;color:var(--dark);padding:10px"></div>
             </div>
           </div>
         </div>
 
-
+        <!-- SCORE -->
         <div id="panelScore" class="phase-panel">
           <div class="card-title" style="font-size:17px">Rate this drawing! ⭐</div>
-          <div class="canvas-wrap">
-            <canvas id="scoreCanvas" height="380"></canvas>
-          </div>
+          <div class="canvas-wrap"><canvas id="scoreCanvas" height="380"></canvas></div>
           <div style="margin-bottom:14px">
             <label style="font-weight:700;font-size:13px;display:block;margin-bottom:8px">Your Rating:</label>
             <div style="display:flex;gap:8px;justify-content:center;font-size:32px" id="starRating">
-              <span class="star" data-v="1" onclick="rateStar(1)" style="cursor:pointer">⭐</span>
-              <span class="star" data-v="2" onclick="rateStar(2)" style="cursor:pointer">⭐</span>
-              <span class="star" data-v="3" onclick="rateStar(3)" style="cursor:pointer">⭐</span>
-              <span class="star" data-v="4" onclick="rateStar(4)" style="cursor:pointer">⭐</span>
-              <span class="star" data-v="5" onclick="rateStar(5)" style="cursor:pointer">⭐</span>
+              <span class="star" onclick="rateStar(1)" style="cursor:pointer">⭐</span>
+              <span class="star" onclick="rateStar(2)" style="cursor:pointer">⭐</span>
+              <span class="star" onclick="rateStar(3)" style="cursor:pointer">⭐</span>
+              <span class="star" onclick="rateStar(4)" style="cursor:pointer">⭐</span>
+              <span class="star" onclick="rateStar(5)" style="cursor:pointer">⭐</span>
             </div>
           </div>
           <button class="btn-primary btn-full" onclick="submitScore()">Submit Rating ✓</button>
         </div>
 
-        <!-- RESULTS / CHAIN -->
+        <!-- RESULTS -->
         <div id="panelResults" class="phase-panel">
-          <div class="card-title" id="resultsTitle">🎉 The Chain!</div>
+          <div class="card-title" id="resultsTitle">🎉 Results!</div>
           <div class="chain-display" id="chainContent"></div>
+          <div id="knockoffGrid" style="display:none;margin-bottom:16px">
+            <div class="card-title" style="font-size:16px">All Drawings:</div>
+            <div class="knockoff-grid" id="knockoffItems"></div>
+          </div>
           <div id="scoreboardWrap" style="display:none;margin-bottom:16px">
             <div class="card-title" style="font-size:17px">🏆 Scoreboard</div>
             <div class="scoreboard" id="scoreboardList"></div>
@@ -299,18 +319,17 @@ code{background:#f0f0f0;padding:3px 8px;border-radius:5px;font-size:13px;letter-
           <button class="btn-secondary btn-full" onclick="leaveRoom()">Play Again 🔄</button>
         </div>
 
-      </div><!-- /main-area -->
-    </div><!-- /game-layout -->
-  </div><!-- /screenGame -->
-
-</div><!-- /container -->
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 //  FIREBASE
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 firebase.initializeApp({
   apiKey:"AIzaSyDdwdbP8tsEGKWW88NR9C3StYMhTmecujM",
   authDomain:"gartic-phone-ea498.firebaseapp.com",
@@ -324,36 +343,36 @@ const db = firebase.database();
 
 document.addEventListener('DOMContentLoaded',()=>{
   setStatus('green','✓ Firebase connected! Create or join a room.');
-  document.getElementById('roomCode').addEventListener('input',function(){this.value=this.value.toUpperCase()});
+  document.getElementById('roomCode').addEventListener('input',function(){this.value=this.value.toUpperCase();});
+  document.getElementById('storyInput').addEventListener('input',function(){
+    document.getElementById('storyCharCount').textContent=this.value.length;
+  });
   buildModeGrid();
 });
 
-// ═══════════════════════════════════════════════════════
-//  GAME MODES
-// ═══════════════════════════════════════════════════════
-const MODES = [
-  { id:'normal',    icon:'📝', name:'NORMAL',          desc:'Classic! Write a prompt → draw it → guess → repeat down the chain.',       hot:false, new:false },
-  { id:'knockoff',  icon:'🃏', name:'KNOCK-OFF',        desc:'Everyone draws the same prompt simultaneously. See all the wild versions!', hot:true,  new:false },
-  { id:'animation', icon:'🎬', name:'ANIMATION',        desc:'Draw 3 frames to make a mini animation, then others guess what it shows.',  hot:false, new:false },
-  { id:'icebreaker',icon:'🧊', name:'ICEBREAKER',       desc:'Fun warm-up! Answer a silly question with a quick drawing.',               hot:false, new:false },
-  { id:'exquisite', icon:'🎭', name:'EXQUISITE CORPSE', desc:'Each player draws only one section of a body — then reveal the monster!',  hot:false, new:true  },
-  { id:'complement',icon:'🖼️', name:'COMPLEMENT',       desc:'Draw the missing half of your partner\'s picture.',                        hot:false, new:false },
-  { id:'masterpiece',icon:'🖼', name:'MASTERPIECE',     desc:'Recreate a famous painting from memory. Others rate how close you got!',   hot:false, new:false },
-  { id:'story',     icon:'📖', name:'STORY',            desc:'Build a story together: alternating sentences and drawings.',               hot:false, new:false },
-  { id:'score',     icon:'🏆', name:'SCORE',            desc:'Rate each drawing! Players earn points based on votes.',                    hot:true,  new:false },
-  { id:'secret',    icon:'🕵️', name:'SECRET',           desc:'One player gets a secret word. Others draw clues without revealing it.',   hot:false, new:true  },
-  { id:'coop',      icon:'🤝', name:'CO-OP',            desc:'Everyone draws on the SAME canvas at the same time!',                      hot:false, new:true  },
-  { id:'sandwich',  icon:'🥪', name:'SANDWICH',         desc:'Draw the top half, pass it; the next player draws the bottom half.',       hot:false, new:false },
+// ══════════════════════════════════════════════════════════
+//  MODES
+// ══════════════════════════════════════════════════════════
+const MODES=[
+  {id:'normal',    icon:'📝',name:'NORMAL',          desc:'Classic! Write a prompt → draw it → guess → repeat.',              hot:false,new:false},
+  {id:'knockoff',  icon:'🃏',name:'KNOCK-OFF',        desc:'Everyone draws the SAME prompt. Compare all the results!',          hot:true, new:false},
+  {id:'animation', icon:'🎬',name:'ANIMATION',        desc:'Draw 3 frames to make a mini flipbook. Others guess the scene!',   hot:false,new:false},
+  {id:'icebreaker',icon:'🧊',name:'ICEBREAKER',       desc:'Fun warm-up! Each person answers a silly question with a drawing.', hot:false,new:false},
+  {id:'exquisite', icon:'🎭',name:'EXQUISITE CORPSE', desc:'Each player draws one section of a body without seeing the rest.',  hot:false,new:true },
+  {id:'complement',icon:'🖼️',name:'COMPLEMENT',       desc:'Draw the top half — your partner draws the bottom half to match.', hot:false,new:false},
+  {id:'masterpiece',icon:'🖼',name:'MASTERPIECE',      desc:'Recreate a famous painting from memory. Vote on the best!',        hot:false,new:false},
+  {id:'story',     icon:'📖',name:'STORY',            desc:'Alternate between writing sentences and drawing them.',             hot:false,new:false},
+  {id:'score',     icon:'🏆',name:'SCORE',            desc:'Everyone draws the same prompt, then votes for the best drawing!',  hot:true, new:false},
+  {id:'secret',    icon:'🕵️',name:'SECRET',           desc:'Only one player sees the word. They draw; others guess.',          hot:false,new:true },
+  {id:'sandwich',  icon:'🥪',name:'SANDWICH',         desc:'Draw the top half; the next player draws the bottom to complete it.',hot:false,new:false},
 ];
-
-let selectedMode = 'normal';
+let selectedMode='normal';
 
 function buildModeGrid(){
-  const grid = document.getElementById('modesGrid');
-  grid.innerHTML = MODES.map(m=>`
-    <div class="mode-card ${m.id==='normal'?'selected':''}" id="mc_${m.id}" onclick="selectMode('${m.id}')">
-      ${m.hot?'<span class="mode-badge badge-hot">🔥 HOT</span>':''}
-      ${m.new?'<span class="mode-badge badge-new">✨ NEW</span>':''}
+  document.getElementById('modesGrid').innerHTML=MODES.map(m=>`
+    <div class="mode-card${m.id==='normal'?' selected':''}" id="mc_${m.id}" onclick="selectMode('${m.id}')">
+      ${m.hot?'<span class="mode-badge badge-hot">🔥</span>':''}
+      ${m.new?'<span class="mode-badge badge-new">✨</span>':''}
       <div class="mode-icon">${m.icon}</div>
       <div class="mode-name">${m.name}</div>
     </div>`).join('');
@@ -361,65 +380,78 @@ function buildModeGrid(){
 }
 
 function selectMode(id){
-  selectedMode = id;
+  selectedMode=id;
   document.querySelectorAll('.mode-card').forEach(c=>c.classList.remove('selected'));
   document.getElementById('mc_'+id).classList.add('selected');
-  const m = MODES.find(x=>x.id===id);
-  document.getElementById('modeDesc').innerHTML = `<strong>${m.icon} ${m.name}:</strong> ${m.desc}`;
+  const m=MODES.find(x=>x.id===id);
+  document.getElementById('modeDesc').innerHTML=`<strong>${m.icon} ${m.name}:</strong> ${m.desc}`;
 }
 
 function goModeSelect(){
-  const name = document.getElementById('playerName').value.trim();
-  if(!name){alert('Please enter your name.');return;}
+  if(!document.getElementById('playerName').value.trim()){alert('Please enter your name.');return;}
   showScreen('screenMode');
 }
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 //  STATE
-// ═══════════════════════════════════════════════════════
-const gs = {
-  playerName:'', playerId:null, roomId:null, roomName:'',
-  isHost:false, isDrawer:false, players:{}, mode:'normal',
-  currentTool:'draw', mouseDown:false, lastX:0, lastY:0,
-  undoStack:[], chain:[], currentTurn:0,
-  scores:{},  myRating:0,
+// ══════════════════════════════════════════════════════════
+const gs={
+  playerName:'',playerId:null,roomId:null,roomName:'',
+  isHost:false,isDrawer:false,players:{},mode:'normal',
+  drawTime:90,guessTime:60,rounds:1,
+  currentTool:'draw',mouseDown:false,lastX:0,lastY:0,
+  undoStack:[],chain:[],currentTurn:0,
+  scores:{},myRating:0,
   pendingDrawing:null,
-  listeners:[], timerInterval:null
+  storySegments:[],            // story mode: array of {type,player,content}
+  exquisiteSection:0,          // 0=head,1=torso,2=legs
+  animationFrames:[],          // animation mode frames
+  animationFrameIdx:0,
+  listeners:[],timers:[],
 };
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 //  ROOM CREATE / JOIN
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 function createRoom(){
-  const name = document.getElementById('playerName').value.trim();
+  const name=document.getElementById('playerName').value.trim();
   if(!name){alert('Enter your name.');return;}
-  gs.playerName = name;
-  gs.playerId   = 'p_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
-  gs.roomId     = Math.random().toString(36).substring(2,8).toUpperCase();
-  gs.roomName   = document.getElementById('roomName').value.trim()||'Fun Room';
-  gs.isHost     = true;
-  gs.mode       = selectedMode;
-  const maxPlayers = Math.min(8,Math.max(2,parseInt(document.getElementById('maxPlayers').value)||4));
+  gs.playerName=name;
+  gs.playerId='p_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+  gs.roomId=Math.random().toString(36).substring(2,8).toUpperCase();
+  gs.roomName=document.getElementById('roomName').value.trim()||'Fun Room';
+  gs.isHost=true;
+  gs.mode=selectedMode;
+  gs.drawTime=parseInt(document.getElementById('settingDrawTime').value);
+  gs.guessTime=parseInt(document.getElementById('settingGuessTime').value);
+  gs.rounds=parseInt(document.getElementById('settingRounds').value);
+  const maxPlayers=Math.min(8,Math.max(2,parseInt(document.getElementById('maxPlayers').value)||4));
   db.ref('rooms/'+gs.roomId).set({
-    name:gs.roomName, maxPlayers, host:gs.playerId, phase:'lobby', mode:gs.mode,
+    name:gs.roomName,maxPlayers,host:gs.playerId,phase:'lobby',mode:gs.mode,
+    drawTime:gs.drawTime,guessTime:gs.guessTime,rounds:gs.rounds,
     createdAt:firebase.database.ServerValue.TIMESTAMP,
-    players:{ [gs.playerId]:{name:gs.playerName,isHost:true,status:'joined'} }
+    players:{[gs.playerId]:{name:gs.playerName,isHost:true,status:'joined'}}
   }).then(enterRoom).catch(e=>alert('Error: '+e.message));
 }
 
 function joinRoom(){
-  const name = document.getElementById('joinPlayerName').value.trim();
-  const code = document.getElementById('roomCode').value.trim().toUpperCase();
+  const name=document.getElementById('joinPlayerName').value.trim();
+  const code=document.getElementById('roomCode').value.trim().toUpperCase();
   if(!name){alert('Enter your name.');return;}
   if(!code){alert('Enter a room code.');return;}
-  gs.playerName=name; gs.playerId='p_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
-  gs.roomId=code; gs.isHost=false;
+  gs.playerName=name;
+  gs.playerId='p_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+  gs.roomId=code;gs.isHost=false;
   db.ref('rooms/'+code).once('value').then(snap=>{
     const room=snap.val();
     if(!room){alert('Room not found.');return;}
     if(room.phase!=='lobby'){alert('Game already started.');return;}
     if(Object.keys(room.players||{}).length>=room.maxPlayers){alert('Room is full!');return;}
-    gs.roomName=room.name; gs.mode=room.mode||'normal';
+    gs.roomName=room.name;
+    gs.mode=room.mode||'normal';
+    gs.drawTime=room.drawTime||90;
+    gs.guessTime=room.guessTime||60;
+    gs.rounds=room.rounds||1;
     db.ref('rooms/'+code+'/players/'+gs.playerId)
       .set({name:gs.playerName,isHost:false,status:'joined'})
       .then(enterRoom).catch(e=>alert('Error: '+e.message));
@@ -427,175 +459,239 @@ function joinRoom(){
 }
 
 function enterRoom(){
-  document.getElementById('sideRoomName').textContent = gs.roomName;
-  document.getElementById('codeDisplay').textContent  = gs.roomId;
-  const modeInfo = MODES.find(m=>m.id===gs.mode)||MODES[0];
-  document.getElementById('modeTag').innerHTML = modeInfo.icon+' <strong>'+modeInfo.name+'</strong> mode';
+  document.getElementById('sideRoomName').textContent=gs.roomName;
+  document.getElementById('codeDisplay').textContent=gs.roomId;
+  const mi=MODES.find(m=>m.id===gs.mode)||MODES[0];
+  document.getElementById('modeTag').innerHTML=mi.icon+' <strong>'+mi.name+'</strong> mode';
+  const dt=gs.drawTime===0?'∞':gs.drawTime+'s';
+  const gt=gs.guessTime===0?'∞':gs.guessTime+'s';
+  document.getElementById('timerSettingsTag').innerHTML='✏️ Draw: <strong>'+dt+'</strong> &nbsp;|&nbsp; 🤔 Guess: <strong>'+gt+'</strong> &nbsp;|&nbsp; 🔄 Rounds: <strong>'+gs.rounds+'</strong>';
   showScreen('screenGame');
   initCanvas();
   attachListeners();
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId).onDisconnect().remove();
 }
 
-// ═══════════════════════════════════════════════════════
-//  FIREBASE LISTENERS
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+//  LISTENERS
+// ══════════════════════════════════════════════════════════
 function attachListeners(){
-  const rPlayers = db.ref('rooms/'+gs.roomId+'/players');
-  rPlayers.on('value',snap=>{ gs.players=snap.val()||{}; renderPlayers(); });
-  gs.listeners.push(rPlayers);
+  function reg(ref){gs.listeners.push(ref);return ref;}
 
-  const rPhase = db.ref('rooms/'+gs.roomId+'/phase');
-  rPhase.on('value',snap=>handlePhaseChange(snap.val()));
-  gs.listeners.push(rPhase);
-
-  const rPrompt = db.ref('rooms/'+gs.roomId+'/currentPrompt');
-  rPrompt.on('value',snap=>{ if(snap.val()) document.getElementById('promptDisplay').textContent=snap.val(); });
-  gs.listeners.push(rPrompt);
-
-  const rDrawing = db.ref('rooms/'+gs.roomId+'/currentDrawing');
-  rDrawing.on('value',snap=>{
-    const data = snap.val();
-    if(data){
-      gs.pendingDrawing = data; // always cache latest
-      renderDisplayCanvas(data);
+  reg(db.ref('rooms/'+gs.roomId+'/players')).on('value',snap=>{
+    gs.players=snap.val()||{};renderPlayers();
+  });
+  reg(db.ref('rooms/'+gs.roomId+'/phase')).on('value',snap=>handlePhaseChange(snap.val()));
+  reg(db.ref('rooms/'+gs.roomId+'/currentPrompt')).on('value',snap=>{
+    if(snap.val()){
+      document.getElementById('promptDisplay').textContent=snap.val();
+      document.getElementById('storyPromptDisplay').textContent=snap.val();
     }
   });
-  gs.listeners.push(rDrawing);
+  reg(db.ref('rooms/'+gs.roomId+'/currentDrawing')).on('value',snap=>{
+    const d=snap.val();
+    if(d){gs.pendingDrawing=d;renderDisplayCanvas(d);}
+  });
+  reg(db.ref('rooms/'+gs.roomId+'/scores')).on('value',snap=>{gs.scores=snap.val()||{};});
+  // story segments
+  reg(db.ref('rooms/'+gs.roomId+'/storySegments')).on('value',snap=>{
+    gs.storySegments=snap.val()||[];
+    renderStorySoFar();
+  });
+  // knockoff drawings
+  reg(db.ref('rooms/'+gs.roomId+'/drawings')).on('value',snap=>{
+    gs.knockoffDrawings=snap.val()||{};
+  });
+}
+function detachListeners(){gs.listeners.forEach(r=>r.off());gs.listeners=[];}
 
-  const rScores = db.ref('rooms/'+gs.roomId+'/scores');
-  rScores.on('value',snap=>{ gs.scores=snap.val()||{}; });
-  gs.listeners.push(rScores);
+// ══════════════════════════════════════════════════════════
+//  PLAYERS RENDER
+// ══════════════════════════════════════════════════════════
+function renderPlayers(){
+  const entries=Object.entries(gs.players);
+  document.getElementById('playerCount').textContent='('+entries.length+')';
+  document.getElementById('playersList').innerHTML=entries.length===0
+    ?'<div class="player-item"><span style="color:#aaa">Nobody here yet…</span></div>'
+    :entries.map(([id,p])=>`
+      <div class="player-item">
+        <span>${esc(p.name)}${id===gs.playerId?' <em style="color:#bbb;font-size:11px">(you)</em>':''}</span>
+        <span class="badge ${p.isHost?'badge-host':p.status==='done'?'badge-done':p.status==='ready'?'badge-ready':'badge-joined'}">
+          ${p.isHost?'👑 Host':p.status==='done'?'✓ Done':p.status==='ready'?'✓ Ready':'👋 Joined'}
+        </span>
+      </div>`).join('');
+  const n=entries.length;
+  document.getElementById('startBtn').disabled=!(gs.isHost&&n>=2);
+  document.getElementById('minPlayerNote').style.display=gs.isHost&&n<2?'block':'none';
+  document.getElementById('turnIndicator').textContent=n<2?'Waiting for players…':n+' player'+(n>1?'s':'')+' ready!';
 }
 
-function detachListeners(){ gs.listeners.forEach(r=>r.off()); gs.listeners=[]; }
+// ══════════════════════════════════════════════════════════
+//  PROMPTS
+// ══════════════════════════════════════════════════════════
+const P_NORMAL=['A cat riding a bicycle','A haunted pizza','A dinosaur at the dentist',
+  'A robot eating spaghetti','A fish playing guitar','An astronaut grocery shopping',
+  'A dog driving a bus','A penguin at the beach','A wizard doing laundry',
+  'A bear baking cupcakes','A shark at a birthday party','A snail winning a race',
+  'A cow in a spaceship','A pirate doing yoga','A giraffe using an ATM',
+  'A zombie eating salad','A unicorn at the gym','A dragon ordering coffee'];
+const P_ICE=['What did you eat for breakfast?','Your spirit animal','Your current mood',
+  'Your biggest fear','A hobby you wish you had','If you were a superhero','Your dream vacation',
+  'How you feel on Monday mornings','Your favorite food'];
+const P_STORY=['Once upon a time in a distant galaxy…','It was a dark and stormy night…',
+  'The robot opened its eyes for the first time…','Nobody expected the penguin to arrive…',
+  'The last human on Earth was surprised to find…'];
+const P_MASTER=['Starry Night','Mona Lisa','The Scream','American Gothic',
+  'Girl with a Pearl Earring','The Last Supper','The Birth of Venus','Water Lilies'];
+const P_SECRET=['The Eiffel Tower','Pizza','A dinosaur','The internet',
+  'Love','A black hole','Time travel','Money','Wifi','Democracy'];
+function rand(a){return a[Math.floor(Math.random()*a.length)];}
 
+// ══════════════════════════════════════════════════════════
+//  START GAME
+// ══════════════════════════════════════════════════════════
+function startGame(){
+  if(!gs.isHost)return;
+  const n=Object.keys(gs.players).length;
+  if(n<2){alert('Need at least 2 players!');return;}
+  let prompt='';
+  switch(gs.mode){
+    case 'icebreaker': prompt=rand(P_ICE); break;
+    case 'story':      prompt=rand(P_STORY); break;
+    case 'masterpiece':prompt='Recreate: "'+rand(P_MASTER)+'"'; break;
+    case 'secret':     prompt=rand(P_SECRET); break;
+    default:           prompt=rand(P_NORMAL);
+  }
+  const updates={phase:'draw',currentPrompt:prompt,currentDrawing:null,scores:{},
+    storySegments:[],drawings:{},animationFrames:{}};
+  Object.keys(gs.players).forEach(pid=>{updates['players/'+pid+'/status']='ready';});
+  db.ref('rooms/'+gs.roomId).update(updates);
+}
+
+// ══════════════════════════════════════════════════════════
+//  PHASE HANDLER
+// ══════════════════════════════════════════════════════════
 function handlePhaseChange(phase){
-  if(!phase) return;
-  stopTimer();
+  if(!phase)return;
+  stopAllTimers();
+
   if(phase==='lobby'){
     showPanel('draw');
     document.getElementById('gamePhaseLabel').textContent='🏠 Lobby';
+
   } else if(phase==='draw'){
+    gs.isDrawer=false;
     document.getElementById('gamePhaseLabel').textContent='✏️ Draw Phase';
-    gs.isDrawer = false; // reset — everyone can draw again
-    showPanel('draw');
     document.getElementById('guessInput').value='';
-    startTimer(90,'timerBar','timerWrap');
+
+    // Story mode alternates: even turns = write text, odd turns = draw
+    if(gs.mode==='story'){
+      const seg=Array.isArray(gs.storySegments)?gs.storySegments:Object.values(gs.storySegments||{});
+      const isTextTurn=(seg.length%2===0);
+      if(isTextTurn){
+        document.getElementById('storyInput').value='';
+        document.getElementById('storyCharCount').textContent='0';
+        showPanel('story');
+        if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarStory','timerWrapStory','timerTextStory',()=>submitStoryText(true));
+      } else {
+        document.getElementById('drawTitle').textContent='Draw the last sentence!';
+        showPanel('draw');
+        clearCanvas();
+        if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
+      }
+      return;
+    }
+
+    // Exquisite corpse — show which section to draw
+    if(gs.mode==='exquisite'){
+      const sections=['HEAD & NECK','TORSO & ARMS','LEGS & FEET'];
+      const seg=Array.isArray(gs.storySegments)?gs.storySegments.length:0;
+      const sIdx=Math.min(seg,2);
+      document.getElementById('drawTitle').textContent='Draw the '+sections[sIdx];
+      const hint=document.querySelector('.exquisite-hint');
+      if(hint){hint.textContent='Section '+(sIdx+1)+'/3: '+sections[sIdx]+'. Draw only your section!';}
+    }
+
+    // Sandwich mode
+    if(gs.mode==='sandwich'){
+      const seg=Array.isArray(gs.storySegments)?gs.storySegments.length:0;
+      document.getElementById('drawTitle').textContent=seg===0?'Draw the TOP half of the picture':'Draw the BOTTOM half!';
+    }
+
+    showPanel('draw');
+    clearCanvas();
+    if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
+
   } else if(phase==='guess'){
     document.getElementById('gamePhaseLabel').textContent='🤔 Guess Phase';
-    // Drawer waits; everyone else guesses
     if(gs.isDrawer){
-      showPanel('waiting');
+      document.getElementById('waitingTitle').textContent='Waiting for guesses…';
+      document.getElementById('waitingSubtitle').textContent='You drew it! Others are guessing.';
+      showPanel('waiting',true);
     } else {
-      const panel = gs.mode==='score' ? 'score' : 'guess';
-      showPanel(panel);
-      // Now the panel is visible and canvas has real dimensions — render drawing
-      if(gs.pendingDrawing) renderDisplayCanvas(gs.pendingDrawing);
-      startTimer(60,'timerBar2','timerWrap2');
+      document.getElementById('guessTitle').textContent=gs.mode==='knockoff'?'Guess the prompt! 🃏':'What is this? 🤔';
+      showPanel('guess');
+      if(gs.guessTime>0) startTimer(gs.guessTime,'timerBarGuess','timerWrapGuess','timerTextGuess',()=>submitGuess(true));
     }
+
+  } else if(phase==='score_vote'){
+    document.getElementById('gamePhaseLabel').textContent='⭐ Vote!';
+    if(!gs.isDrawer){
+      showPanel('score');
+      if(gs.pendingDrawing) requestAnimationFrame(()=>{
+        scoreCanv.width=scoreCanv.parentElement.clientWidth||600;
+        scoreCanv.height=380;
+        renderOnCanvas(scoreCanv,gs.pendingDrawing);
+      });
+    } else {
+      showPanel('waiting',false);
+    }
+
   } else if(phase==='done'){
     buildResults();
   }
 }
 
-// ═══════════════════════════════════════════════════════
-//  PLAYERS RENDER
-// ═══════════════════════════════════════════════════════
-function renderPlayers(){
-  const entries = Object.entries(gs.players);
-  document.getElementById('playerCount').textContent='('+entries.length+')';
-  document.getElementById('playersList').innerHTML = entries.length===0
-    ? '<div class="player-item"><span style="color:#aaa">Nobody here yet…</span></div>'
-    : entries.map(([id,p])=>`
-        <div class="player-item">
-          <span>${esc(p.name)}${id===gs.playerId?' <em style="color:#bbb;font-size:11px">(you)</em>':''}</span>
-          <span class="badge ${p.isHost?'badge-host':p.status==='done'?'badge-done':p.status==='ready'?'badge-ready':'badge-joined'}">${p.isHost?'👑 Host':p.status==='done'?'✓ Done':p.status==='ready'?'✓ Ready':'👋 Joined'}</span>
-        </div>`).join('');
-  const n = entries.length;
-  const canStart = gs.isHost && n>=2;
-  document.getElementById('startBtn').disabled = !canStart;
-  document.getElementById('minPlayerNote').style.display = gs.isHost&&n<2?'block':'none';
-  document.getElementById('turnIndicator').textContent = n<2?'Waiting for players…':n+' player'+(n>1?'s':'')+' ready!';
-}
-
-// ═══════════════════════════════════════════════════════
-//  GAME START & PROMPTS
-// ═══════════════════════════════════════════════════════
-const PROMPTS_NORMAL = ['A cat riding a bicycle','A haunted pizza','A dinosaur at the dentist',
-  'A robot eating spaghetti','A fish playing guitar','An astronaut grocery shopping',
-  'A dog driving a bus','A penguin at the beach','A wizard doing laundry',
-  'A bear baking cupcakes','A shark at a birthday party','A snail winning a race',
-  'A cow in a spaceship','A pirate doing yoga','A giraffe using an ATM'];
-
-const PROMPTS_ICEBREAKER = ['What did you eat for breakfast?','Your spirit animal',
-  'Your current mood','Your biggest fear','A hobby you wish you had',
-  'If you were a superhero','Your dream vacation'];
-
-const PROMPTS_STORY = ['Once upon a time in a distant galaxy…','It was a dark and stormy night…',
-  'The robot opened its eyes for the first time…','Nobody expected the penguin to arrive…'];
-
-const PROMPTS_MASTERPIECE = ['Starry Night','Mona Lisa','The Scream','American Gothic',
-  'Girl with a Pearl Earring','The Last Supper'];
-
-const PROMPTS_SECRET = ['The Eiffel Tower','Pizza','A dinosaur','The internet',
-  'Love','A black hole','Time travel','Money'];
-
-function randFrom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-function startGame(){
-  if(!gs.isHost) return;
-  const n = Object.keys(gs.players).length;
-  if(n<2){alert('Need at least 2 players!');return;}
-  let prompt='';
-  switch(gs.mode){
-    case 'icebreaker': prompt=randFrom(PROMPTS_ICEBREAKER); break;
-    case 'story':      prompt=randFrom(PROMPTS_STORY); break;
-    case 'masterpiece':prompt='Recreate: "'+randFrom(PROMPTS_MASTERPIECE)+'"'; break;
-    case 'secret':     prompt='SECRET WORD: '+randFrom(PROMPTS_SECRET)+'\n(Only the drawer knows!)'; break;
-    default:           prompt=randFrom(PROMPTS_NORMAL);
-  }
-  clearCanvas();
-  const updates={phase:'draw',currentPrompt:prompt,currentDrawing:null,scores:{}};
-  Object.keys(gs.players).forEach(pid=>{updates['players/'+pid+'/status']='ready';});
-  db.ref('rooms/'+gs.roomId).update(updates);
-}
-
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 //  CANVAS
-// ═══════════════════════════════════════════════════════
-let canvas, ctx, dispCanvas, dispCtx, scoreCanv, scoreCtx;
+// ══════════════════════════════════════════════════════════
+let canvas,ctx,dispCanvas,dispCtx,scoreCanv,scoreCtx;
 
 function initCanvas(){
-  canvas    = document.getElementById('drawingCanvas');   ctx      = canvas.getContext('2d');
-  dispCanvas= document.getElementById('displayCanvas');   dispCtx  = dispCanvas.getContext('2d');
-  scoreCanv = document.getElementById('scoreCanvas');     scoreCtx = scoreCanv.getContext('2d');
+  canvas=document.getElementById('drawingCanvas');       ctx=canvas.getContext('2d');
+  dispCanvas=document.getElementById('displayCanvas');   dispCtx=dispCanvas.getContext('2d');
+  scoreCanv=document.getElementById('scoreCanvas');      scoreCtx=scoreCanv.getContext('2d');
 
-  function setDim(c, h){
-    const w = c.parentElement ? (c.parentElement.clientWidth||700) : 700;
-    c.width = w; c.height = h||420;
+  // Set pixel dims once from parent width
+  function setDim(c,h){const w=c.parentElement?c.parentElement.clientWidth||700:700;c.width=w;c.height=h||420;}
+  setDim(canvas,420);setDim(dispCanvas,420);setDim(scoreCanv,380);
+
+  // White background
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // Exquisite corpse hint
+  if(!document.querySelector('.exquisite-hint')){
+    const hint=document.createElement('div');
+    hint.className='exquisite-hint';hint.style.display='none';
+    document.getElementById('drawCanvasWrap')&&document.getElementById('drawCanvasWrap').before(hint);
   }
-  setDim(canvas,420); setDim(dispCanvas,420); setDim(scoreCanv,380);
 
-  // White background so JPEG export never goes black
-  ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  canvas.addEventListener('mousedown', e=>{gs.mouseDown=true; setLast(e); saveUndo();});
-  canvas.addEventListener('mousemove', doDraw);
-  canvas.addEventListener('mouseup',   ()=>gs.mouseDown=false);
+  canvas.addEventListener('mousedown',e=>{gs.mouseDown=true;setLast(e);saveUndo();});
+  canvas.addEventListener('mousemove',doDraw);
+  canvas.addEventListener('mouseup',()=>gs.mouseDown=false);
   canvas.addEventListener('mouseleave',()=>gs.mouseDown=false);
   canvas.addEventListener('touchstart',e=>{e.preventDefault();gs.mouseDown=true;setLast(e.touches[0]);saveUndo();},{passive:false});
-  canvas.addEventListener('touchmove', e=>{e.preventDefault();doDraw(e.touches[0]);},{passive:false});
-  canvas.addEventListener('touchend',  ()=>gs.mouseDown=false);
+  canvas.addEventListener('touchmove',e=>{e.preventDefault();doDraw(e.touches[0]);},{passive:false});
+  canvas.addEventListener('touchend',()=>gs.mouseDown=false);
 }
 
 function setLast(e){const r=canvas.getBoundingClientRect();gs.lastX=e.clientX-r.left;gs.lastY=e.clientY-r.top;}
 
 function doDraw(e){
-  if(!gs.mouseDown) return;
+  if(!gs.mouseDown)return;
   const r=canvas.getBoundingClientRect();
-  const x=e.clientX-r.left, y=e.clientY-r.top;
-  ctx.globalAlpha = parseFloat(document.getElementById('brushOpacity').value);
+  const x=e.clientX-r.left,y=e.clientY-r.top;
+  ctx.globalAlpha=parseFloat(document.getElementById('brushOpacity').value);
   if(gs.currentTool==='eraser'){
     const s=parseInt(document.getElementById('brushSize').value)*2;
     ctx.clearRect(x-s/2,y-s/2,s,s);
@@ -603,9 +699,9 @@ function doDraw(e){
     ctx.strokeStyle=document.getElementById('brushColor').value;
     ctx.lineWidth=document.getElementById('brushSize').value;
     ctx.lineCap=ctx.lineJoin='round';
-    ctx.beginPath(); ctx.moveTo(gs.lastX,gs.lastY); ctx.lineTo(x,y); ctx.stroke();
+    ctx.beginPath();ctx.moveTo(gs.lastX,gs.lastY);ctx.lineTo(x,y);ctx.stroke();
   }
-  gs.lastX=x; gs.lastY=y;
+  gs.lastX=x;gs.lastY=y;
 }
 
 function selectTool(t){
@@ -616,199 +712,363 @@ function selectTool(t){
 
 function clearCanvas(){
   ctx.globalAlpha=1;
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  // white bg
   ctx.fillStyle='#ffffff';
   ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.globalAlpha=1;
   gs.undoStack=[];
 }
 
 function saveUndo(){
   gs.undoStack.push(ctx.getImageData(0,0,canvas.width,canvas.height));
-  if(gs.undoStack.length>20) gs.undoStack.shift();
+  if(gs.undoStack.length>20)gs.undoStack.shift();
 }
-
-function undoCanvas(){
-  if(gs.undoStack.length===0) return;
-  ctx.putImageData(gs.undoStack.pop(),0,0);
-}
+function undoCanvas(){if(gs.undoStack.length)ctx.putImageData(gs.undoStack.pop(),0,0);}
 
 function fillBucket(){
-  const color=document.getElementById('brushColor').value;
   ctx.globalAlpha=parseFloat(document.getElementById('brushOpacity').value);
-  ctx.fillStyle=color;
+  ctx.fillStyle=document.getElementById('brushColor').value;
   ctx.fillRect(0,0,canvas.width,canvas.height);
   ctx.globalAlpha=1;
 }
 
+// Export canvas with guaranteed white background
+function exportCanvas(){
+  const exp=document.createElement('canvas');
+  exp.width=canvas.width;exp.height=canvas.height;
+  const ectx=exp.getContext('2d');
+  ectx.fillStyle='#ffffff';ectx.fillRect(0,0,exp.width,exp.height);
+  ectx.drawImage(canvas,0,0);
+  return exp.toDataURL('image/jpeg',0.82);
+}
+
 function renderDisplayCanvas(dataUrl){
-  if(!dispCanvas) return;
-  // Ensure canvas has real pixel dimensions (it may be hidden/zero when first called)
-  if(!dispCanvas.width || dispCanvas.width<10){
-    dispCanvas.width  = dispCanvas.parentElement ? dispCanvas.parentElement.clientWidth||600 : 600;
-    dispCanvas.height = 420;
+  if(!dispCanvas)return;
+  if(!dispCanvas.width||dispCanvas.width<10){
+    dispCanvas.width=dispCanvas.parentElement?dispCanvas.parentElement.clientWidth||600:600;
+    dispCanvas.height=420;
   }
+  renderOnCanvas(dispCanvas,dataUrl);
+}
+
+function renderOnCanvas(c,dataUrl){
+  const cctx=c.getContext('2d');
   const img=new Image();
-  img.onload=()=>{
-    dispCtx.clearRect(0,0,dispCanvas.width,dispCanvas.height);
-    dispCtx.drawImage(img,0,0,dispCanvas.width,dispCanvas.height);
-    if(scoreCanv && scoreCanv.width>0){
-      scoreCtx.clearRect(0,0,scoreCanv.width,scoreCanv.height);
-      scoreCtx.drawImage(img,0,0,scoreCanv.width,scoreCanv.height);
-    }
-  };
+  img.onload=()=>{cctx.clearRect(0,0,c.width,c.height);cctx.drawImage(img,0,0,c.width,c.height);};
   img.src=dataUrl;
 }
 
-// ═══════════════════════════════════════════════════════
-//  TIMER
-// ═══════════════════════════════════════════════════════
-function startTimer(secs, barId, wrapId){
-  document.getElementById(wrapId).style.display='block';
+// ══════════════════════════════════════════════════════════
+//  TIMERS
+// ══════════════════════════════════════════════════════════
+function startTimer(secs,barId,wrapId,textId,onEnd){
+  const wrap=document.getElementById(wrapId);
   const bar=document.getElementById(barId);
+  const txt=document.getElementById(textId);
+  if(wrap)wrap.style.display='block';
+  if(bar)bar.style.width='100%';
   let left=secs;
-  bar.style.width='100%';
-  gs.timerInterval=setInterval(()=>{
+  if(txt)txt.textContent=left+'s remaining';
+  const iv=setInterval(()=>{
     left--;
-    bar.style.width=Math.max(0,(left/secs*100))+'%';
-    if(left<=0){ stopTimer(); }
+    if(bar)bar.style.width=Math.max(0,left/secs*100)+'%';
+    if(txt)txt.textContent=left>0?left+'s remaining':'Time\'s up!';
+    if(left<=0){clearInterval(iv);if(onEnd)onEnd();}
   },1000);
-}
-function stopTimer(){
-  clearInterval(gs.timerInterval);
-  gs.timerInterval=null;
-  ['timerWrap','timerWrap2'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  gs.timers.push(iv);
 }
 
-// ═══════════════════════════════════════════════════════
+function stopAllTimers(){
+  gs.timers.forEach(iv=>clearInterval(iv));
+  gs.timers=[];
+  ['timerWrapDraw','timerWrapGuess','timerWrapStory'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.style.display='none';
+  });
+  ['timerTextDraw','timerTextGuess','timerTextStory'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.textContent='';
+  });
+}
+
+// ══════════════════════════════════════════════════════════
 //  SUBMIT DRAWING
-// ═══════════════════════════════════════════════════════
-function submitDrawing(){
-  gs.isDrawer = true;
-  // Stamp white bg before JPEG (no alpha channel = transparent → black)
-  const exp=document.createElement('canvas');
-  exp.width=canvas.width; exp.height=canvas.height;
-  const ectx=exp.getContext('2d');
-  ectx.fillStyle='#ffffff'; ectx.fillRect(0,0,exp.width,exp.height);
-  ectx.drawImage(canvas,0,0);
-  const dataUrl=exp.toDataURL('image/jpeg',0.82);
-  gs.chain.push({type:'drawing',player:gs.playerName,content:dataUrl,mode:gs.mode});
+// ══════════════════════════════════════════════════════════
+function submitDrawing(auto){
+  stopAllTimers();
+  gs.isDrawer=true;
+  const dataUrl=exportCanvas();
+  gs.chain.push({type:'drawing',player:gs.playerName,content:dataUrl});
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
-  if(gs.mode==='knockoff'){
+
+  // Mode-specific submit logic
+  if(gs.mode==='knockoff'||gs.mode==='masterpiece'||gs.mode==='score'){
+    // Everyone draws same prompt — store individually, host triggers vote when all done
     db.ref('rooms/'+gs.roomId+'/drawings/'+gs.playerId).set({player:gs.playerName,data:dataUrl});
-    db.ref('rooms/'+gs.roomId+'/phase').set('guess');
+    showPanel('waiting',true);
+    document.getElementById('waitingTitle').textContent='Waiting for others to finish…';
+    document.getElementById('waitingSubtitle').textContent='Your drawing is saved!';
+    // Check if all players done — host triggers next phase
+    checkAllDone(()=>{
+      if(gs.mode==='score'){
+        // Pick one random drawing to show for rating
+        const allDrawings=Object.values(gs.knockoffDrawings||{});
+        if(allDrawings.length>0){
+          const pick=allDrawings[Math.floor(Math.random()*allDrawings.length)];
+          db.ref('rooms/'+gs.roomId).update({phase:'score_vote',currentDrawing:pick.data});
+        }
+      } else {
+        db.ref('rooms/'+gs.roomId+'/phase').set('done');
+      }
+    });
+
+  } else if(gs.mode==='exquisite'||gs.mode==='sandwich'){
+    // Store this section
+    db.ref('rooms/'+gs.roomId+'/drawings/'+gs.playerId+'_'+gs.storySegments.length)
+      .set({player:gs.playerName,data:dataUrl,section:gs.storySegments.length});
+    const segs=(gs.storySegments||[]);
+    const newSegs=[...segs,{type:'drawing',player:gs.playerName,content:dataUrl}];
+    db.ref('rooms/'+gs.roomId+'/storySegments').set(newSegs);
+    showPanel('waiting',true);
+    const maxSections=gs.mode==='exquisite'?3:2;
+    checkAllDone(()=>{
+      if(newSegs.length>=maxSections){
+        db.ref('rooms/'+gs.roomId+'/phase').set('done');
+      } else {
+        // Next section
+        db.ref('rooms/'+gs.roomId).update({phase:'draw',currentDrawing:null});
+      }
+    });
+
+  } else if(gs.mode==='animation'){
+    gs.animationFrames=gs.animationFrames||[];
+    gs.animationFrames.push(dataUrl);
+    if(gs.animationFrames.length<3){
+      document.getElementById('drawTitle').textContent='Frame '+( gs.animationFrames.length+1)+'/3';
+      showPanel('draw');
+      clearCanvas();
+      gs.isDrawer=false;
+      if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
+    } else {
+      gs.chain.push({type:'animation',player:gs.playerName,frames:gs.animationFrames});
+      db.ref('rooms/'+gs.roomId).update({phase:'guess',currentDrawing:gs.animationFrames[0]});
+      showPanel('waiting',true);
+    }
+
   } else {
+    // Normal / icebreaker / secret — draw once then guess
     db.ref('rooms/'+gs.roomId).update({phase:'guess',currentDrawing:dataUrl});
+    showPanel('waiting',true);
   }
 }
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+//  SUBMIT STORY TEXT
+// ══════════════════════════════════════════════════════════
+function submitStoryText(auto){
+  stopAllTimers();
+  const text=document.getElementById('storyInput').value.trim()||'(skipped)';
+  gs.storySegments=Array.isArray(gs.storySegments)?gs.storySegments:[];
+  const newSegs=[...gs.storySegments,{type:'text',player:gs.playerName,content:text}];
+  gs.chain.push({type:'text',player:gs.playerName,content:text});
+  db.ref('rooms/'+gs.roomId+'/storySegments').set(newSegs);
+  db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
+
+  document.getElementById('waitingTitle').textContent='Waiting for others…';
+  document.getElementById('waitingSubtitle').textContent='Your sentence was added!';
+  document.getElementById('waitingTextPreview').style.display='block';
+  document.getElementById('waitingTextPreview').textContent='"'+text+'"';
+  document.getElementById('waitingThumb').style.display='none';
+  showPanel('waiting',false);
+
+  const totalPlayers=Object.keys(gs.players).length;
+  const maxSegments=totalPlayers*2; // alternating text+draw for each player
+  checkAllDone(()=>{
+    if(newSegs.length>=maxSegments){
+      db.ref('rooms/'+gs.roomId+'/phase').set('done');
+    } else {
+      // move to draw turn
+      db.ref('rooms/'+gs.roomId).update({
+        phase:'draw',
+        currentPrompt:'Draw: "'+text+'"',
+        currentDrawing:null
+      });
+    }
+  });
+}
+
+function renderStorySoFar(){
+  const el=document.getElementById('storyChainSoFar');
+  if(!el)return;
+  const segs=Array.isArray(gs.storySegments)?gs.storySegments:Object.values(gs.storySegments||{});
+  if(segs.length===0){el.style.display='none';return;}
+  el.style.display='block';
+  el.innerHTML='<strong style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.5px">Story so far:</strong><br>'+
+    segs.filter(s=>s.type==='text').map(s=>'<span style="color:#555">…'+esc(s.content)+'</span>').join('<br>');
+}
+
+// ══════════════════════════════════════════════════════════
 //  SUBMIT GUESS
-// ═══════════════════════════════════════════════════════
-function submitGuess(){
-  const guess=document.getElementById('guessInput').value.trim();
-  if(!guess) return;
+// ══════════════════════════════════════════════════════════
+function submitGuess(auto){
+  stopAllTimers();
+  const guess=document.getElementById('guessInput').value.trim()||(auto?'(no answer)':'');
+  if(!guess&&!auto)return;
   gs.chain.push({type:'guess',player:gs.playerName,content:guess});
   document.getElementById('guessInput').value='';
   gs.currentTurn++;
-
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
 
-  const total=Object.keys(gs.players).length;
-  if(gs.currentTurn>=total){
-    db.ref('rooms/'+gs.roomId+'/phase').set('done');
-  } else {
-    const nextPrompt='Last guess: "'+guess+'"';
-    clearCanvas();
-    db.ref('rooms/'+gs.roomId).update({phase:'draw',currentPrompt:nextPrompt,currentDrawing:null});
-  }
+  checkAllDone(()=>{
+    const total=Object.keys(gs.players).length;
+    if(gs.currentTurn>=total){
+      db.ref('rooms/'+gs.roomId+'/phase').set('done');
+    } else {
+      clearCanvas();
+      db.ref('rooms/'+gs.roomId).update({phase:'draw',currentPrompt:'Last guess: "'+guess+'"',currentDrawing:null});
+    }
+  });
+
+  showPanel('waiting',false);
+  document.getElementById('waitingTitle').textContent='Guess submitted!';
+  document.getElementById('waitingSubtitle').textContent='Waiting for others…';
 }
 
-// ═══════════════════════════════════════════════════════
+// Helper: poll if all non-host (or all) players are done, then run callback (host only)
+function checkAllDone(cb){
+  if(!gs.isHost)return;
+  const check=()=>{
+    db.ref('rooms/'+gs.roomId+'/players').once('value').then(snap=>{
+      const p=snap.val()||{};
+      const all=Object.values(p).every(pl=>pl.status==='done'||pl.isHost&&Object.values(p).filter(x=>!x.isHost).every(x=>x.status==='done'));
+      // simpler: just check all
+      const allDone=Object.values(p).every(pl=>pl.status==='done');
+      if(allDone)cb();
+      else setTimeout(check,1500);
+    });
+  };
+  setTimeout(check,800);
+}
+
+// ══════════════════════════════════════════════════════════
 //  SCORE MODE
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 function rateStar(v){
   gs.myRating=v;
   document.querySelectorAll('.star').forEach((s,i)=>{
     s.style.filter=i<v?'none':'grayscale(1) opacity(.4)';
   });
 }
-
 function submitScore(){
   if(!gs.myRating){alert('Please pick a star rating!');return;}
   db.ref('rooms/'+gs.roomId+'/scores/'+gs.playerId).set(gs.myRating);
   gs.myRating=0;
   document.querySelectorAll('.star').forEach(s=>s.style.filter='');
-  // after scoring, go to results if everyone has scored
-  db.ref('rooms/'+gs.roomId+'/phase').set('done');
+  db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
+  showPanel('waiting',false);
+  checkAllDone(()=>db.ref('rooms/'+gs.roomId+'/phase').set('done'));
 }
 
-// ═══════════════════════════════════════════════════════
-//  BUILD RESULTS
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+//  RESULTS
+// ══════════════════════════════════════════════════════════
 function buildResults(){
-  stopTimer();
+  stopAllTimers();
   showPanel('results');
   document.getElementById('gamePhaseLabel').textContent='🎉 Game Over!';
 
-  // Chain
-  document.getElementById('chainContent').innerHTML = gs.chain.length===0
-    ? '<p style="color:#aaa;text-align:center">No chain data — play a full round to see results!</p>'
-    : gs.chain.map((item,i)=>
-        item.type==='drawing'
-          ? `<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} drew:</div><img src="${item.content}" class="chain-image" alt="drawing"></div>`
-          : `<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} guessed:</div><div class="chain-content">"${esc(item.content)}"</div></div>`
-      ).join('');
+  document.getElementById('resultsTitle').textContent={
+    normal:'🎉 The Chain!',knockoff:'🃏 All Drawings!',animation:'🎬 Animations!',
+    icebreaker:'🧊 Icebreaker!',exquisite:'🎭 The Monsters!',complement:'🖼️ Full Pictures!',
+    masterpiece:'🖼 Masterpieces!',story:'📖 The Story!',score:'🏆 Scores!',
+    secret:'🕵️ Secret Revealed!',sandwich:'🥪 Sandwiches!'
+  }[gs.mode]||'🎉 Results!';
 
-  // Scoreboard (score mode)
-  if(gs.mode==='score' && Object.keys(gs.scores).length>0){
+  // Chain (normal/story/icebreaker/secret/animation)
+  const chainEl=document.getElementById('chainContent');
+  const storySegs=Array.isArray(gs.storySegments)?gs.storySegments:Object.values(gs.storySegments||{});
+
+  if(gs.mode==='story'&&storySegs.length>0){
+    chainEl.innerHTML=storySegs.map((item,i)=>
+      item.type==='drawing'
+        ?`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} drew:</div><img src="${item.content}" class="chain-image"></div>`
+        :`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} wrote:</div><div class="chain-content">"${esc(item.content)}"</div></div>`
+    ).join('');
+  } else if(['exquisite','sandwich','complement'].includes(gs.mode)){
+    // Composite: stitch the drawings together vertically
+    const drawings=Object.values(gs.knockoffDrawings||{}).sort((a,b)=>(a.section||0)-(b.section||0));
+    if(drawings.length>0){
+      chainEl.innerHTML='<p style="text-align:center;color:#888;font-size:13px;margin-bottom:12px">Each player drew one section:</p>'+
+        drawings.map((d,i)=>`<div class="chain-item"><div class="chain-player">Section ${i+1} — ${esc(d.player)}:</div><img src="${d.data}" class="chain-image"></div>`).join('');
+    } else {
+      chainEl.innerHTML='<p style="color:#aaa;text-align:center">No drawings yet.</p>';
+    }
+  } else if(['knockoff','masterpiece'].includes(gs.mode)){
+    chainEl.style.display='none';
+    document.getElementById('knockoffGrid').style.display='block';
+    const allD=Object.values(gs.knockoffDrawings||{});
+    document.getElementById('knockoffItems').innerHTML=allD.length>0
+      ?allD.map(d=>`<div class="knockoff-item"><img src="${d.data}" style="width:100%;display:block"><div class="knockoff-label">${esc(d.player)}</div></div>`).join('')
+      :'<p style="color:#aaa">No drawings submitted.</p>';
+  } else if(gs.mode==='animation'){
+    const animItem=gs.chain.find(c=>c.type==='animation');
+    if(animItem){
+      chainEl.innerHTML='<div class="chain-player">'+esc(animItem.player)+'\'s animation:</div>'+
+        animItem.frames.map((f,i)=>`<div class="chain-item"><div class="chain-player">Frame ${i+1}:</div><img src="${f}" class="chain-image"></div>`).join('');
+      const guesses=gs.chain.filter(c=>c.type==='guess');
+      if(guesses.length)chainEl.innerHTML+=guesses.map(g=>`<div class="chain-item"><div class="chain-player">${esc(g.player)} guessed:</div><div class="chain-content">"${esc(g.content)}"</div></div>`).join('');
+    }
+  } else {
+    chainEl.innerHTML=gs.chain.length===0
+      ?'<p style="color:#aaa;text-align:center">Play a full round to see results!</p>'
+      :gs.chain.map((item,i)=>
+          item.type==='drawing'
+            ?`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} drew:</div><img src="${item.content}" class="chain-image"></div>`
+            :`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} ${item.type==='text'?'wrote':'guessed'}:</div><div class="chain-content">"${esc(item.content)}"</div></div>`
+        ).join('');
+  }
+
+  // Scoreboard for score mode
+  if(gs.mode==='score'&&Object.keys(gs.scores).length>0){
     document.getElementById('scoreboardWrap').style.display='block';
     const entries=Object.entries(gs.scores)
       .map(([id,pts])=>({name:(gs.players[id]||{name:'?'}).name,pts}))
       .sort((a,b)=>b.pts-a.pts);
-    const medals=['🥇','🥈','🥉'];
     document.getElementById('scoreboardList').innerHTML=entries.map((e,i)=>`
       <div class="score-row">
-        <span class="score-rank">${medals[i]||'#'+(i+1)}</span>
+        <span class="score-rank">${['🥇','🥈','🥉'][i]||'#'+(i+1)}</span>
         <span class="score-name">${esc(e.name)}</span>
-        <span class="score-pts">${e.pts} ⭐</span>
+        <span class="score-pts">${e.pts}⭐</span>
       </div>`).join('');
   }
-
-  document.getElementById('resultsTitle').textContent = {
-    normal:'🎉 The Chain!', knockoff:'🃏 All Drawings!', animation:'🎬 Animation Results!',
-    icebreaker:'🧊 Icebreaker Results!', exquisite:'🎭 The Monster!',
-    complement:'🖼️ The Full Picture!', masterpiece:'🖼 Masterpieces!',
-    story:'📖 The Story!', score:'🏆 Scores!', secret:'🕵️ Secret Revealed!',
-    coop:'🤝 Co-op Result!', sandwich:'🥪 The Sandwich!'
-  }[gs.mode]||'🎉 Results!';
 }
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 //  UI HELPERS
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-function showPanel(name){
-  ['panelDraw','panelGuess','panelWaiting','panelScore','panelResults'].forEach(id=>
-    document.getElementById(id).classList.remove('active'));
-  const map={draw:'panelDraw',guess:'panelGuess',waiting:'panelWaiting',score:'panelScore',results:'panelResults'};
+function showPanel(name, showDrawingThumb){
+  const panels=['panelDraw','panelStory','panelGuess','panelWaiting','panelScore','panelResults'];
+  panels.forEach(id=>document.getElementById(id).classList.remove('active'));
+  const map={draw:'panelDraw',story:'panelStory',guess:'panelGuess',
+             waiting:'panelWaiting',score:'panelScore',results:'panelResults'};
   if(map[name]) document.getElementById(map[name]).classList.add('active');
 
   if(name==='waiting'){
-    requestAnimationFrame(()=>{
-      const thumb=document.getElementById('waitingThumb');
-      thumb.width=thumb.parentElement.clientWidth||400;
-      thumb.height=Math.round(thumb.width*420/600);
-      if(canvas) thumb.getContext('2d').drawImage(canvas,0,0,thumb.width,thumb.height);
-    });
+    const thumbCanvas=document.getElementById('waitingThumb');
+    const textPrev=document.getElementById('waitingTextPreview');
+    if(showDrawingThumb===true){
+      thumbCanvas.style.display='block';
+      if(textPrev)textPrev.style.display='none';
+      requestAnimationFrame(()=>{
+        thumbCanvas.width=thumbCanvas.parentElement.clientWidth||400;
+        thumbCanvas.height=Math.round(thumbCanvas.width*420/600);
+        if(canvas)thumbCanvas.getContext('2d').drawImage(canvas,0,0,thumbCanvas.width,thumbCanvas.height);
+      });
+    }
   }
 
-  if((name==='guess'||name==='score') && gs.pendingDrawing){
+  if((name==='guess'||name==='score')&&gs.pendingDrawing){
     requestAnimationFrame(()=>{
       dispCanvas.width=dispCanvas.parentElement.clientWidth||600;
       dispCanvas.height=420;
@@ -823,30 +1083,24 @@ function switchTab(tab){
   document.getElementById('tabCreate').classList.toggle('active',tab==='create');
   document.getElementById('tabJoin').classList.toggle('active',tab==='join');
 }
-
-function setStatus(color,html){
-  const el=document.getElementById('firebaseStatus');
-  el.className='info-box info-'+color; el.innerHTML=html;
-}
-
-function copyCode(){ navigator.clipboard.writeText(gs.roomId).then(()=>alert('Room code copied!')); }
-
+function setStatus(color,html){const el=document.getElementById('firebaseStatus');el.className='info-box info-'+color;el.innerHTML=html;}
+function copyCode(){navigator.clipboard.writeText(gs.roomId).then(()=>alert('Copied!'));}
 function leaveRoom(){
-  if(!confirm('Leave the room?')) return;
-  stopTimer(); detachListeners();
-  if(gs.playerId&&gs.roomId) db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId).remove();
+  if(!confirm('Leave the room?'))return;
+  stopAllTimers();detachListeners();
+  if(gs.playerId&&gs.roomId)db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId).remove();
   Object.assign(gs,{playerName:'',playerId:null,roomId:null,roomName:'',isHost:false,isDrawer:false,
-    players:{},chain:[],currentTurn:0,scores:{},myRating:0,pendingDrawing:null,
-    currentTool:'draw',mouseDown:false,undoStack:[]});
-  showScreen('screenSetup');
-  showPanel('draw');
-  ['playerName','roomName','joinPlayerName','roomCode','guessInput'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.value='';
+    players:{},chain:[],storySegments:[],animationFrames:[],knockoffDrawings:{},
+    currentTurn:0,scores:{},myRating:0,pendingDrawing:null,currentTool:'draw',mouseDown:false,undoStack:[]});
+  showScreen('screenSetup');showPanel('draw');
+  ['playerName','roomName','joinPlayerName','roomCode','guessInput','storyInput'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
   });
-  if(ctx) clearCanvas();
+  if(ctx)clearCanvas();
 }
-
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 </script>
 </body>
 </html>
+HTMLEOF
+echo "Done: $(wc -l < /mnt/user-data/outputs/gartic-phone.html) lines"
