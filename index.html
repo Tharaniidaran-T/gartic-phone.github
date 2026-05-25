@@ -765,23 +765,39 @@ function submitGuess(auto){
     });
   }
 }
+  function transitionTelephonePhase(segs){
+  const totalPlayers = Object.keys(gs.players).length;
+  const maxSegs = totalPlayers * 2;
 
-function transitionTelephonePhase(segs){
-  const totalPlayers=Object.keys(gs.players).length;
-  const maxSegs=totalPlayers*2;
-  setTimeout(()=>{
-    if(segs.length>=maxSegs){
-      db.ref('rooms/'+gs.roomId).update({phase:'done'});
-    } else {
-      const nextPrompt=segs[segs.length-1].content;
-      db.ref('rooms/'+gs.roomId).update({
+  setTimeout(() => {
+
+    if(segs.length >= maxSegs){
+      db.ref('rooms/' + gs.roomId).update({
+        phase:'done'
+      });
+      return;
+    }
+
+    const last = segs[segs.length - 1];
+
+    // If last thing was a guess -> next phase is drawing
+    if(last.type === 'guess'){
+      db.ref('rooms/' + gs.roomId).update({
         phase:'draw',
-        currentPrompt:'Draw: "'+nextPrompt+'"'
+        currentPrompt:last.content
       });
     }
-  },400);
-}
 
+    // If last thing was a drawing -> next phase is guessing
+    else if(last.type === 'drawing'){
+      db.ref('rooms/' + gs.roomId).update({
+        phase:'guess',
+        currentDrawing:last.content
+      });
+    }
+
+  }, 400);
+}
 function watchForAllDone(cb){
   if(!gs.isHost)return;
   const check=()=>{
