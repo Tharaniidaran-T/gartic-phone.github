@@ -771,12 +771,23 @@ function submitGuess(auto){
 
   setTimeout(() => {
 
-    if(segs.length >= maxSegs){
-      db.ref('rooms/' + gs.roomId).update({
-        phase:'done'
-      });
-      return;
-    }
+const MIN_PLAYERS = 4;
+
+if (totalPlayers < MIN_PLAYERS) {
+  db.ref('rooms/' + gs.roomId).update({
+    phase: 'waiting'
+  });
+
+  alert('Need at least 4 players for Telephone mode.');
+  return;
+}
+
+if(segs.length >= maxSegs){
+  db.ref('rooms/' + gs.roomId).update({
+    phase:'done'
+  });
+  return;
+}
 
     const last = segs[segs.length - 1];
 
