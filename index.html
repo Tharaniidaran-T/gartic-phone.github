@@ -290,20 +290,148 @@ firebase.initializeApp({
 });
 const db = firebase.database();
 
-// MODES - Now includes ALL modes
+// MODES
 const MODES=[
   {id:'normal',    icon:'📝',name:'NORMAL',          desc:'One player draws, others guess. Classic phone!'},
-  {id:'telephone', icon:'☎️',name:'TELEPHONE',        desc:'Draw → guess → draw → guess chain.'},
+  {id:'telephone', icon:'☎️',name:'TELEPHONE',        desc:'Prompt → draw → guess → draw → guess chain. Each player adds to the chaos!'},
   {id:'story',     icon:'📖',name:'STORY',            desc:'Write one sentence each to build a story.'},
   {id:'knockoff',  icon:'🃏',name:'KNOCK-OFF',        desc:'Everyone draws the SAME prompt. Compare!'},
   {id:'animation', icon:'🎬',name:'ANIMATION',        desc:'Draw 3 frames for a mini flipbook!'},
   {id:'icebreaker',icon:'🧊',name:'ICEBREAKER',       desc:'Warm-up game with fun questions.'},
-  {id:'exquisite', icon:'🎭',name:'EXQUISITE CORPSE', desc:'Draw one body part, hide from others.'},
+  {id:'exquisite', icon:'🎭',name:'EXQUISITE CORPSE', desc:'Draw one body part, pass it on — each player adds the next section.'},
   {id:'masterpiece',icon:'🖼️',name:'MASTERPIECE',     desc:'Recreate famous paintings from memory!'},
   {id:'secret',    icon:'🕵️',name:'SECRET',           desc:'Only one player knows the prompt!'},
   {id:'score',     icon:'🏆',name:'SCORE',            desc:'Everyone draws same thing, vote best!'},
 ];
 let selectedMode='normal';
+
+// ─── 200 PROMPTS ───
+const ALL_PROMPTS = [
+  // Everyday Chaos
+  'A cat wearing a tuxedo','A squirrel trying to use an ATM','A banana slipping on a banana peel',
+  'An octopus playing the drums','A pizza delivery to a haunted house','A dog driving a convertible',
+  'A pigeon eating a giant croissant','A cactus wearing a winter sweater','A ghost struggling to fold laundry',
+  'A hamster running a marathon',
+  // Strange & Surreal
+  'A cloud raining tacos','A teapot pouring liquid galaxy','A skeleton playing video games',
+  'A tree growing lightbulbs instead of fruit','A fish riding a bicycle underwater',
+  'A dragon roasting a single marshmallow','A house with chicken legs','A shark wearing a monocle and top hat',
+  'A cloud shaped like a giant chicken','A mailbox eating a letter',
+  // Pop Culture & Fandom
+  'A superhero forgetting their cape','An alien trying to learn how to hula hoop',
+  'A Jedi knight cooking an omelet','A vampire at a beach party','A wizard failing a magic trick',
+  'An astronaut walking a dog on the moon','A pirate searching for a treasure chest full of socks',
+  'A knight fighting a giant rubber duck','A gnome playing heavy metal music',
+  'A detective investigating a spilled milk crime scene',
+  // Food & Drink
+  'A burger with tiny legs running away','An ice cream cone melting on a hot day',
+  'Spaghetti wrestling a meatball','A tea party for forest animals','A taco wearing sunglasses',
+  'A giant donut rolling down a hill','A cup of coffee with a personality','A sushi roll with an attitude',
+  'A chef losing a fight to a lobster','A watermelon wearing a helmet',
+  // Action & Movement
+  'A ballerina falling over','A robot trying to dance ballet','A penguin sliding on its belly on ice',
+  'A turtle winning a race against a cheetah','A frog catching a fly with a fishing rod',
+  'A bear trying to climb a lamp post','A ninja hiding behind a very thin pole',
+  'A weightlifter lifting a feather','A kangaroo jumping over a house',
+  'A person trying to walk in high heels for the first time',
+  // Oddly Specific Scenarios
+  'A sloth moving at the speed of light','A chicken crossing the road and regretting it',
+  'A bear stealing a picnic basket from a bear','A man trying to paint a portrait of a moving cat',
+  'An elephant trying to hide behind a curtain',
+  'A group of ants building a skyscraper out of crumbs','A snowman trying to tan on a beach',
+  'A toaster that burns bread on purpose','A lamp that is afraid of the dark',
+  'A vacuum cleaner chasing a dust bunny',
+  // Creatures & Monsters
+  'A tiny dragon living in a birdhouse','A unicorn with a messy mane','A yeti trying to use a blow dryer',
+  'A cyclops wearing two pairs of glasses','A werewolf at a flea market',
+  'A garden gnome planning a revolution','A mermaid with legs instead of a tail',
+  'A Bigfoot taking a selfie','A vampire using a straw to drink orange juice',
+  'A fairy having a bad hair day',
+  // Objects & Tech
+  'A smartphone with a physical dial pad','A computer mouse that is an actual mouse',
+  'A pencil that is afraid of being sharpened','A clock that ticks backwards',
+  'A bed that eats people who hit snooze','A car with square wheels','A hat that talks back',
+  'An umbrella that leaks when it rains','A pair of scissors that refuse to cut',
+  'A pillow that screams at night',
+  // Abstract & Funny
+  'The concept of Monday as a person','A mood ring that turns black',
+  'A shadow that has a different shape than the person','Gravity having a day off',
+  'A cloud that is sad because it is sunny','An echo that comes five seconds late',
+  'A dream where you are flying but have no wings','An invisible person wearing a hat',
+  'A knot that cannot be untied','The sound of a bell rendered visually',
+  // Short & Random
+  'A disco potato','Flying cheese','A lawyer frog','An angry toaster','A secret agent hamster',
+  'Gravity-defying soup','A grumpy cloud','Cowboy duck','A banana in a suit','A cat playing chess',
+  // Animals Being Weird
+  'A shark doing yoga on a surfboard','A giraffe wearing a very long scarf',
+  'A penguin trying to fly a kite','A hamster piloting a tiny airplane',
+  'A cow jumping over the moon but it is tired','An octopus wearing a different hat on each tentacle',
+  'A dog teaching a cat how to bark','A squirrel proposing to an acorn',
+  'A lion getting a haircut at a fancy salon','A jellyfish wearing rain boots',
+  // Bizarre Jobs
+  'A skeleton working as a lifeguard','A ghost performing stand-up comedy',
+  'A dragon working at a drive-thru window','A vampire being a dentist',
+  'A bear working as a kindergarten teacher','A robot trying to be a painter',
+  'A fairy filing taxes','A caveman trying to use a microwave',
+  'A wizard working as a barista','A mime talking on a cellphone',
+  // Daily Life but Wrong
+  'Trying to eat soup with a fork','A bed that is actually a giant trampoline',
+  'A toaster that toasts bread using laser beams','A bicycle with five wheels',
+  'A toothbrush that is afraid of toothpaste','Someone trying to mop the ocean',
+  'A door that leads to the ceiling','A staircase that turns into a slide',
+  'A pair of glasses that show you the future','A refrigerator that is actually a portal to space',
+  // Food Dramas
+  'A taco getting a manicure','A slice of pizza trying to order a salad',
+  'A giant strawberry wearing a winter coat','A hot dog trying to escape a bun',
+  'An egg trying to do a push-up','A cupcake that is actually a disguise for a broccoli',
+  'A bowl of cereal with milk falling upwards','A pickle playing the violin',
+  'A burger eating a human','A lemon having an existential crisis',
+  // Fantasy & Sci-Fi
+  'A UFO stuck in a tree','A knight riding a giant snail into battle',
+  'A mermaid with a pet goldfish','A robot falling in love with a toaster',
+  'A time traveler wearing a suit made of aluminum foil',
+  'A cloud that rains candy instead of water','An alien trying to eat a rubber duck',
+  'A wizard accidentally turning himself into a teapot',
+  'A dragon hoarding piles of pizza instead of gold','A centaur wearing pants',
+  // People Problems
+  'A person trying to pet a cactus','Someone trying to high-five a reflection',
+  'A musician playing an instrument made of cheese','A detective looking for a missing shadow',
+  'An athlete running in slow motion','Someone trying to fold a fitted sheet',
+  'A barber cutting a wig\'s hair',
+  'A mountain climber reaching the top only to find a gift shop',
+  'A person sleeping while floating in mid-air',
+  'A pirate using a map that only shows where the bathroom is',
+  // Inanimate Object Personalities
+  'A pencil trying to write a letter to itself','A lamp that constantly tells bad jokes',
+  'A mirror that shows you as a different animal','A shoe that is trying to learn how to dance',
+  'A backpack that is too full of dreams','A rug that is trying to walk away',
+  'A window looking outside and seeing another window',
+  'A washing machine that eats socks on purpose',
+  'A key that does not fit any lock in the universe','A book that reads its owner',
+  // Wild Scenarios
+  'A tea party held on the wings of a flying plane',
+  'A squirrel wearing a suit of armor made of walnuts',
+  'A bowling ball trying to play soccer','A snowman building a human out of mud',
+  'A cactus trying to hug a balloon','A bathtub full of Jell-O',
+  'A traffic jam caused by a parade of ducks','A toaster oven on a mountain peak',
+  'A flashlight that shoots darkness','A garden where the flowers grow human ears',
+  // Abstract/Random
+  'A color that does not exist','The smell of purple','A geometric shape feeling sad',
+  'A whisper becoming a physical object','Yesterday\'s weather today',
+  'A daydream being captured in a jar','Gravity having a temper tantrum',
+  'The sound of a falling star','A conversation between two rocks',
+  'A feeling of missing something you never had',
+  // Short & Punchy
+  'Disco cactus','Space cowboy','Angry mailbox','Ninja baby','Underwater campfire',
+  'Laser-eyed pug','Heavy metal grandma','Confused statue','Balloon sword fight','Pirate ballerina',
+];
+
+const P_ICE=['What did you have for breakfast today?','What is your spirit animal?','Your current mood as a drawing','Your biggest fear','What superpower would you have?'];
+const P_MASTER=['Starry Night by Van Gogh','Mona Lisa by Da Vinci','The Scream by Munch','American Gothic','Girl with a Pearl Earring','The Great Wave off Kanagawa'];
+const P_SECRET=['Eiffel Tower','Pizza','Dinosaur','Internet','Rainbow','Black hole'];
+
+function rand(a){return a[Math.floor(Math.random()*a.length)];}
+function randPrompt(){return rand(ALL_PROMPTS);}
 
 // Game state
 const gs={
@@ -413,10 +541,6 @@ function attachListeners(){
   function reg(ref){gs.listeners.push(ref);return ref;}
   reg(db.ref('rooms/'+gs.roomId+'/players')).on('value',snap=>{
     gs.players=snap.val()||{};renderPlayers();
-    // Host reassignment on disconnect
-    if(gs.isHost&&!gs.players[gs.playerId]){
-      gs.isHost=false;
-    }
   });
   reg(db.ref('rooms/'+gs.roomId+'/phase')).on('value',snap=>handlePhaseChange(snap.val()));
   reg(db.ref('rooms/'+gs.roomId+'/gameState')).on('value',snap=>gs.gameState=snap.val()||{});
@@ -434,7 +558,9 @@ function attachListeners(){
     gs.chatMessages.push(msg);
     renderChat();
   });
-  reg(db.ref('rooms/'+gs.roomId+'/storySegments')).on('value',snap=>gs.storySegments=snap.val()||[]);
+  reg(db.ref('rooms/'+gs.roomId+'/storySegments')).on('value',snap=>{
+    gs.storySegments=snap.val()||[];
+  });
 }
 
 function detachListeners(){gs.listeners.forEach(r=>r.off());gs.listeners=[];}
@@ -457,32 +583,26 @@ function renderPlayers(){
   document.getElementById('turnIndicator').textContent=n+' player'+(n>1?'s':'')+' ready';
 }
 
-// PROMPTS
-const P_NORMAL=['Cat on bike','Haunted pizza','Dinosaur dentist','Robot eating spaghetti','Fish guitar','Astronaut shopping'];
-const P_ICE=['Breakfast today?','Your spirit animal','Current mood','Biggest fear'];
-const P_MASTER=['Starry Night','Mona Lisa','The Scream','American Gothic'];
-const P_SECRET=['Eiffel Tower','Pizza','Dinosaur','Internet'];
-function rand(a){return a[Math.floor(Math.random()*a.length)];}
-
 // START GAME
 function startGame(){
   if(!gs.isHost)return;
   const n=Object.keys(gs.players).length;
   if(n<2){alert('Need 2+ players!');return;}
+
   let prompt='';
   switch(gs.mode){
     case 'story': prompt=''; break;
     case 'icebreaker': prompt=rand(P_ICE); break;
-    case 'telephone': prompt=rand(P_NORMAL); break;
     case 'masterpiece': prompt='Recreate: '+rand(P_MASTER); break;
     case 'secret': prompt=rand(P_SECRET); break;
-    default: prompt=rand(P_NORMAL);
+    default: prompt=randPrompt();
   }
+
   const playerIds=Object.keys(gs.players);
   const updates={
     phase:'draw',currentPrompt:prompt,currentDrawing:null,
     currentDrawerIdx:0,scores:{},storySegments:[],drawings:{},
-    animationFrames:{},playerOrder:playerIds,gameState:{round:0}
+    animationFrames:{},playerOrder:playerIds,gameState:{round:0,currentDrawerIdx:0}
   };
   playerIds.forEach(pid=>{updates['players/'+pid+'/status']='ready';});
   db.ref('rooms/'+gs.roomId).update(updates);
@@ -496,11 +616,23 @@ function handlePhaseChange(phase){
   if(phase==='lobby'){
     showPanel('draw');
     document.getElementById('gamePhaseLabel').textContent='🏠 Lobby';
-  } else if(phase==='draw'){
+    return;
+  }
+
+  // ─── TELEPHONE MODE ───
+  if(gs.mode==='telephone'){
+    handleTelephonePhase(phase);
+    return;
+  }
+
+  // ─── EXQUISITE CORPSE MODE ───
+  if(gs.mode==='exquisite'){
+    handleExquisitePhase(phase);
+    return;
+  }
+
+  if(phase==='draw'){
     document.getElementById('gamePhaseLabel').textContent='✏️ Draw';
-    const playerOrder=gs.gameState.playerOrder||Object.keys(gs.players);
-    const drawerIdx=gs.gameState.currentDrawerIdx||0;
-    const isMyTurn=playerOrder[drawerIdx]===gs.playerId;
 
     if(gs.mode==='story'){
       const segCount=Array.isArray(gs.storySegments)?gs.storySegments.length:0;
@@ -513,53 +645,136 @@ function handlePhaseChange(phase){
     }
 
     if(gs.mode==='normal'){
+      const playerOrder=gs.gameState.playerOrder||Object.keys(gs.players);
+      const drawerIdx=gs.gameState.currentDrawerIdx||0;
+      const isMyTurn=playerOrder[drawerIdx]===gs.playerId;
       if(isMyTurn){
         document.getElementById('drawTitle').textContent='Your Turn!';
         showPanel('draw');
         clearCanvas();
         if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
       } else {
+        const drawerName=gs.players[playerOrder[drawerIdx]]?.name||'Someone';
         showPanel('waiting');
-        document.getElementById('waitingTitle').textContent=esc(gs.players[playerOrder[drawerIdx]].name)+' is drawing…';
+        document.getElementById('waitingTitle').textContent=esc(drawerName)+' is drawing…';
       }
       return;
     }
 
-    if(['telephone','exquisite','animation'].includes(gs.mode)){
-      const segCount=Array.isArray(gs.storySegments)?gs.storySegments.length:0;
-      if(isMyTurn){
-        if(gs.mode==='animation'){
-          document.getElementById('drawTitle').textContent='Frame '+(gs.animationFrames.length+1)+'/3';
-        }
-        showPanel('draw');
-        clearCanvas();
-        if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
-      } else {
-        showPanel('waiting');
-      }
+    if(gs.mode==='animation'){
+      document.getElementById('drawTitle').textContent='Frame '+(gs.animationFrames.length+1)+'/3';
+      showPanel('draw');
+      clearCanvas();
+      if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
       return;
     }
 
+    // knockoff, score, masterpiece, icebreaker, secret — everyone draws
     showPanel('draw');
     clearCanvas();
     if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
 
   } else if(phase==='guess'){
     document.getElementById('gamePhaseLabel').textContent='🤔 Guess';
-    const playerOrder=gs.gameState.playerOrder||Object.keys(gs.players);
-    const drawerIdx=gs.gameState.currentDrawerIdx||0;
-    const isDrawer=playerOrder[drawerIdx]===gs.playerId;
 
-    if(isDrawer){
+    if(gs.mode==='normal'){
+      const playerOrder=gs.gameState.playerOrder||Object.keys(gs.players);
+      const drawerIdx=gs.gameState.currentDrawerIdx||0;
+      const isDrawer=playerOrder[drawerIdx]===gs.playerId;
+      if(isDrawer){
+        showPanel('waiting');
+        document.getElementById('waitingTitle').textContent='Others are guessing…';
+      } else {
+        showPanel('guess');
+        if(gs.guessTime>0) startTimer(gs.guessTime,'timerBarGuess','timerWrapGuess','timerTextGuess',()=>submitGuess(true));
+      }
+      return;
+    }
+
+    showPanel('guess');
+    if(gs.guessTime>0) startTimer(gs.guessTime,'timerBarGuess','timerWrapGuess','timerTextGuess',()=>submitGuess(true));
+
+  } else if(phase==='done'){
+    buildResults();
+  }
+}
+
+// ─── TELEPHONE HANDLER ───
+// Flow: prompt → draw → guess → draw → guess → … → done
+// storySegments tracks the chain. Each step everyone participates (rotating who draws/guesses).
+// Segment index tells us what step we're on.
+function handleTelephonePhase(phase){
+  document.getElementById('gamePhaseLabel').textContent='☎️ Telephone';
+
+  const segs=Array.isArray(gs.storySegments)?gs.storySegments:[];
+  const playerOrder=gs.gameState.playerOrder||Object.keys(gs.players);
+  const n=playerOrder.length;
+  const segIndex=segs.length; // how many segments have been submitted so far
+
+  // Determine whose turn it is — rotate through players each segment
+  const activePlayerIdx=segIndex % n;
+  const activePlayerId=playerOrder[activePlayerIdx];
+  const isMyTurn=activePlayerId===gs.playerId;
+
+  if(phase==='draw'){
+    if(isMyTurn){
+      document.getElementById('drawTitle').textContent=segIndex===0?'Draw the prompt!':'Draw what was guessed!';
+      showPanel('draw');
+      clearCanvas();
+      if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
+    } else {
+      const drawerName=gs.players[activePlayerId]?.name||'Someone';
       showPanel('waiting');
-      document.getElementById('waitingTitle').textContent='Others are guessing…';
+      document.getElementById('waitingTitle').textContent=esc(drawerName)+' is drawing…';
+      document.getElementById('waitingSubtitle').textContent='You\'ll guess next!';
+    }
+  } else if(phase==='guess'){
+    if(isMyTurn){
+      // The person who just drew now waits
+      showPanel('waiting');
+      document.getElementById('waitingTitle').textContent='Others are guessing your drawing…';
+      document.getElementById('waitingSubtitle').textContent='';
     } else {
       showPanel('guess');
       if(gs.guessTime>0) startTimer(gs.guessTime,'timerBarGuess','timerWrapGuess','timerTextGuess',()=>submitGuess(true));
     }
-
   } else if(phase==='done'){
     buildResults();
+  }
+}
+
+// ─── EXQUISITE CORPSE HANDLER (FIXED) ───
+// Each player draws one section of the body. No guessing phase.
+// Players are assigned body parts by their index in playerOrder.
+// After all players submit their section, go to done.
+function handleExquisitePhase(phase){
+  document.getElementById('gamePhaseLabel').textContent='🎭 Exquisite Corpse';
+
+  if(phase==='done'){
+    buildResults();
+    return;
+  }
+
+  // In exquisite corpse, every player draws their own section simultaneously.
+  // No guessing involved. We just wait for all to submit, then show results.
+  const playerOrder=gs.gameState.playerOrder||Object.keys(gs.players);
+  const myIndex=playerOrder.indexOf(gs.playerId);
+  const parts=['Head / Top','Torso / Middle','Legs / Bottom','Feet / Base','Arms / Sides','Neck / Connection'];
+  const myPart=parts[myIndex%parts.length]||'Your section';
+
+  if(phase==='draw'){
+    const myStatus=gs.players[gs.playerId]?.status;
+    if(myStatus==='done'){
+      showPanel('waiting');
+      document.getElementById('waitingTitle').textContent='Waiting for others to finish…';
+      document.getElementById('waitingSubtitle').textContent='Your section is submitted!';
+    } else {
+      document.getElementById('drawTitle').textContent='Draw: '+myPart;
+      document.getElementById('promptDisplay').textContent='Draw your section — '+myPart;
+      showPanel('draw');
+      clearCanvas();
+      if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
+    }
   }
 }
 
@@ -677,43 +892,74 @@ function stopAllTimers(){
   });
 }
 
-// SUBMISSIONS
+// ─── SUBMISSIONS ───
+
 function submitDrawing(auto){
   stopAllTimers();
   const dataUrl=exportCanvas();
   gs.chain.push({type:'drawing',player:gs.playerName,content:dataUrl});
-  db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
 
+  // ─── EXQUISITE CORPSE ───
+  if(gs.mode==='exquisite'){
+    db.ref('rooms/'+gs.roomId+'/drawings/'+gs.playerId).set({player:gs.playerName,data:dataUrl});
+    db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
+    showPanel('waiting');
+    document.getElementById('waitingTitle').textContent='Waiting for others to finish…';
+    document.getElementById('waitingSubtitle').textContent='Your section is submitted!';
+    if(gs.isHost){
+      watchForAllDone(()=>db.ref('rooms/'+gs.roomId).update({phase:'done'}));
+    }
+    return;
+  }
+
+  // ─── TELEPHONE ───
+  if(gs.mode==='telephone'){
+    const newSegs=[...gs.storySegments,{type:'drawing',player:gs.playerName,content:dataUrl}];
+    db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
+    db.ref('rooms/'+gs.roomId+'/storySegments').set(newSegs).then(()=>{
+      if(gs.isHost) advanceTelephone(newSegs);
+    });
+    showPanel('waiting');
+    document.getElementById('waitingTitle').textContent='Waiting for others…';
+    return;
+  }
+
+  // ─── KNOCKOFF / SCORE ───
   if(['knockoff','score'].includes(gs.mode)){
     db.ref('rooms/'+gs.roomId+'/drawings/'+gs.playerId).set({player:gs.playerName,data:dataUrl});
+    db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
     showPanel('waiting');
     if(gs.isHost) watchForAllDone(()=>db.ref('rooms/'+gs.roomId).update({phase:'done'}));
+    return;
+  }
 
-  } else if(gs.mode==='telephone'){
-    const newSegs=[...gs.storySegments,{type:'drawing',player:gs.playerName,content:dataUrl}];
-    db.ref('rooms/'+gs.roomId+'/storySegments').set(newSegs);
-    showPanel('waiting');
-    if(gs.isHost) transitionTelephonePhase(newSegs);
-
-  } else if(gs.mode==='normal'){
-    db.ref('rooms/'+gs.roomId).update({phase:'guess',currentDrawing:dataUrl});
-    showPanel('waiting');
-
-  } else if(gs.mode==='animation'){
+  // ─── ANIMATION ───
+  if(gs.mode==='animation'){
     gs.animationFrames.push(dataUrl);
     if(gs.animationFrames.length<3){
       document.getElementById('drawTitle').textContent='Frame '+(gs.animationFrames.length+1)+'/3';
       clearCanvas();
       if(gs.drawTime>0) startTimer(gs.drawTime,'timerBarDraw','timerWrapDraw','timerTextDraw',()=>submitDrawing(true));
     } else {
+      db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
       db.ref('rooms/'+gs.roomId).update({phase:'guess',currentDrawing:gs.animationFrames[0]});
       showPanel('waiting');
     }
+    return;
+  }
 
-  } else {
+  // ─── NORMAL ───
+  if(gs.mode==='normal'){
+    db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
     db.ref('rooms/'+gs.roomId).update({phase:'guess',currentDrawing:dataUrl});
     showPanel('waiting');
+    return;
   }
+
+  // ─── DEFAULT (masterpiece, icebreaker, secret etc.) ───
+  db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
+  db.ref('rooms/'+gs.roomId).update({phase:'guess',currentDrawing:dataUrl});
+  showPanel('waiting');
 }
 
 function submitStoryText(auto){
@@ -741,18 +987,25 @@ function submitGuess(auto){
   stopAllTimers();
   const guess=document.getElementById('guessInput').value.trim()||(auto?'(no answer)':'');
   if(!guess&&!auto)return;
-  gs.chain.push({type:'guess',player:gs.playerName,content:guess});
   document.getElementById('guessInput').value='';
   db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId+'/status').set('done');
-  showPanel('waiting');
 
-  if(gs.mode==='telephone'&&gs.isHost){
+  // ─── TELEPHONE GUESS ───
+  if(gs.mode==='telephone'){
     const newSegs=[...gs.storySegments,{type:'guess',player:gs.playerName,content:guess}];
-    db.ref('rooms/'+gs.roomId+'/storySegments').set(newSegs);
-    transitionTelephonePhase(newSegs);
+    gs.chain.push({type:'guess',player:gs.playerName,content:guess});
+    db.ref('rooms/'+gs.roomId+'/storySegments').set(newSegs).then(()=>{
+      if(gs.isHost) advanceTelephone(newSegs);
+    });
+    showPanel('waiting');
+    document.getElementById('waitingTitle').textContent='Waiting for others…';
     return;
   }
 
+  gs.chain.push({type:'guess',player:gs.playerName,content:guess});
+  showPanel('waiting');
+
+  // ─── NORMAL GUESS ───
   if(gs.mode==='normal'&&gs.isHost){
     watchForAllDone(()=>{
       const playerOrder=gs.gameState.playerOrder||Object.keys(gs.players);
@@ -760,60 +1013,68 @@ function submitGuess(auto){
       if(nextIdx>=playerOrder.length){
         db.ref('rooms/'+gs.roomId).update({phase:'done'});
       } else {
-        db.ref('rooms/'+gs.roomId).update({phase:'draw','gameState/currentDrawerIdx':nextIdx});
+        const newPrompt=randPrompt();
+        db.ref('rooms/'+gs.roomId).update({
+          phase:'draw',
+          currentPrompt:newPrompt,
+          'gameState/currentDrawerIdx':nextIdx
+        });
+        // Reset all statuses for next round
+        const resets={};
+        playerOrder.forEach(pid=>{resets['players/'+pid+'/status']='ready';});
+        db.ref('rooms/'+gs.roomId).update(resets);
       }
     });
+    return;
   }
-}
-  function transitionTelephonePhase(segs){
-  const totalPlayers = Object.keys(gs.players).length;
-  const maxSegs = totalPlayers * 2;
 
-  setTimeout(() => {
-
-const MIN_PLAYERS = 4;
-
-if (totalPlayers < MIN_PLAYERS) {
-  db.ref('rooms/' + gs.roomId).update({
-    phase: 'waiting'
-  });
-
-  alert('Need at least 4 players for Telephone mode.');
-  return;
+  if(gs.isHost) watchForAllDone(()=>db.ref('rooms/'+gs.roomId).update({phase:'done'}));
 }
 
-if(segs.length >= maxSegs){
-  db.ref('rooms/' + gs.roomId).update({
-    phase:'done'
-  });
-  return;
-}
+// ─── TELEPHONE ADVANCE LOGIC ───
+// Sequence: prompt (index 0, draw) → draw (seg 0) → guess (seg 1) → draw (seg 2) → guess (seg 3) → …
+// Each segment index determines whether next phase is draw or guess.
+// Total segments = players * 2 (each player draws once and guesses once).
+function advanceTelephone(segs){
+  if(!gs.isHost) return;
+  const n=Object.keys(gs.players).length;
+  // Each player gets one draw + one guess turn
+  const maxSegs=n*2;
 
-    const last = segs[segs.length - 1];
+  setTimeout(()=>{
+    if(segs.length>=maxSegs){
+      db.ref('rooms/'+gs.roomId).update({phase:'done'});
+      return;
+    }
 
-    // If last thing was a guess -> next phase is drawing
-    if(last.type === 'guess'){
-      db.ref('rooms/' + gs.roomId).update({
+    const last=segs[segs.length-1];
+    // Reset all player statuses for the next step
+    const resets={};
+    Object.keys(gs.players).forEach(pid=>{resets['players/'+pid+'/status']='ready';});
+    db.ref('rooms/'+gs.roomId).update(resets);
+
+    if(last.type==='drawing'){
+      // After a draw → guess phase. Show the drawing to guessers.
+      db.ref('rooms/'+gs.roomId).update({
+        phase:'guess',
+        currentDrawing:last.content
+      });
+    } else if(last.type==='guess'){
+      // After a guess → draw phase. The guess becomes the new prompt.
+      db.ref('rooms/'+gs.roomId).update({
         phase:'draw',
         currentPrompt:last.content
       });
     }
-
-    // If last thing was a drawing -> next phase is guessing
-    else if(last.type === 'drawing'){
-      db.ref('rooms/' + gs.roomId).update({
-        phase:'guess',
-        currentDrawing:last.content
-      });
-    }
-
-  }, 400);
+  },600);
 }
+
 function watchForAllDone(cb){
   if(!gs.isHost)return;
   const check=()=>{
     db.ref('rooms/'+gs.roomId+'/players').once('value').then(snap=>{
-      const allDone=Object.values(snap.val()||{}).every(p=>p.status==='done');
+      const players=snap.val()||{};
+      const allDone=Object.values(players).every(p=>p.status==='done');
       if(allDone)cb();else setTimeout(check,800);
     });
   };
@@ -862,36 +1123,61 @@ function buildResults(){
   stopAllTimers();
   showPanel('results');
   document.getElementById('gamePhaseLabel').textContent='🎉 Results!';
-  
+
   const chainEl=document.getElementById('chainContent');
   const segs=Array.isArray(gs.storySegments)?gs.storySegments:[];
 
   if(gs.mode==='story'&&segs.length>0){
     const textSegs=segs.filter(s=>s.type==='text');
     chainEl.innerHTML='<div style="font-size:14px;line-height:1.8;color:var(--dark);font-style:italic">'+
-      textSegs.map(s=>s.content).join(' ')+
+      textSegs.map(s=>esc(s.content)).join(' ')+
       '</div>';
+
   } else if(gs.mode==='telephone'&&segs.length>0){
     chainEl.innerHTML=segs.map((item,i)=>
       item.type==='drawing'
         ?`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} drew:</div><img src="${item.content}" class="chain-image"></div>`
         :`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)} guessed:</div><div class="chain-content">"${esc(item.content)}"</div></div>`
     ).join('');
+
+  } else if(gs.mode==='exquisite'){
+    // Show all drawings stacked vertically
+    db.ref('rooms/'+gs.roomId+'/drawings').once('value').then(snap=>{
+      const drawings=snap.val()||{};
+      const playerOrder=gs.gameState.playerOrder||Object.keys(gs.players);
+      chainEl.innerHTML=playerOrder.map((pid,i)=>{
+        const d=drawings[pid];
+        if(!d)return '';
+        return `<div class="chain-item">
+          <div class="chain-player">Section ${i+1}: ${esc(d.player)}</div>
+          <img src="${d.data}" class="chain-image">
+        </div>`;
+      }).join('');
+    });
+
   } else if(['knockoff','score'].includes(gs.mode)){
-    chainEl.style.display='none';
-    document.getElementById('knockoffGrid').style.display='block';
+    db.ref('rooms/'+gs.roomId+'/drawings').once('value').then(snap=>{
+      const drawings=snap.val()||{};
+      chainEl.innerHTML=Object.values(drawings).map(d=>
+        `<div class="chain-item">
+          <div class="chain-player">${esc(d.player)}</div>
+          <img src="${d.data}" class="chain-image">
+        </div>`
+      ).join('');
+    });
+
   } else {
     chainEl.innerHTML=gs.chain.length>0
       ?gs.chain.map((item,i)=>
           item.type==='drawing'
             ?`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)}</div><img src="${item.content}" class="chain-image"></div>`
             :`<div class="chain-item"><div class="chain-player">${i+1}. ${esc(item.player)}</div><div class="chain-content">"${esc(item.content)}"</div></div>`
-        ).join(''):
-      'Play to see results!';
+        ).join('')
+      :'<p style="color:#aaa;text-align:center;padding:20px">Play to see results!</p>';
   }
 }
 
-// UI
+// UI HELPERS
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -921,7 +1207,7 @@ function copyCode(){navigator.clipboard.writeText(gs.roomId);}
 function leaveRoom(){
   stopAllTimers();detachListeners();
   if(gs.playerId&&gs.roomId)db.ref('rooms/'+gs.roomId+'/players/'+gs.playerId).remove();
-  Object.assign(gs,{playerName:'',playerId:null,roomId:null,players:{},chain:[],storySegments:[],animationFrames:[]});
+  Object.assign(gs,{playerName:'',playerId:null,roomId:null,players:{},chain:[],storySegments:[],animationFrames:[],gameState:{}});
   showScreen('screenSetup');showPanel('draw');
   ['playerName','roomName','joinPlayerName','roomCode','guessInput','storyInput','chatInput'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.value='';
